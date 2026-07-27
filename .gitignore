@@ -1,0 +1,43 @@
+# 作業系統與編輯器
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 本機工具設定
+.codex/
+.agents/
+.claude/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# 環境變數、憑證與機密
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# 建置、快取、日誌與暫存
+build/
+dist/
+*.log
+*.tmp
+*.bak
+
+# GitHub Release 附件保留在本機，不納入 Git 歷史
+release-assets/*.html
+

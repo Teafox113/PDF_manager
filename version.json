@@ -1,0 +1,35 @@
+{
+  "version": "2.2.0-F",
+  "release_date": "2026-06-30",
+  "channel": "Branch (Fable Dev)",
+  "branch": "branch_v2",
+  "branch_suffix": "-F",
+  "branch_note": "由 Fable 模型接續的開發修訂線；分枝版號恆帶 -F 後綴，與主線 1.x 區隔。合併回主線時摘除後綴並升 MINOR。",
+  "notes": "新功能：個別分頁存檔，將左側所有頁面各自輸出為 PDF 並打包成 ZIP",
+
+  "bump_rules": {
+    "PATCH": "臭蟲修正、文字修正、UI 微調（不影響功能）",
+    "MINOR": "新功能加入、顯著改善（向下相容）",
+    "MAJOR": "介面大改版、架構重寫、破壞性變更",
+    "BRANCH": "分枝版本後綴恆為 -F，升版邏輯同 SemVer"
+  },
+
+  "output_filename_template": "pdf_editor_offline_v{version}.html",
+
+  "history": [
+    { "version": "2.2.0-F", "date": "2026-06-30", "summary": "新增個別分頁存檔：輸入檔名前綴後，將左側所有頁面各自輸出為 PDF，依 01/02/03 編號並打包成 ZIP（內建無壓縮 ZIP writer，未新增第三方依賴）" },
+    { "version": "2.1.4-F", "date": "2026-06-17", "summary": "左側縮圖新增冰鈦藍右下截角，標示由右側來源插入或合併產生的頁面" },
+    { "version": "2.1.3-F", "date": "2026-06-17", "summary": "右側來源區新增「全選來源頁」按鈕，可一次選取所有來源頁面並保留頁面順序" },
+    { "version": "2.1.2-F", "date": "2026-06-11", "summary": "修正 zoom 1.1 把 100vh 放大導致底部被擠出畫面：body 高度改 calc(100vh / 1.1)" },
+    { "version": "2.1.1-F", "date": "2026-06-11", "summary": "全介面預設放大 110%（body zoom 1.1）；分隔線拖曳的視覺/版面座標換算校正（UI_ZOOM）" },
+    { "version": "2.1.0-F", "date": "2026-06-11", "summary": "左右面板分隔線可拖曳自訂比例：220px～視窗 60% 範圍、雙擊重設 320px、localStorage 記憶、視窗縮放防呆" },
+    { "version": "2.0.0-F", "date": "2026-06-11", "summary": "鈦金屬 iPhone 風格介面大改版：毛玻璃工具列、膠囊按鈕、微漸層、2% 噪訊紋路、髮絲線邊框、線性符號圖示（依規則「介面大改版」升 MAJOR）" },
+    { "version": "1.5.1-F", "date": "2026-06-11", "summary": "修正左側拖曳重排誤觸「拖曳 PDF 開啟」：內部拖曳優先判斷、空白區放開改為取消、右側同步防護" },
+    { "version": "1.5.0-F", "date": "2026-06-11", "summary": "批次選取（全選/反選/奇偶頁/頁碼範圍/Ctrl+A）、多頁整組移動與多選拖曳重排、縮圖懶渲染、狀態列已選頁數、改版前備份制度" },
+    { "version": "1.4.0-F", "date": "2026-06-11", "summary": "分枝起點（branch_v2）：文件同步實況、版號分枝 -F 後綴規則" },
+    { "version": "1.3.0", "date": "2026-06-09", "summary": "右側複數頁選取後可合併為左側一頁（垂直拼貼，A4 寬度）" },
+    { "version": "1.2.0", "date": "2026-06-09", "summary": "右側多檔批次載入（PDF/圖片混合）、左側縮圖旋轉功能（↺ ↻）" },
+    { "version": "1.1.0", "date": "2026-06-08", "summary": "CSP 資安加固、第三方授權聲明、atob() 修正 fetch 問題" },
+    { "version": "1.0.0", "date": "2026-06-01", "summary": "初版：PDF 頁面刪除、插入、重排、DOCX、Undo、另存新 PDF" }
+  ]
+}
