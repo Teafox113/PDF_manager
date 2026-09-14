@@ -25,6 +25,7 @@ import sys
 import re
 import json
 import argparse
+from license_bundle import load_manifest, verify_bundle, embed_notices
 
 # ── 函式庫下載清單 ────────────────────────────────────────
 LIBS = [
@@ -267,6 +268,9 @@ copyright notice 與 license 條款。
 
 def main():
     args = parse_args()
+    license_manifest = load_manifest()
+    if license_manifest.get("open_items"):
+        print("授權提醒：仍有上游缺漏待確認；此建置不是公開散布核准。")
     here = os.path.dirname(os.path.abspath(__file__))
     src_path = os.path.join(here, SRC_FILE)
 
@@ -303,6 +307,7 @@ def main():
     for lib in LIBS:
         try:
             code = download(lib["url"], lib["name"]).decode("utf-8")
+            verify_bundle(lib["url"], code, license_manifest)
             inline = f"<script>/* {lib['name']} (offline embed) */\n{code}\n</script>"
             html = html.replace(lib["tag"], inline)
         except Exception as e:
@@ -312,6 +317,7 @@ def main():
     # PDF.js Worker → Blob URL
     try:
         worker_code = download(WORKER_URL, WORKER_NAME).decode("utf-8")
+        verify_bundle(WORKER_URL, worker_code, license_manifest)
         worker_json = json.dumps(worker_code)
         blob_init = (
             "const _pdfWorkerBlob = new Blob(["
@@ -331,6 +337,7 @@ def main():
     # ── 步驟 2：套用資安強化修改 ──
     print(f"\n[2/3] 套用資安強化修改（v{version}）")
     html = apply_security(html, ver)
+    html = embed_notices(html)
 
     # ── 步驟 3：輸出 ──
     print("\n[3/3] 寫出檔案")

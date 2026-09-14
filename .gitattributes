@@ -6,3 +6,6 @@
 *.json text eol=lf
 *.txt text eol=lf
 
+# Preserve upstream license bytes exactly for manifest SHA-256 verification.
+licenses/** -text -whitespace
+THIRD_PARTY_NOTICES.txt -text -whitespace

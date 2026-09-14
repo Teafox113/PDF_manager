@@ -1,0 +1,673 @@
+{
+  "audit_date": "2026-09-14",
+  "application_version": "2.2.0-F",
+  "status": "upstream-confirmation-required",
+  "open_items": [
+    "dingbat-to-unicode@1.0.1: original copyright/license text absent; owner confirmation required."
+  ],
+  "components": [
+    {
+      "name": "base64-arraybuffer",
+      "version": "1.0.1",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/base64-arraybuffer/1.0.1",
+      "archive_sha256": "4dc4537a24181aa4a54699aa4d77fe6cf4a2c07c50d55b3efb4ce26ca8577fa5",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/base64-arraybuffer-1.0.1/LICENSE",
+          "sha256": "f3eca6ff762533fa5a77caf954a143e48afa204668cf97dce758c45a9e006be3"
+        }
+      ]
+    },
+    {
+      "name": "base64-arraybuffer",
+      "version": "1.0.2",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/base64-arraybuffer/1.0.2",
+      "archive_sha256": "e1f7448bcb848e47382cafc52bee0eb83978212cecca4ce12f8a00bcd7874723",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/base64-arraybuffer-1.0.2/LICENSE",
+          "sha256": "f3eca6ff762533fa5a77caf954a143e48afa204668cf97dce758c45a9e006be3"
+        }
+      ]
+    },
+    {
+      "name": "base64-js",
+      "version": "1.5.1",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/base64-js/1.5.1",
+      "archive_sha256": "b1b7a945b52685269083425216d6597e33d97bf21699d656e92fdb3eb5210a85",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/base64-js-1.5.1/LICENSE",
+          "sha256": "5b37224c080cdcc97c871ada971c224e9926370fe74f11b539aa1cf9f3b1aca1"
+        }
+      ]
+    },
+    {
+      "name": "bluebird",
+      "version": "3.4.7",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/bluebird/3.4.7",
+      "archive_sha256": "e9228ac32d28024336b2a7fdcae689344165ff5d9fdcb8dc65af14444bd2e2dd",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/bluebird-3.4.7/LICENSE",
+          "sha256": "bd92858f2261ae179cd4c4f56aaa6fa628dee927cc33808044bd7f676198c0fc"
+        }
+      ]
+    },
+    {
+      "name": "buffer",
+      "version": "4.9.1",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/buffer/4.9.1",
+      "archive_sha256": "186d0c8a8ded6ded2b5166d90a927d9084dc2d65459c0a349bb040ac2eb389a6",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/buffer-4.9.1/LICENSE",
+          "sha256": "06bafa45fdad2579ba0e43b0c9b2c6290287c99c4203c300254a462b38a307f6"
+        }
+      ]
+    },
+    {
+      "name": "core-util-is",
+      "version": "1.0.2",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/core-util-is/1.0.2",
+      "archive_sha256": "a4a44dab6579ede3e06ade58d26f8fd642eae09153fd59c608fcb7951a499398",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/core-util-is-1.0.2/LICENSE",
+          "sha256": "33b734d60042d0fe0c92dd1fc1e874193a1c899ec3e276a2eb935d2d0bf5b710"
+        }
+      ]
+    },
+    {
+      "name": "css-line-break",
+      "version": "2.1.0",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/css-line-break/2.1.0",
+      "archive_sha256": "ad418c918be188f713c4019ccd939fa510ee708695b353e39b90254466fe8db7",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/css-line-break-2.1.0/LICENSE",
+          "sha256": "ce1ee0539f7fe1f7b75b76d121e674cb897c709c3e24ddba7f9a10fe2d0d88a5"
+        }
+      ]
+    },
+    {
+      "name": "dingbat-to-unicode",
+      "version": "1.0.1",
+      "declared_license": "BSD-2-Clause",
+      "source": "https://registry.npmjs.org/dingbat-to-unicode/1.0.1",
+      "archive_sha256": "e3360a80e59952789ca59b499dd443796a43a698c3b45d5ae3a3dfb2bef9560a",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/dingbat-to-unicode-1.0.1/UPSTREAM-STATUS.txt",
+          "sha256": "adac5d17b166f1756c124657cd522be9fea696907e934ecdbf7dcf747d6456ec"
+        },
+        {
+          "path": "licenses/dingbat-to-unicode-1.0.1/upstream-package.json",
+          "sha256": "e34a07af5c8074ec60fdc1f9db775d117d2b2f985d88175c455c9fc37f898d59"
+        }
+      ],
+      "status": "upstream-license-text-missing"
+    },
+    {
+      "name": "html2canvas",
+      "version": "1.4.1",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/html2canvas/1.4.1",
+      "archive_sha256": "542536a762933dadf7605b275ae096a31734ab3cf488069b7d75523c309f5b12",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/html2canvas-1.4.1/LICENSE",
+          "sha256": "86200ce4e92d9a22c41c8647a55f7a5fddff304ff89b4d36ecc699ed8c123d2c"
+        }
+      ]
+    },
+    {
+      "name": "ieee754",
+      "version": "1.1.8",
+      "declared_license": "BSD-3-Clause",
+      "source": "https://registry.npmjs.org/ieee754/1.1.8",
+      "archive_sha256": "a0dd51ee2de6ab8ad452e829ece19bcfc5fdb796502051ec8d533adc9cba1b31",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/ieee754-1.1.8/LICENSE",
+          "sha256": "6d5ef6dcbcc2d08589c716a674536afe8a23ac2499a814afb5b14b39cc415126"
+        }
+      ]
+    },
+    {
+      "name": "immediate",
+      "version": "3.0.6",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/immediate/3.0.6",
+      "archive_sha256": "98c792f39650b00818c05dcc407902034dc4092f368596b37658d44f28739d11",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/immediate-3.0.6/LICENSE.txt",
+          "sha256": "809e66de579fb7d92503848bbe6d1f348f4f6521a71e5d294fe7cc0c87a3b4ff"
+        }
+      ]
+    },
+    {
+      "name": "inherits",
+      "version": "2.0.1",
+      "declared_license": "ISC",
+      "source": "https://registry.npmjs.org/inherits/2.0.1",
+      "archive_sha256": "e0d5493f8142aff09125344665a90a8227b9a3ffa4bb8d086d0fb471c00deb29",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/inherits-2.0.1/LICENSE",
+          "sha256": "5ffe28e7ade7d8f10d85d5337a73fd793dac5c462fb9a28fbf8c5046c7fbca3b"
+        }
+      ]
+    },
+    {
+      "name": "inherits",
+      "version": "2.0.3",
+      "declared_license": "ISC",
+      "source": "https://registry.npmjs.org/inherits/2.0.3",
+      "archive_sha256": "7f5f58e9b54e87e264786e7e84d9e078aaf68c1003de9fa68945101e02356cdf",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/inherits-2.0.3/LICENSE",
+          "sha256": "5ffe28e7ade7d8f10d85d5337a73fd793dac5c462fb9a28fbf8c5046c7fbca3b"
+        }
+      ]
+    },
+    {
+      "name": "isarray",
+      "version": "1.0.0",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/isarray/1.0.0",
+      "archive_sha256": "e23c76f14f5222e07e39d89858b61e8e33f96956de9e0df3659cbdf8db950c87",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/isarray-1.0.0/LICENSE-from-README.txt",
+          "sha256": "a1bd5deadb6a06dd74efa852c1b8b23f63b67f2214fbe9c8bd591da51da69268"
+        }
+      ]
+    },
+    {
+      "name": "jszip",
+      "version": "3.7.1",
+      "declared_license": "(MIT OR GPL-3.0-or-later)",
+      "source": "https://registry.npmjs.org/jszip/3.7.1",
+      "archive_sha256": "7ac88dbebbfb5de3ad37cd263324481f0372210a336d7dd2ede0b186a6eb5b33",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/jszip-3.7.1/LICENSE-MIT.txt",
+          "sha256": "3add299598dc609cfe56cb0698aad9af3ce849317cceac0711c5253f5881370c"
+        }
+      ],
+      "selected_license": "MIT"
+    },
+    {
+      "name": "lie",
+      "version": "3.3.0",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/lie/3.3.0",
+      "archive_sha256": "2db8461cd4a10e2fc3588c8c55da34d33465ff81cc19c72416bbcaec7ee6a36e",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/lie-3.3.0/license.md",
+          "sha256": "5c81b0caa98593408b03125efa25efe622341ed87ae55561968828cd887d64a4"
+        }
+      ]
+    },
+    {
+      "name": "lop",
+      "version": "0.4.1",
+      "declared_license": "BSD-2-Clause",
+      "source": "https://registry.npmjs.org/lop/0.4.1",
+      "archive_sha256": "044365a154df24441839646787577a839e8a5d946c84305b332ebe6a3daf3a4c",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/lop-0.4.1/LICENSE",
+          "sha256": "6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1"
+        }
+      ]
+    },
+    {
+      "name": "mammoth",
+      "version": "1.6.0",
+      "declared_license": "BSD-2-Clause",
+      "source": "https://registry.npmjs.org/mammoth/1.6.0",
+      "archive_sha256": "2b5ec836989c3c8cfb3df047d305899dfd4c2d6669bc8bfdb2b1ba05d81155c9",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/mammoth-1.6.0/LICENSE",
+          "sha256": "6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1"
+        }
+      ]
+    },
+    {
+      "name": "option",
+      "version": "0.2.4",
+      "declared_license": "BSD-2-Clause",
+      "source": "https://registry.npmjs.org/option/0.2.4",
+      "archive_sha256": "0c6ef87c6b17166f3b4a926309fcdfe453a2d05e21b443e9d34da8a4a079712b",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/option-0.2.4/LICENSE",
+          "sha256": "6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1"
+        }
+      ]
+    },
+    {
+      "name": "pako",
+      "version": "1.0.10",
+      "declared_license": "(MIT AND Zlib)",
+      "source": "https://registry.npmjs.org/pako/1.0.10",
+      "archive_sha256": "226e4f109397e7f7e634d6124607a716b0bd9c95a41348910516ba60f36bf8ff",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/pako-1.0.10/LICENSE",
+          "sha256": "a04665b3b2de56c66730c1f720f528175739e4104f79073614aa611da1e85539"
+        }
+      ]
+    },
+    {
+      "name": "pako",
+      "version": "1.0.11",
+      "declared_license": "(MIT AND Zlib)",
+      "source": "https://registry.npmjs.org/pako/1.0.11",
+      "archive_sha256": "0d4028dc0352a740c30cbfd772917f2744986d42bfa0b06ec7642bffe7ad3941",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/pako-1.0.11/LICENSE",
+          "sha256": "a04665b3b2de56c66730c1f720f528175739e4104f79073614aa611da1e85539"
+        }
+      ]
+    },
+    {
+      "name": "pako",
+      "version": "1.0.5",
+      "declared_license": "(MIT AND Zlib)",
+      "source": "https://registry.npmjs.org/pako/1.0.5",
+      "archive_sha256": "6d7efd8e218516a28d5521c8f20446045107486d93afc55eff9b7eb3042ef2be",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/pako-1.0.5/LICENSE",
+          "sha256": "a04665b3b2de56c66730c1f720f528175739e4104f79073614aa611da1e85539"
+        }
+      ]
+    },
+    {
+      "name": "path-browserify",
+      "version": "0.0.0",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/path-browserify/0.0.0",
+      "archive_sha256": "0b5e658c29cd602879ea50a9edae38e392fe8de5a5600da39be114f69dd0d2f5",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/path-browserify-0.0.0/LICENSE",
+          "sha256": "435a6722c786b0a56fbe7387028f1d9d3f3a2d0fb615bb8fee118727c3f59b7b"
+        }
+      ]
+    },
+    {
+      "name": "pdf-lib",
+      "version": "1.17.1",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/pdf-lib/1.17.1",
+      "archive_sha256": "a7cc1eaf12e41e612a7be581162a63b18118aefc01e90f6a1f35347b1f324a1c",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/pdf-lib-1.17.1/LICENSE.md",
+          "sha256": "f2c9fc00fdb66eb99ac156ba52d734af66d8d309f65753ae809ad34ee2883bcb"
+        }
+      ]
+    },
+    {
+      "name": "@pdf-lib/standard-fonts",
+      "version": "1.0.0",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/@pdf-lib/standard-fonts/1.0.0",
+      "archive_sha256": "8a6b3a914d6d928840b484aa247d12702fc7b5ef00130a914929a129a5423d36",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/pdf-lib__standard-fonts-1.0.0/LICENSE.md",
+          "sha256": "45cc2bb9957ed43f5c7f5eb1912f9f670730394d614079510477cae626194649"
+        }
+      ]
+    },
+    {
+      "name": "@pdf-lib/upng",
+      "version": "1.0.1",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/@pdf-lib/upng/1.0.1",
+      "archive_sha256": "737ffe924e0e207173427b7fe30a610144c93b27a1c894ac006b6ff70fc84f6c",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/pdf-lib__upng-1.0.1/LICENSE",
+          "sha256": "c1fb8861eca211bf5aea574358aba7039396c0c1824c2a1477cc126d398efd89"
+        }
+      ]
+    },
+    {
+      "name": "pdfjs-dist",
+      "version": "3.11.174",
+      "declared_license": "Apache-2.0",
+      "source": "https://registry.npmjs.org/pdfjs-dist/3.11.174",
+      "archive_sha256": "11402926f38e7d5c71e63f4c3fdcfcb9172afd5bd202900994cecfa8ee7a98c4",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/pdfjs-dist-3.11.174/LICENSE",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        }
+      ]
+    },
+    {
+      "name": "process",
+      "version": "0.11.9",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/process/0.11.9",
+      "archive_sha256": "dea1a4481f59f7d837769bc5033fcc7e56aea6669c00640a575f61619c0642ef",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/process-0.11.9/LICENSE",
+          "sha256": "59a400d04c5078579acc27ddd6452c1bdf763f9506e01364700935fbb1a7c91b"
+        }
+      ]
+    },
+    {
+      "name": "process-nextick-args",
+      "version": "1.0.7",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/process-nextick-args/1.0.7",
+      "archive_sha256": "674cb3ba253e3b6ba221d0558ee9e0814799e121f4df8bec1a91fbb270b550ae",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/process-nextick-args-1.0.7/license.md",
+          "sha256": "ecdccbcf39024f624ded480c01c0b25458e1eca8f26ecf040933865ce56d9a4f"
+        }
+      ]
+    },
+    {
+      "name": "process-nextick-args",
+      "version": "2.0.0",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/process-nextick-args/2.0.0",
+      "archive_sha256": "8eec271b7af29443e9bc816d5645a1cf8dd744e4ce9d7d929bbcdc2bd49e9c4e",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/process-nextick-args-2.0.0/license.md",
+          "sha256": "ecdccbcf39024f624ded480c01c0b25458e1eca8f26ecf040933865ce56d9a4f"
+        }
+      ]
+    },
+    {
+      "name": "readable-stream",
+      "version": "2.3.6",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/readable-stream/2.3.6",
+      "archive_sha256": "0f205b60dc0fb300f05bbbf1d1583b3f87cca8cecc0b6a8673910c9519c45c77",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/readable-stream-2.3.6/LICENSE",
+          "sha256": "ec62dc96da0099b87f4511736c87309335527fb7031639493e06c95728dc8c54"
+        }
+      ]
+    },
+    {
+      "name": "safe-buffer",
+      "version": "5.1.1",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/safe-buffer/5.1.1",
+      "archive_sha256": "0c1447202230c905a611cfbd4c6d834ffcd1f598dadcbc8d5be74826e5e3b171",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/safe-buffer-5.1.1/LICENSE",
+          "sha256": "c7cc929b57080f4b9d0c6cf57669f0463fc5b39906344dfc8d3bc43426b30eac"
+        }
+      ]
+    },
+    {
+      "name": "set-immediate-shim",
+      "version": "1.0.1",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/set-immediate-shim/1.0.1",
+      "archive_sha256": "d72d78d5fa9944408bdf30d59140c0298a5673ff30b4ec8597fe2e6bf694d696",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/set-immediate-shim-1.0.1/LICENSE",
+          "sha256": "6fb9754611c20f6649f68805e8c990e83261f29316e29de9e6cedae607b8634c"
+        }
+      ],
+      "license_source": "https://raw.githubusercontent.com/sindresorhus/set-immediate-shim/v1.0.1/license"
+    },
+    {
+      "name": "string_decoder",
+      "version": "0.10.31",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/string_decoder/0.10.31",
+      "archive_sha256": "3e6e6ffeafe6157eb2278a909afc0b845234b13446dca8a9518c2b79b9c22086",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/string_decoder-0.10.31/LICENSE",
+          "sha256": "21a82bbee91262a076c2e34533d51d73475d55e889f1c42cf884c86b2a0d5773"
+        }
+      ]
+    },
+    {
+      "name": "string_decoder",
+      "version": "1.1.1",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/string_decoder/1.1.1",
+      "archive_sha256": "af8262434508fa8292407f7fef4690d19eabb73387ca230b41f2a1155216963a",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/string_decoder-1.1.1/LICENSE",
+          "sha256": "11f2aafb37d06b3ee5bdaf06e9811141d0da05263c316f3d627f45c20d43261b"
+        }
+      ]
+    },
+    {
+      "name": "text-segmentation",
+      "version": "1.0.3",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/text-segmentation/1.0.3",
+      "archive_sha256": "e4c475323b54850ce507eff9c52ed90cf5e44ecaa254ea3616b386884eea3446",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/text-segmentation-1.0.3/LICENSE",
+          "sha256": "8b00952cd8d0f5cbbefb13576778e1185dc963943151353d90c4e14a5a4caf40"
+        }
+      ]
+    },
+    {
+      "name": "tslib",
+      "version": "1.11.1",
+      "declared_license": "Apache-2.0",
+      "source": "https://registry.npmjs.org/tslib/1.11.1",
+      "archive_sha256": "7095b4b5fe8fe827acbf6ebe53dc44129f887b56d1bf85ee99331729d36b2fed",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/tslib-1.11.1/CopyrightNotice.txt",
+          "sha256": "19246466cb51e46c12b22e43b4d2703ac981cb4295d061d6e20609bd5845510b"
+        },
+        {
+          "path": "licenses/tslib-1.11.1/LICENSE.txt",
+          "sha256": "a7d00bfd54525bc694b6e32f64c7ebcf5e6b7ae3657be5cc12767bce74654a47"
+        }
+      ]
+    },
+    {
+      "name": "tslib",
+      "version": "2.3.0",
+      "declared_license": "0BSD",
+      "source": "https://registry.npmjs.org/tslib/2.3.0",
+      "archive_sha256": "ae285639feff7e3c39de4626352181a5d73b815725e42639b411c43848abffdb",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/tslib-2.3.0/CopyrightNotice.txt",
+          "sha256": "dd835e67a9a297da32f9467d7677a5d02c8e50e10f15da43b810147c79c04b9b"
+        },
+        {
+          "path": "licenses/tslib-2.3.0/LICENSE.txt",
+          "sha256": "210b19e543130388c68654b7497e967119ce17145f66ab7d85688fbd70f08751"
+        }
+      ]
+    },
+    {
+      "name": "underscore",
+      "version": "1.13.1",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/underscore/1.13.1",
+      "archive_sha256": "223b9ca7be6f44992350bce5e1f411225bf4719b5c695970b6b98ac624f63a0a",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/underscore-1.13.1/LICENSE",
+          "sha256": "708bd87d08b48ffd427ee2717fe76efeb63c09c5bdf64e3dae4674e20986bc6c"
+        }
+      ]
+    },
+    {
+      "name": "util",
+      "version": "0.10.3",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/util/0.10.3",
+      "archive_sha256": "88033ac0a981b3c3919d7bf21e9808d0a2903c331688e4122bdd32eeea3dd6d0",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/util-0.10.3/LICENSE",
+          "sha256": "6239c6144c31e58cf925c34483606969c555574d64ffa96518ab5d7f45c75d43"
+        }
+      ]
+    },
+    {
+      "name": "util-deprecate",
+      "version": "1.0.2",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/util-deprecate/1.0.2",
+      "archive_sha256": "79a1de983c1b393180c47456d6b73caab278a00ea6e37d5c6675f2dcdec2a3e5",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/util-deprecate-1.0.2/LICENSE",
+          "sha256": "0154425673db15cdfa80ecba2c9b1f1a867f7197a006764712849bfc3a93cbb7"
+        }
+      ]
+    },
+    {
+      "name": "utrie",
+      "version": "1.0.2",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/utrie/1.0.2",
+      "archive_sha256": "d9b9333988daf0d9f3c0ba679f1d87382b0702f5384f6d672b5b336276b47680",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/utrie-1.0.2/LICENSE",
+          "sha256": "8b00952cd8d0f5cbbefb13576778e1185dc963943151353d90c4e14a5a4caf40"
+        }
+      ]
+    },
+    {
+      "name": "xmlbuilder",
+      "version": "10.0.0",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/xmlbuilder/10.0.0",
+      "archive_sha256": "411ae7cbdc686cd51d06ddb635713226b6ba38fa330b0599741a390954a00396",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/xmlbuilder-10.0.0/LICENSE",
+          "sha256": "8ad16994acb18814fcd2ff6d0b559906b842047b995baf33fd0c55e4d24cbac8"
+        }
+      ]
+    },
+    {
+      "name": "@xmldom/xmldom",
+      "version": "0.8.6",
+      "declared_license": "MIT",
+      "source": "https://registry.npmjs.org/@xmldom/xmldom/0.8.6",
+      "archive_sha256": "df6fce876473e4582e38d1683876b8a65affb3c635f0dce3d1feb8b5bd3c8836",
+      "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
+      "files": [
+        {
+          "path": "licenses/xmldom__xmldom-0.8.6/LICENSE",
+          "sha256": "4da724fc305d81606b245b324d4d2586916b9d248b23d82183df753ace0fdf71"
+        }
+      ]
+    }
+  ],
+  "supplement": {
+    "path": "licenses/UPSTREAM-SOURCE-NOTICES.txt",
+    "sha256": "8dfd8dffa1409c47a3312c2b37446f0fb1068bb3a241b92679adc19e6795d85d"
+  },
+  "notices_sha256": "981e6b14b25f6eda26532bbe53ccd509504320bc2705e52bd4838f2423799932",
+  "bundles": [
+    {
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",
+      "sha256": "5b5799e6f8c680663207ac5b42ee14eed2a406fa7af48f50c154f0c0b1566946",
+      "package_member": "pdfjs-dist-3.11.174/package/build/pdf.min.js"
+    },
+    {
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js",
+      "sha256": "feabdf309770ed24bba31a5467836cdc8cf639c705af27d52b585b041bb8527b",
+      "package_member": "pdfjs-dist-3.11.174/package/build/pdf.worker.min.js"
+    },
+    {
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js",
+      "sha256": "0f9a5cad07941f0826586c94e089d89b918c46e5c17cf2d5a3c6f666e3bc694f",
+      "package_member": "pdf-lib-1.17.1/package/dist/pdf-lib.min.js"
+    },
+    {
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
+      "sha256": "e87e550794322e574a1fda0c1549a3c70dae5a93d9113417a429016838eab8cb",
+      "package_member": "html2canvas-1.4.1/package/dist/html2canvas.min.js"
+    },
+    {
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js",
+      "sha256": "596ef52239e52d8ee3cee10b2ee4a72596abf900d0e4f468593f956e9f1809b0",
+      "package_member": "mammoth-1.6.0/package/mammoth.browser.min.js"
+    }
+  ]
+}

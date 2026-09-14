@@ -1,0 +1,443 @@
+SOURCE COPYRIGHT AND LICENSE COMMENTS
+Verbatim comments from pinned upstream bundles and source maps.
+
+Sources: mammoth-1.6.0/package/mammoth.browser.js
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+
+Sources: mammoth-1.6.0/package/mammoth.browser.js; jszip-3.7.1/jszip.js
+/*!
+
+JSZip v3.7.1 - A JavaScript class for generating and reading zip files
+<http://stuartk.com/jszip>
+
+(c) 2009-2016 Stuart Knightley <stuart [at] stuartk.com>
+Dual licenced under the MIT license or GPLv3. See https://raw.github.com/Stuk/jszip/master/LICENSE.markdown.
+
+JSZip uses the library pako released under the MIT license :
+https://github.com/nodeca/pako/blob/master/LICENSE
+*/
+
+Sources: mammoth-1.6.0/package/mammoth.browser.js; mammoth-1.6.0/package/mammoth.browser.js
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Sources: jszip-3.7.1/jszip.js; jszip-3.7.1/jszip.js; jszip-3.7.1/jszip.js; jszip-3.7.1/jszip.js; jszip-3.7.1/jszip.js; jszip-3.7.1/jszip.js; jszip-3.7.1/jszip.js; jszip-3.7.1/jszip.js; jszip-3.7.1/jszip.js; jszip-3.7.1/jszip.js; jszip-3.7.1/jszip.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/standard-fonts/node_modules/pako/lib/zlib/trees.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/standard-fonts/node_modules/pako/lib/zlib/adler32.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/standard-fonts/node_modules/pako/lib/zlib/crc32.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/standard-fonts/node_modules/pako/lib/zlib/messages.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/standard-fonts/node_modules/pako/lib/zlib/deflate.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/standard-fonts/node_modules/pako/lib/zlib/zstream.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/standard-fonts/node_modules/pako/lib/zlib/inffast.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/standard-fonts/node_modules/pako/lib/zlib/inftrees.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/standard-fonts/node_modules/pako/lib/zlib/inflate.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/standard-fonts/node_modules/pako/lib/zlib/constants.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/standard-fonts/node_modules/pako/lib/zlib/gzheader.js; pdf-lib-1.17.1: ../node_modules/pako/lib/zlib/trees.js; pdf-lib-1.17.1: ../node_modules/pako/lib/zlib/adler32.js; pdf-lib-1.17.1: ../node_modules/pako/lib/zlib/crc32.js; pdf-lib-1.17.1: ../node_modules/pako/lib/zlib/messages.js; pdf-lib-1.17.1: ../node_modules/pako/lib/zlib/deflate.js; pdf-lib-1.17.1: ../node_modules/pako/lib/zlib/zstream.js; pdf-lib-1.17.1: ../node_modules/pako/lib/zlib/inffast.js; pdf-lib-1.17.1: ../node_modules/pako/lib/zlib/inftrees.js; pdf-lib-1.17.1: ../node_modules/pako/lib/zlib/inflate.js; pdf-lib-1.17.1: ../node_modules/pako/lib/zlib/constants.js; pdf-lib-1.17.1: ../node_modules/pako/lib/zlib/gzheader.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/upng/node_modules/pako/lib/zlib/trees.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/upng/node_modules/pako/lib/zlib/adler32.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/upng/node_modules/pako/lib/zlib/crc32.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/upng/node_modules/pako/lib/zlib/messages.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/upng/node_modules/pako/lib/zlib/deflate.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/upng/node_modules/pako/lib/zlib/zstream.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/upng/node_modules/pako/lib/zlib/inffast.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/upng/node_modules/pako/lib/zlib/inftrees.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/upng/node_modules/pako/lib/zlib/inflate.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/upng/node_modules/pako/lib/zlib/constants.js; pdf-lib-1.17.1: ../node_modules/@pdf-lib/upng/node_modules/pako/lib/zlib/gzheader.js
+// (C) 1995-2013 Jean-loup Gailly and Mark Adler
+// (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
+//
+// This software is provided 'as-is', without any express or implied
+// warranty. In no event will the authors be held liable for any damages
+// arising from the use of this software.
+//
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it
+// freely, subject to the following restrictions:
+//
+// 1. The origin of this software must not be misrepresented; you must not
+//   claim that you wrote the original software. If you use this software
+//   in a product, an acknowledgment in the product documentation would be
+//   appreciated but is not required.
+// 2. Altered source versions must be plainly marked as such, and must not be
+//   misrepresented as being the original software.
+// 3. This notice may not be removed or altered from any source distribution.
+
+Sources: pdf-lib-1.17.1: ../node_modules/tslib/tslib.es6.js
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+Sources: pdf-lib-1.17.1: ../es/utils/base64.js
+/*
+ * The `chars`, `lookup`, `encode`, and `decode` members of this file are
+ * licensed under the following:
+ *
+ *     base64-arraybuffer
+ *     https://github.com/niklasvh/base64-arraybuffer
+ *
+ *     Copyright (c) 2012 Niklas von Hertzen
+ *     Licensed under the MIT license.
+ *
+ */
+
+Sources: pdf-lib-1.17.1: ../node_modules/@pdf-lib/standard-fonts/es/utils.js
+/*
+ * The `chars`, `lookup`, and `decodeFromBase64` members of this file are
+ * licensed under the following:
+ *
+ *     base64-arraybuffer
+ *     https://github.com/niklasvh/base64-arraybuffer
+ *
+ *     Copyright (c) 2012 Niklas von Hertzen
+ *     Licensed under the MIT license.
+ *
+ */
+
+Sources: pdf-lib-1.17.1: ../es/core/streams/Stream.js
+/*
+ * Copyright 2012 Mozilla Foundation
+ *
+ * The Stream class contained in this file is a TypeScript port of the
+ * JavaScript Stream class in Mozilla's pdf.js project, made available
+ * under the Apache 2.0 open source license.
+ */
+
+Sources: pdf-lib-1.17.1: ../es/core/streams/DecodeStream.js
+/*
+ * Copyright 2012 Mozilla Foundation
+ *
+ * The DecodeStream class contained in this file is a TypeScript port of the
+ * JavaScript DecodeStream class in Mozilla's pdf.js project, made available
+ * under the Apache 2.0 open source license.
+ */
+
+Sources: pdf-lib-1.17.1: ../es/core/streams/Ascii85Stream.js
+/*
+ * Copyright 2012 Mozilla Foundation
+ *
+ * The Ascii85Stream class contained in this file is a TypeScript port of the
+ * JavaScript Ascii85Stream class in Mozilla's pdf.js project, made available
+ * under the Apache 2.0 open source license.
+ */
+
+Sources: pdf-lib-1.17.1: ../es/core/streams/AsciiHexStream.js
+/*
+ * Copyright 2012 Mozilla Foundation
+ *
+ * The AsciiHexStream class contained in this file is a TypeScript port of the
+ * JavaScript AsciiHexStream class in Mozilla's pdf.js project, made available
+ * under the Apache 2.0 open source license.
+ */
+
+Sources: pdf-lib-1.17.1: ../es/core/streams/FlateStream.js
+/*
+ * Copyright 1996-2003 Glyph & Cog, LLC
+ *
+ * The flate stream implementation contained in this file is a JavaScript port
+ * of XPDF's implementation, made available under the Apache 2.0 open source
+ * license.
+ */
+
+Sources: pdf-lib-1.17.1: ../es/core/streams/FlateStream.js
+/*
+ * Copyright 2012 Mozilla Foundation
+ *
+ * The FlateStream class contained in this file is a TypeScript port of the
+ * JavaScript FlateStream class in Mozilla's pdf.js project, made available
+ * under the Apache 2.0 open source license.
+ */
+
+Sources: pdf-lib-1.17.1: ../es/core/streams/LZWStream.js
+/*
+ * Copyright 2012 Mozilla Foundation
+ *
+ * The LZWStream class contained in this file is a TypeScript port of the
+ * JavaScript LZWStream class in Mozilla's pdf.js project, made available
+ * under the Apache 2.0 open source license.
+ */
+
+Sources: pdf-lib-1.17.1: ../es/core/streams/RunLengthStream.js
+/*
+ * Copyright 2012 Mozilla Foundation
+ *
+ * The RunLengthStream class contained in this file is a TypeScript port of the
+ * JavaScript RunLengthStream class in Mozilla's pdf.js project, made available
+ * under the Apache 2.0 open source license.
+ */
+
+Sources: pdf-lib-1.17.1: ../es/api/svgPath.js
+// Originated from pdfkit Copyright (c) 2014 Devon Govett
+// https://github.com/foliojs/pdfkit/blob/1e62e6ffe24b378eb890df507a47610f4c4a7b24/lib/path.js
+// MIT LICENSE
+// Updated for pdf-lib & TypeScript by Jeremy Messenger
+
+Sources: html2canvas-1.4.1: ../node_modules/tslib/tslib.es6.js
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/shared/util.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/api.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/font_loader.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/canvas.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/metadata.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/transport_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/fetch_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/network_utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/network.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/node_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/svg.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/pdf.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/worker.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/shared/util.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/primitives.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/pdf_manager.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/chunked_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/document.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/annotation.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/colorspace.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/evaluator.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/cmap.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/binary_cmap.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/parser.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/ascii_85_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/decode_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/ascii_hex_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/ccitt_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/ccitt.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/flate_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/jbig2_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/jbig2.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/arithmetic_decoder.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/jpeg_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/jpx_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/jpx.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/lzw_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/predictor_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/run_length_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/fonts.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/charsets.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/encodings.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/fonts_utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/glyphlist.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/to_unicode_map.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/cff_font.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/font_renderer.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/metrics.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/opentype_file_builder.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/type1_font.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/type1_parser.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/pattern.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/function.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/bidi.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/image.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/catalog.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/metadata_parser.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/crypto.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/decrypt_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/pdf.worker.js
+/* Copyright 2012 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/annotation_storage.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/node_utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/optional_content_config.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/shared/scripting_utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/default_appearance.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/writer.js
+/* Copyright 2020 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/editor/editor.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/editor/tools.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/shared/image_utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/editor/annotation_editor_layer.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/editor/freetext.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/editor/ink.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/editor/stamp.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/shared/image_utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/cleanup_helper.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/dataset_reader.js
+/* Copyright 2022 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/display_utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/base_factory.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/text_layer.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/standard_fonts.js
+/* Copyright 2015 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/shared/murmurhash3.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/shared/murmurhash3.js
+/* Copyright 2014 Opera Software ASA
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * Based on https://code.google.com/p/smhasher/wiki/MurmurHash3.
+ * Hashes roughly 100 KB per millisecond on i7 3.4 GHz.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/pattern_helper.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/annotation_layer.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/ps_parser.js
+/* Copyright 2014 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/worker_options.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/shared/message_handler.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xml_parser.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/shared/message_handler.js
+/* Copyright 2018 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/content_disposition.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/operator_list.js
+/* Copyright 2017 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/xfa_text.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/web/l10n_utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf/src/display/xfa_layer.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/base_stream.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/glyf.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa_fonts.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/calibri_factors.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/helvetica_factors.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/liberationsans_widths.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/myriadpro_factors.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/segoeui_factors.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/name_number_tree.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/file_spec.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/struct_tree.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/object_loader.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/factory.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/symbol_utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/bind.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/template.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/namespaces.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/layout.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/html_utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/fonts.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/text.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/xfa_object.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/som.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/data.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/parser.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/builder.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/setup.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/config.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/connection_set.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/datasets.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/locale_set.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/signature.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/stylesheet.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/xdp.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/xhtml.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xfa/unknown.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/xref.js
+/* Copyright 2021 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/core_utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/image_utils.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/worker_stream.js
+/* Copyright 2019 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/ccitt.js
+/* Copyright 1996-2003 Glyph & Cog, LLC
+ *
+ * The CCITT stream implementation contained in this file is a JavaScript port
+ * of XPDF's implementation, made available under the Apache 2.0 open source
+ * license.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/flate_stream.js
+/* Copyright 1996-2003 Glyph & Cog, LLC
+ *
+ * The flate stream implementation contained in this file is a JavaScript port
+ * of XPDF's implementation, made available under the Apache 2.0 open source
+ * license.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/jpg.js
+/* Copyright 2014 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the 'License');
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an 'AS IS' BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/fonts.js
+// 0.Copyright
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/cff_parser.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/unicode.js
+/* Copyright 2016 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/unicode.js
+// Some characters, e.g. copyrightserif, are mapped to the private use area
+// and might not be displayed using standard fonts. Mapping/hacking well-known
+// chars to the similar equivalents in the normal characters range.
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/unicode.js
+// copyrightsans (0xF8E9) => copyright
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/unicode.js
+// copyrightserif (0xF6D9) => copyright
+
+Sources: pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/font_substitutions.js; pdfjs-dist-3.11.174: webpack://pdfjs-dist/build/pdf.worker/src/core/image_resizer.js
+/* Copyright 2023 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */

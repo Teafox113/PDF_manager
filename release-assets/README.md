@@ -12,3 +12,6 @@ pdf_editor_offline_v2.2.0-F.html
 
 可使用 `SHA256SUMS.txt` 驗證附件完整性。
 
+2026-09-14：HTML 已補入第三方條文，可由 About →「第三方授權」開啟。應用版本保持 2.2.0-F，程式邏輯與函式庫未變；校驗碼已更新。
+
+目前為授權補件候選，dingbat-to-unicode 1.0.1 原文仍待上游確認，詳見 ../docs/LICENSE_AUDIT.md；尚不可視為全部授權已結案。

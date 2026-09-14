@@ -1,0 +1,10 @@
+Upstream package: dingbat-to-unicode 1.0.1
+Declared license: BSD-2-Clause
+Author field: Michael Williamson
+Source: https://registry.npmjs.org/dingbat-to-unicode/1.0.1
+Repository: https://github.com/mwilliamson/dingbat-to-unicode
+
+The published package does not supply a LICENSE or copyright statement.
+The inspected upstream repository also lacks that text.
+No copyright year, owner statement or substitute grant has been invented.
+Public redistribution clearance remains pending upstream confirmation.

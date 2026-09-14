@@ -67,7 +67,7 @@ PDF_manager/
 - html2canvas 1.4.1
 - Mammoth.js 1.6.0
 
-依賴版本固定於 `pdf_editor.html` 與 `build_offline.py`。詳細授權資訊見 `THIRD_PARTY_LICENSES_SUMMARY.md`。
+依賴版本固定於 `pdf_editor.html` 與 `build_offline.py`。完整上游條文見 [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt)，來源與校驗紀錄在 [licenses/](licenses/README.md)。建置時會檢查函式庫雜湊與授權文件，離線版可從 About →「第三方授權」閱讀內嵌條文。
 
 ## 已知限制
 
@@ -88,3 +88,5 @@ PDF_manager/
 ## 授權狀態
 
 本專案目前尚未加入專案本身的授權檔。建立公開儲存庫前，應由專案所有者決定是否採用開源授權。第三方元件仍依各自授權條款使用。
+
+2026-09-14 已補入主要及附屬元件授權，但仍有一項上游原文缺漏：dingbat-to-unicode 1.0.1 僅提供 BSD-2-Clause 宣告，未附著作權／授權原文。公開散布前需確認；詳見 [查核紀錄](docs/LICENSE_AUDIT.md)。本次沒有代替所有者對應用程式採用 MIT，詳見 [本專案授權狀態](PROJECT_LICENSE_STATUS.md)。

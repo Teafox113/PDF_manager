@@ -1,92 +1,28 @@
-# 第三方開源授權聲明
-Third-Party Open Source License Summary
+# 第三方授權資料
 
-本工具的離線發布檔（目前為 `pdf_editor_offline_v2.2.0-F.html`）以離線內嵌方式包含以下第三方開源 JavaScript 函式庫。
-相關著作權與授權條款歸原作者所有。本工具未修改原始碼。
+更新：2026-09-14；適用 PDF Manager v2.2.0-F 的目前固定函式庫。
 
----
+完整條文在 [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt)，各上游原文與 SHA-256 在 [licenses/](licenses/README.md)。本文件只是索引，不取代原始條文。
 
-## 1. PDF.js
+| 主要元件 | 版本 | 授權 |
+|---|---|---|
+| PDF.js（含 Worker） | 3.11.174 | Apache-2.0 |
+| pdf-lib | 1.17.1 | MIT |
+| html2canvas | 1.4.1 | MIT |
+| Mammoth.js | 1.6.0 | BSD-2-Clause |
 
-| 項目 | 內容 |
-|------|------|
-| 版本 | 3.11.174 |
-| 著作權 | Copyright (c) Mozilla Foundation and individual contributors |
-| 授權 | Apache License 2.0 |
-| SPDX | `Apache-2.0` |
-| 用途 | PDF 解析、頁面渲染、縮圖產生 |
-| 來源 | https://github.com/mozilla/pdf.js |
+附屬元件已依官方瀏覽器打包清單、source map 與版本鎖定檔收集，包含 JSZip、Bluebird、pako、tslib、xmldom、buffer、Unicode 排版工具等；共 44 組套件／版本資料。部分版本採保守方式一併附錄，不代表每一版本都出現在執行路徑中。精確範圍見 [授權查核紀錄](docs/LICENSE_AUDIT.md)。
 
-Apache License 2.0 主要條款摘要：
-- 可自由使用、複製、修改、散布
-- 散布時須保留原始著作權聲明與授權條款
-- 修改版本須標示修改說明
+JSZip 3.7.1 為 MIT／GPL 雙重授權，本專案選用 MIT 選項，附檔保留該選項的完整授權及著作權。pako 等來源內的 zlib 聲明，以及 Microsoft、Mozilla、Glyph & Cog 等附加聲明，保留於 licenses/UPSTREAM-SOURCE-NOTICES.txt。
 
----
+## 尚未結案的上游缺漏
 
-## 2. pdf-lib
+**dingbat-to-unicode 1.0.1** 的官方 package.json 宣告 BSD-2-Clause，但其 npm 套件及已查閱的上游原始碼庫未提供 LICENSE／著作權聲明原文。已保存官方 metadata 與缺漏紀錄，沒有臆造年份、權利人或授權原文。對外散布前仍需向上游確認，或另行核准替代方案；不可將本次補件理解為全部權利已獲確認。
 
-| 項目 | 內容 |
-|------|------|
-| 版本 | 1.17.1 |
-| 著作權 | Copyright (c) Andrew Dillon and pdf-lib contributors |
-| 授權 | MIT License |
-| SPDX | `MIT` |
-| 用途 | PDF 建立、頁面複製、輸出編輯後的 PDF |
-| 來源 | https://github.com/Hopding/pdf-lib |
+## 散布方式
 
-MIT License 主要條款摘要：
-- 可自由使用、複製、修改、散布、販售
-- 散布時須保留原始著作權聲明與授權條款
-
----
-
-## 3. Mammoth.js
-
-| 項目 | 內容 |
-|------|------|
-| 版本 | 1.6.0 |
-| 著作權 | Copyright (c) Michael Williamson and contributors |
-| 授權 | BSD 2-Clause "Simplified" License |
-| SPDX | `BSD-2-Clause` |
-| 用途 | DOCX 轉 HTML，供頁面預覽截圖使用 |
-| 來源 | https://github.com/mwilliamson/mammoth.js |
-
-BSD 2-Clause 主要條款摘要：
-- 可自由使用、複製、修改、散布
-- 散布原始碼時須保留著作權聲明與授權條款
-- 散布二進位形式時須在文件或其他提供材料中保留著作權聲明
-
-**附屬依賴注意事項：**
-Mammoth.js browser bundle 可能包含以下依賴：
-- JSZip（MIT License）— ZIP 檔案處理（DOCX 格式為 ZIP）
-- bluebird 或 Promise polyfill（MIT）
-如需完整依賴授權清單，請參閱 Mammoth.js 原始碼庫 `package.json` 及 `node_modules`。
-
----
-
-## 4. html2canvas
-
-| 項目 | 內容 |
-|------|------|
-| 版本 | 1.4.1 |
-| 著作權 | Copyright (c) Niklas von Hertzen and html2canvas contributors |
-| 授權 | MIT License |
-| SPDX | `MIT` |
-| 用途 | DOCX 預覽頁面的 HTML 截圖（轉為 Canvas 圖片） |
-| 來源 | https://github.com/niklasvh/html2canvas |
-
----
-
-## 內網散布建議
-
-若本工具要於公司內網長期維護與散布：
-
-1. **保留本文件**或將授權聲明附於工具說明文件中。
-2. **備份原始授權文本**：各函式庫的完整 LICENSE 文件可從上方來源連結取得。
-3. **雜湊值備查**：建議記錄 HTML 檔案的 SHA-256 雜湊值，供資安單位核查。
-4. **版本追蹤**：如升級函式庫版本，請重新確認各授權條款是否變更。
-
----
-
-*本摘要文件由 FloofyFox 維護，最後更新：2026-06-08*
+- 原始碼：一併保留 licenses/、THIRD_PARTY_NOTICES.txt 與本文件。
+- 離線版：完整已取得條文內嵌於 HTML，可由 About 的「第三方授權」開啟。
+- 既有本機 Release HTML 已補入條文並更新校驗碼；上層 branch_v2 原檔保持原樣。
+- build_offline.py 現在驗證函式庫雜湊與授權檔，並內嵌完整條文；變更版本後需重新查核。
+- 本專案自己的授權仍待所有者決定，見 PROJECT_LICENSE_STATUS.md。第三方授權不代表授予整個應用程式開源權利。
