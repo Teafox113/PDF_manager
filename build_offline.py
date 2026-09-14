@@ -269,8 +269,8 @@ copyright notice 與 license 條款。
 def main():
     args = parse_args()
     license_manifest = load_manifest()
-    if license_manifest.get("open_items"):
-        print("授權提醒：仍有上游缺漏待確認；此建置不是公開散布核准。")
+    if license_manifest.get("provisional_decisions"):
+        print("授權登錄：dingbat-to-unicode 暫時引用 Mammoth BSD-2-Clause；詳見授權紀錄。")
     here = os.path.dirname(os.path.abspath(__file__))
     src_path = os.path.join(here, SRC_FILE)
 

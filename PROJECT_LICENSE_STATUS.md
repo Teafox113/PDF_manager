@@ -6,4 +6,4 @@
 
 本次只補第三方授權資料，不推定程式碼權利歸屬，不代替所有者授權，也不創造上游未提供的著作權聲明。
 
-第三方仍有一項上游原文缺漏，詳見 docs/LICENSE_AUDIT.md。
+dingbat-to-unicode 1.0.1 依所有者指示暫時引用 Mammoth BSD-2-Clause；此暫行登錄不改變本專案自有程式碼的授權狀態，詳見 docs/LICENSE_AUDIT.md。

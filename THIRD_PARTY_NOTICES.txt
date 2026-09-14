@@ -4,7 +4,7 @@ Prepared 2026-09-14. These terms cover third-party components only.
 
 JSZip: the MIT option is selected. This does not license PDF Manager itself.
 
-Open upstream issue: dingbat-to-unicode 1.0.1 declares BSD-2-Clause but omits a copyright/license text. See its UPSTREAM-STATUS.txt. Do not treat this inventory as complete public-release clearance.
+Provisional registration authorized by the project owner on 2026-09-14: dingbat-to-unicode 1.0.1 references the Mammoth 1.6.0 BSD-2-Clause license. Both packages identify Michael Williamson and BSD-2-Clause. This is a project registration decision, not an upstream confirmation that the Mammoth copyright notice covers the standalone package.
 
 Inventory includes conservative notices from upstream lockfiles; presence here is not a claim that every package/version is separately present at runtime.
 
@@ -231,10 +231,39 @@ Author field: Michael Williamson
 Source: https://registry.npmjs.org/dingbat-to-unicode/1.0.1
 Repository: https://github.com/mwilliamson/dingbat-to-unicode
 
-The published package does not supply a LICENSE or copyright statement.
-The inspected upstream repository also lacks that text.
-No copyright year, owner statement or substitute grant has been invented.
-Public redistribution clearance remains pending upstream confirmation.
+Provisional registration (project owner decision, 2026-09-14):
+Reference the Mammoth 1.6.0 BSD-2-Clause license, reproduced unchanged in MAMMOTH-LICENSE-REFERENCE.txt.
+Basis: both packages identify Michael Williamson as author and BSD-2-Clause as license; Mammoth lists dingbat-to-unicode@1.0.1 / BSD-2-Clause in its official browser bundle header.
+
+The standalone published package does not supply its own LICENSE or copyright text.
+The 2013 copyright notice in the reference remains a Mammoth notice; it is not asserted as a separately verified dingbat-to-unicode copyright date.
+This registration does not claim upstream confirmation of coverage. If upstream clarifies the notice, update this record and the release notices.
+
+
+Provisional reference: original Mammoth 1.6.0 LICENSE (not a standalone dingbat copyright assertion)
+
+Copyright (c) 2013, Michael Williamson
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met: 
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer. 
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution. 
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 

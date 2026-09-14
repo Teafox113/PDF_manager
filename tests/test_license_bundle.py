@@ -14,7 +14,11 @@ class LicenseTests(unittest.TestCase):
     def test_archived_texts_match_manifest(self):
         manifest = load_manifest()
         self.assertEqual(len(manifest['bundles']), 5)
-        self.assertTrue(any('dingbat-to-unicode' in item for item in manifest['open_items']))
+        self.assertTrue(any('dingbat-to-unicode' in item for item in manifest['provisional_decisions']))
+        component = next(c for c in manifest['components'] if c['name'] == 'dingbat-to-unicode')
+        self.assertEqual(component['status'], 'provisional-mammoth-license-reference')
+        self.assertFalse(component['upstream_coverage_confirmed'])
+        self.assertEqual((ROOT/'licenses/dingbat-to-unicode-1.0.1/MAMMOTH-LICENSE-REFERENCE.txt').read_bytes(), (ROOT/'licenses/mammoth-1.6.0/LICENSE').read_bytes())
 
     def test_changed_dependency_is_rejected(self):
         manifest = load_manifest()

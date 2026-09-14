@@ -57,7 +57,7 @@ release-assets/pdf_editor_offline_v2.2.0-F.html
 
 該 HTML 應於建立 GitHub Release 時作為附件上傳，不放入 Git 歷史。
 
-2026-09-14 新增 licenses/ 下全部授權資料。具體檔案與雜湊以 licenses/manifest.json 為準。離線 HTML 已內嵌條文，但 dingbat-to-unicode 上游原文缺漏仍待確認；目前不是公開散布授權結案狀態。
+2026-09-14 新增 licenses/ 下全部授權資料。具體檔案與雜湊以 licenses/manifest.json 為準。包括 dingbat-to-unicode 暫行引用的 MAMMOTH-LICENSE-REFERENCE.txt 及說明；離線 HTML 已同步內嵌條文與暫行紀錄。
 
 ## 尚未加入
 

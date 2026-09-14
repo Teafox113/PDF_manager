@@ -4,7 +4,10 @@ Author field: Michael Williamson
 Source: https://registry.npmjs.org/dingbat-to-unicode/1.0.1
 Repository: https://github.com/mwilliamson/dingbat-to-unicode
 
-The published package does not supply a LICENSE or copyright statement.
-The inspected upstream repository also lacks that text.
-No copyright year, owner statement or substitute grant has been invented.
-Public redistribution clearance remains pending upstream confirmation.
+Provisional registration (project owner decision, 2026-09-14):
+Reference the Mammoth 1.6.0 BSD-2-Clause license, reproduced unchanged in MAMMOTH-LICENSE-REFERENCE.txt.
+Basis: both packages identify Michael Williamson as author and BSD-2-Clause as license; Mammoth lists dingbat-to-unicode@1.0.1 / BSD-2-Clause in its official browser bundle header.
+
+The standalone published package does not supply its own LICENSE or copyright text.
+The 2013 copyright notice in the reference remains a Mammoth notice; it is not asserted as a separately verified dingbat-to-unicode copyright date.
+This registration does not claim upstream confirmation of coverage. If upstream clarifies the notice, update this record and the release notices.

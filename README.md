@@ -89,4 +89,4 @@ PDF_manager/
 
 本專案目前尚未加入專案本身的授權檔。建立公開儲存庫前，應由專案所有者決定是否採用開源授權。第三方元件仍依各自授權條款使用。
 
-2026-09-14 已補入主要及附屬元件授權，但仍有一項上游原文缺漏：dingbat-to-unicode 1.0.1 僅提供 BSD-2-Clause 宣告，未附著作權／授權原文。公開散布前需確認；詳見 [查核紀錄](docs/LICENSE_AUDIT.md)。本次沒有代替所有者對應用程式採用 MIT，詳見 [本專案授權狀態](PROJECT_LICENSE_STATUS.md)。
+2026-09-14 已補入主要及附屬元件授權；依所有者指示，dingbat-to-unicode 1.0.1 暫時引用 Mammoth 1.6.0 的 BSD-2-Clause 原文。此為暫行登錄，不表示上游已確認同一份署名涵蓋該獨立套件；詳見 [查核紀錄](docs/LICENSE_AUDIT.md)。本次沒有對整個應用程式採用 MIT，詳見 [本專案授權狀態](PROJECT_LICENSE_STATUS.md)。

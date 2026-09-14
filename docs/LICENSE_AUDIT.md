@@ -6,7 +6,9 @@
 
 已收集 44 組固定套件／版本的授權或上游狀態資料、36 個不同的來源署名／授權註解區塊。四個主要函式庫與 Worker 的程式碼均與官方同版本套件逐字核對（UTF-8、LF 正規化），不依今天重新解析 semver 來猜測版本。
 
-**一項未解決：dingbat-to-unicode@1.0.1 的原始 LICENSE 與 copyright notice 缺漏。** 官方 npm metadata 明確標示 BSD-2-Clause，但發布 tarball、README 及查閱的上游 js/ 目錄沒有完整原文。已保存 metadata，未自行擬造。公開散布前需取得上游確認；本次沒有聯絡上游或變更 DOCX 功能。
+**暫行決定（2026-09-14）：依專案所有者指示，dingbat-to-unicode@1.0.1 暫時引用 Mammoth 1.6.0 的 BSD-2-Clause 授權。** 兩者均署名 Michael Williamson、明確宣告 BSD-2-Clause；Mammoth 官方瀏覽器包亦逐項列出 dingbat-to-unicode 與其授權。
+
+已保存 Mammoth 原文引用副本、官方 metadata 與登錄依據。此處不宣稱上游已確認同一份 copyright notice 的涵蓋範圍；Mammoth 的 2013 年署名未被重新歸屬給 dingbat-to-unicode。獨立套件缺少自身原文的事實保留為後續追蹤，不再列成必須先取得確認才能繼續本專案準備工作的阻擋項。本次未聯絡上游或變更 DOCX 功能。
 
 ## 取證方式
 
@@ -23,7 +25,7 @@
 
 - JSZip 官方雙重授權選擇 MIT，保留完整 MIT 原文。
 - isarray 原文來自同版本 README；set-immediate-shim 原文來自上游 v1.0.1。
-- dingbat-to-unicode 只保存官方宣告與缺漏狀態，未複製其他套件作者的 BSD 聲明冒充。
+- dingbat-to-unicode 的參考檔明確命名為 MAMMOTH-LICENSE-REFERENCE.txt，完整保留 Mammoth 原文並標示暫行引用，未冒充該獨立套件的已證實授權原文。
 - 本專案自有程式碼未新增授權。
 
 ## 發布產物

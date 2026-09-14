@@ -15,9 +15,11 @@
 
 JSZip 3.7.1 為 MIT／GPL 雙重授權，本專案選用 MIT 選項，附檔保留該選項的完整授權及著作權。pako 等來源內的 zlib 聲明，以及 Microsoft、Mozilla、Glyph & Cog 等附加聲明，保留於 licenses/UPSTREAM-SOURCE-NOTICES.txt。
 
-## 尚未結案的上游缺漏
+## dingbat-to-unicode 的暫行授權登錄
 
-**dingbat-to-unicode 1.0.1** 的官方 package.json 宣告 BSD-2-Clause，但其 npm 套件及已查閱的上游原始碼庫未提供 LICENSE／著作權聲明原文。已保存官方 metadata 與缺漏紀錄，沒有臆造年份、權利人或授權原文。對外散布前仍需向上游確認，或另行核准替代方案；不可將本次補件理解為全部權利已獲確認。
+**2026-09-14 依專案所有者指示，暫時引用 Mammoth 1.6.0 的 BSD-2-Clause 授權登錄 dingbat-to-unicode 1.0.1。** 依據是兩者皆署名 Michael Williamson、宣告 BSD-2-Clause，且 Mammoth 官方瀏覽器包明列此元件及授權。引用原文保存在 licenses/dingbat-to-unicode-1.0.1/MAMMOTH-LICENSE-REFERENCE.txt。
+
+這是本專案的暫行登錄方式，不是上游已確認授權涵蓋範圍。Mammoth 原文的 2013 年署名仍歸屬 Mammoth，不改寫成已證實的 dingbat-to-unicode 年份；該套件自身原文缺漏的事實仍保留。日後取得上游補充時再更新。
 
 ## 散布方式
 

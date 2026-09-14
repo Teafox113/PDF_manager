@@ -18,7 +18,8 @@
 - [x] JSZip 明確選用 MIT，保留其他上游署名與 zlib 聲明
 - [x] 已將取得的完整條文內嵌離線 HTML，並更新 SHA-256
 - [x] 授權檔、雜湊拒絕、條文內嵌與 Release 校驗測試通過
-- [ ] 取得 dingbat-to-unicode 1.0.1 缺漏的 LICENSE／copyright 原文或上游確認
+- [x] 依所有者指示，dingbat-to-unicode 1.0.1 暫時引用 Mammoth BSD-2-Clause，保留依據與不確定性
+- [ ] 後續如上游補充獨立署名／授權範圍，更新暫行登錄（追蹤項）
 - [ ] 所有者確認自有程式碼權利及授權方式
 
 ## 安全與隱私檢查

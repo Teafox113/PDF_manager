@@ -24,7 +24,7 @@
 
 ## 尚待完成
 
-2026-09-14 補件：新增 licenses/、THIRD_PARTY_NOTICES.txt、授權查核紀錄與建置雜湊檢查。離線成品已內嵌已取得原文並更新 SHA-256，原有 script 區塊完全相同。四項授權／包裝測試通過，未執行完整 UI 測試。dingbat-to-unicode 1.0.1 的上游 LICENSE／copyright 原文仍缺，公開散布前需確認。
+2026-09-14 補件：新增 licenses/、THIRD_PARTY_NOTICES.txt、授權查核紀錄與建置雜湊檢查。離線成品已內嵌原文並更新 SHA-256，原有 script 區塊完全相同。四項授權／包裝測試通過，未執行完整 UI 測試。所有者後續指示：dingbat-to-unicode 1.0.1 暫時引用 Mammoth BSD-2-Clause，附原文參考檔並保留尚未取得上游涵蓋範圍確認的說明；不再作為發布準備阻擋項。
 
 1. 依 `docs/TEST_REPORT.md` 執行功能測試並填寫實際結果。
 2. 確認專案本身的授權方式；公開前視需要加入 `LICENSE`。
