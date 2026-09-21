@@ -1,5 +1,17 @@
 # 第三方授權查核紀錄
 
+## 2026-09-21 更新 — v2.7.0-F
+
+維護者 mwilliamson 於 2026-09-19 明確確認 1.0.2 新增的 LICENSE 適用所有先前版本，包含 1.0.1：
+https://github.com/mwilliamson/dingbat-to-unicode/issues/1#issuecomment-5740760399
+
+正式原文來源固定至 commit `a89b69198c2dd030b097cbf44b4eb7dd8b85722d` 的 `js/LICENSE`，Copyright (c) 2021, Michael Williamson，BSD-2-Clause。已新增獨立 LICENSE、更新 manifest 及完整條文。MAMMOTH-LICENSE-REFERENCE.txt 留作歷史依據，不再是該元件的現行授權文字。無需因此升級函式庫；其餘固定依賴及保守附錄範圍不變。
+
+下方是原先查核的歷史紀錄；其中暫行登錄與尚待確認事項已被本節取代。
+
+## 2026-09-14 歷史紀錄
+
+
 日期：2026-09-14；應用版本：2.2.0-F。
 
 ## 結果與限制

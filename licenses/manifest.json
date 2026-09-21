@@ -1,13 +1,9 @@
 {
-  "audit_date": "2026-09-14",
-  "application_version": "2.2.0-F",
-  "status": "documented-with-provisional-reference",
-  "provisional_decisions": [
-    "dingbat-to-unicode@1.0.1: temporarily reference Mammoth 1.6.0 BSD-2-Clause per project owner instruction on 2026-09-14."
-  ],
-  "follow_up_items": [
-    "Update dingbat-to-unicode notice when upstream clarifies coverage; upstream confirmation is not asserted."
-  ],
+  "audit_date": "2026-09-21",
+  "application_version": "2.7.0-F",
+  "status": "documented",
+  "provisional_decisions": [],
+  "follow_up_items": [],
   "components": [
     {
       "name": "base64-arraybuffer",
@@ -116,23 +112,25 @@
       "evidence": "Pinned upstream package; supplementary versions retained conservatively.",
       "files": [
         {
-          "path": "licenses/dingbat-to-unicode-1.0.1/UPSTREAM-STATUS.txt",
-          "sha256": "e1964382ae9ef498456578eab50b2d5240bc23732726f99c98da626f2f225d1f"
+          "path": "licenses/dingbat-to-unicode-1.0.1/LICENSE",
+          "sha256": "1013cef4b629a3c7eaf737c110fb5bebbf3abbc16e154d769468d71c3653fa37"
         },
         {
-          "path": "licenses/dingbat-to-unicode-1.0.1/MAMMOTH-LICENSE-REFERENCE.txt",
-          "sha256": "6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1"
+          "path": "licenses/dingbat-to-unicode-1.0.1/UPSTREAM-STATUS.txt",
+          "sha256": "362b6ac0c4675ea06c24c6708d4c62a8e2f595114a0eaa3559bbd505259ab2e0"
         },
         {
           "path": "licenses/dingbat-to-unicode-1.0.1/upstream-package.json",
           "sha256": "e34a07af5c8074ec60fdc1f9db775d117d2b2f985d88175c455c9fc37f898d59"
         }
       ],
-      "status": "provisional-mammoth-license-reference",
-      "registration_date": "2026-09-14",
-      "registration_basis": "Project owner instruction; same author and declared license; official Mammoth browser bundle annotation.",
-      "referenced_component": "mammoth@1.6.0",
-      "upstream_coverage_confirmed": false
+      "status": "upstream-confirmed",
+      "registration_date": "2026-09-21",
+      "upstream_coverage_confirmed": true,
+      "confirmation_url": "https://github.com/mwilliamson/dingbat-to-unicode/issues/1#issuecomment-5740760399",
+      "license_source": "https://raw.githubusercontent.com/mwilliamson/dingbat-to-unicode/a89b69198c2dd030b097cbf44b4eb7dd8b85722d/js/LICENSE",
+      "confirmation_date": "2026-09-19",
+      "historical_reference": "licenses/dingbat-to-unicode-1.0.1/MAMMOTH-LICENSE-REFERENCE.txt"
     },
     {
       "name": "html2canvas",
@@ -653,7 +651,7 @@
     "path": "licenses/UPSTREAM-SOURCE-NOTICES.txt",
     "sha256": "8dfd8dffa1409c47a3312c2b37446f0fb1068bb3a241b92679adc19e6795d85d"
   },
-  "notices_sha256": "179efd21db63fe6068c2409119a9f74f5cfede4db6048bd0855fe80ef73a0221",
+  "notices_sha256": "863a89001044ed7439877e8fe0a03b98357fcd2db7d6e57456365440166fe715",
   "bundles": [
     {
       "url": "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",

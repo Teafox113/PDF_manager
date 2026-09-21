@@ -14,11 +14,12 @@ class LicenseTests(unittest.TestCase):
     def test_archived_texts_match_manifest(self):
         manifest = load_manifest()
         self.assertEqual(len(manifest['bundles']), 5)
-        self.assertTrue(any('dingbat-to-unicode' in item for item in manifest['provisional_decisions']))
+        self.assertEqual(manifest['provisional_decisions'], [])
         component = next(c for c in manifest['components'] if c['name'] == 'dingbat-to-unicode')
-        self.assertEqual(component['status'], 'provisional-mammoth-license-reference')
-        self.assertFalse(component['upstream_coverage_confirmed'])
-        self.assertEqual((ROOT/'licenses/dingbat-to-unicode-1.0.1/MAMMOTH-LICENSE-REFERENCE.txt').read_bytes(), (ROOT/'licenses/mammoth-1.6.0/LICENSE').read_bytes())
+        self.assertEqual(component['status'], 'upstream-confirmed')
+        self.assertTrue(component['upstream_coverage_confirmed'])
+        self.assertIn('Copyright (c) 2021, Michael Williamson', (ROOT/'licenses/dingbat-to-unicode-1.0.1/LICENSE').read_text())
+        self.assertIn('5740760399', component['confirmation_url'])
 
     def test_changed_dependency_is_rejected(self):
         manifest = load_manifest()
@@ -35,10 +36,12 @@ class LicenseTests(unittest.TestCase):
             embed_notices(output)
 
     def test_release_checksum_when_asset_present(self):
-        path = ROOT/'release-assets/pdf_editor_offline_v2.2.0-F.html'
+        import json
+        version = json.loads((ROOT/'version.json').read_text(encoding='utf-8'))['version']
+        path = ROOT/f'release-assets/pdf_editor_offline_v{version}.html'
         if not path.exists():
             self.skipTest('Release asset is intentionally not tracked in Git.')
-        checksum = (ROOT/'release-assets/SHA256SUMS.txt').read_text().split()[0]
+        checksum = next(line.split()[0] for line in (ROOT/'release-assets/SHA256SUMS.txt').read_text().splitlines() if line.endswith(path.name))
         self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest().upper(), checksum)
 
 

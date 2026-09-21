@@ -1,13 +1,14 @@
 Upstream package: dingbat-to-unicode 1.0.1
 Declared license: BSD-2-Clause
-Author field: Michael Williamson
-Source: https://registry.npmjs.org/dingbat-to-unicode/1.0.1
-Repository: https://github.com/mwilliamson/dingbat-to-unicode
+Status: upstream-confirmed, verified 2026-09-21.
+Copyright (c) 2021, Michael Williamson
 
-Provisional registration (project owner decision, 2026-09-14):
-Reference the Mammoth 1.6.0 BSD-2-Clause license, reproduced unchanged in MAMMOTH-LICENSE-REFERENCE.txt.
-Basis: both packages identify Michael Williamson as author and BSD-2-Clause as license; Mammoth lists dingbat-to-unicode@1.0.1 / BSD-2-Clause in its official browser bundle header.
+Maintainer mwilliamson stated on 2026-09-19:
+"A licence file has been added to 1.0.2. This licence also applies to any previous versions."
+Confirmation: https://github.com/mwilliamson/dingbat-to-unicode/issues/1#issuecomment-5740760399
+License source: https://raw.githubusercontent.com/mwilliamson/dingbat-to-unicode/a89b69198c2dd030b097cbf44b4eb7dd8b85722d/js/LICENSE
 
-The standalone published package does not supply its own LICENSE or copyright text.
-The 2013 copyright notice in the reference remains a Mammoth notice; it is not asserted as a separately verified dingbat-to-unicode copyright date.
-This registration does not claim upstream confirmation of coverage. If upstream clarifies the notice, update this record and the release notices.
+The LICENSE saved here is the upstream text, applicable to 1.0.1 according
+to that confirmation. No dependency upgrade is required for this notice.
+The earlier MAMMOTH-LICENSE-REFERENCE.txt is retained only as a historical
+record of the 2026-09-14 provisional decision, not as this package's notice.

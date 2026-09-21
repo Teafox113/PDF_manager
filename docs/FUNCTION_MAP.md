@@ -1,5 +1,16 @@
 # FUNCTION_MAP — pdf_editor.html 函式索引
 
+## v2.7.0-F 新增與整合
+
+- `I18N` / `text` / `template`：中英文詞典及參數插值；全域 `t`、`tr` 為捷徑。插值不作 HTML 解析，不翻譯文件資料。
+- `rememberStatic`：只在 DOMContentLoaded 收集介面文字節點及 title / aria-label，不遍歷 iframe 或授權原文。
+- `setLanguage`：白名單語言、偏好儲存、更新介面；儲存失敗可繼續使用。
+- `refreshInterfaceLanguage` / `createEmptyHint`：更新標題、頁碼、提示及控制列，不重建 canvas 或復原狀態。
+- `theme-controller` / `applyTheme`：四套主題與偏好回退。
+- v2.6.2-F 整合的主要函式：`openStampEditor`、`closeStampEditor`、`openStampFile`、`handleStampFile`、`renderStampOverlays`、`updateStampControls`、`toggleCropMode`、`resetActiveStampCrop`、`deleteActiveStamp`、`renderPagePreviewToCanvas`、`drawStampsOnCanvas`、`cloneStamp`、`clonePageForUndo`；縮圖佇列 `enqueueThumbRender`、`pumpThumbRenderQueue`、`runThumbRenderJob`、`resetThumbRendering`。
+- 以下索引來自早期發布版，蓋章等新增函式請以上述名稱定位，避免依賴舊行號。
+
+
 > 目的：降低開發時的 token 消耗。先查此表，再用 grep 函式名定位、只讀相關段落，
 > 避免全檔讀取。**每次新增/刪除函式時必須同步此表**（行號會漂移，故以函式名與
 > 區塊註解為錨點；檔內區塊以 `════` 註解分隔）。

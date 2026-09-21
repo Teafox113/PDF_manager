@@ -34,10 +34,13 @@ env/
 # 建置、快取、日誌與暫存
 build/
 dist/
+node_modules/
+test-results/
+review_*/
+README_GITHUB_DRAFT.md
 *.log
 *.tmp
 *.bak
 
 # GitHub Release 附件保留在本機，不納入 Git 歷史
 release-assets/*.html
-

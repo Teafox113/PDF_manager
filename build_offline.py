@@ -113,7 +113,7 @@ def apply_security(html: str, ver: dict) -> str:
 
     # ── 1. 更新工具列按鈕版號 ───────────────────────────
     html = re.sub(
-        r'(FloofyFox · PDF Editor )v[\d.]+',
+        r'(FloofyFox · PDF Editor )v[\d.]+(?:-F)?',
         lambda m: m.group(1) + ver_label,
         html
     )
@@ -121,7 +121,7 @@ def apply_security(html: str, ver: dict) -> str:
 
     # ── 2. 更新 About 面板 about-version ────────────────
     html = re.sub(
-        r'(<div class="about-version">PDF 頁面編輯器 )v[\d.]+(<\/div>)',
+        r'(<div class="about-version">PDF 頁面編輯器 )v[\d.]+(?:-F)?(<\/div>)',
         lambda m: m.group(1) + ver_label + m.group(2),
         html
     )
@@ -203,7 +203,7 @@ Change Log
     )
     OLD_SAVE = "// ════════════════════════════════\n//  另存新 PDF"
     idx = html.rfind(OLD_SAVE)
-    if idx != -1:
+    if idx != -1 and 'function dataUrlToArrayBuffer(' not in html:
         html = html[:idx] + HELPER + html[idx + len(OLD_SAVE):]
         changes.append("✅ 加入 dataUrlToArrayBuffer helper")
 
@@ -267,6 +267,9 @@ copyright notice 與 license 條款。
 
 
 def main():
+    # Windows consoles may otherwise reject the status symbols under cp950.
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
     args = parse_args()
     license_manifest = load_manifest()
     if license_manifest.get("provisional_decisions"):

@@ -1,17 +1,9 @@
-# GitHub Release 附件
+# 離線成品
 
-此資料夾保存可直接下載執行的離線 HTML。
+現行版本：`pdf_editor_offline_v2.7.0-F.html`。
 
-目前附件：
+包含中英文介面、四套佈景、既有 v2.6.2-F 功能與完整第三方授權。由 About →「第三方授權 / Third-party licenses」閱讀原文；dingbat 已使用作者確認適用 1.0.1 的正式授權。
 
-```text
-pdf_editor_offline_v2.2.0-F.html
-```
+使用 `SHA256SUMS.txt` 驗證成品。舊 v2.2.0-F 仍保留，僅作歷史參考。
 
-離線 HTML 由 `build_offline.py` 產生，體積較大且包含第三方函式庫，因此由 `.gitignore` 排除，不納入 Git 歷史。建立 GitHub Release 時再手動附加。
-
-可使用 `SHA256SUMS.txt` 驗證附件完整性。
-
-2026-09-14：HTML 已補入第三方條文，可由 About →「第三方授權」開啟。應用版本保持 2.2.0-F，程式邏輯與函式庫未變；校驗碼已更新。
-
-目前 dingbat-to-unicode 1.0.1 依所有者指示暫時引用 Mammoth BSD-2-Clause；離線條文中明確標示參考原文及暫行性質，詳見 ../docs/LICENSE_AUDIT.md。
+HTML 由 .gitignore 排除，不納入 Git 歷史；來源 Push 不會自動建立 GitHub Release，也不會上傳本目錄的 HTML 附件。

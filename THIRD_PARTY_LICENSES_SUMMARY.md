@@ -1,5 +1,9 @@
 # 第三方授權資料
 
+## 2026-09-21 更新
+
+適用應用版本 v2.7.0-F。dingbat-to-unicode 1.0.1 已改附其正式 BSD-2-Clause LICENSE（2021, Michael Williamson）；作者確認新版授權也適用所有舊版。下文若提到暫行引用或待確認，屬先前查核紀錄，已由本節取代。詳見 docs/LICENSE_AUDIT.md 與 licenses/manifest.json。
+
 更新：2026-09-14；適用 PDF Manager v2.2.0-F 的目前固定函式庫。
 
 完整條文在 [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt)，各上游原文與 SHA-256 在 [licenses/](licenses/README.md)。本文件只是索引，不取代原始條文。

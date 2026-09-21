@@ -39,7 +39,7 @@ def embed_notices(document):
     text = (ROOT / 'THIRD_PARTY_NOTICES.txt').read_text(encoding='utf-8')
     dialog = (START + '\n<dialog id="third-party-licenses" style="max-width:90vw;max-height:85vh;overflow:auto;" aria-label="第三方授權">\n'
               '<button type="button" onclick="this.closest(\'dialog\').close()">關閉</button>\n'
-              '<h2>Third-party licenses / 第三方授權</h2>\n'
+              '<h2>第三方授權</h2>\n'
               '<pre style="white-space:pre-wrap;overflow-wrap:anywhere;">' + html.escape(text) + '</pre>\n</dialog>\n' + END + '\n')
     # DOCX rendering templates inside scripts also contain </body> strings.
     # The application document closes after all scripts, at the final body end.
