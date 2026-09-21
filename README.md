@@ -120,3 +120,7 @@ node tests/test_ui.cjs
 Node.js / Playwright 僅用於測試，不是使用或打包工具的必要依賴。詳見 [實測報告](docs/TEST_REPORT.md) 與 [已知限制](docs/KNOWN_ISSUES.md)。
 
 回報問題時請提供版本、瀏覽器、操作步驟及去識別化截圖；勿公開上傳個資、內部 PDF、印章原檔或憑證。
+
+## 聯繫
+
+如需聯繫、提出問題或功能建議，請至本專案的 [GitHub Issues](https://github.com/Teafox113/PDF_manager/issues) 留言。請勿在公開留言中提供個資、機密文件或憑證。

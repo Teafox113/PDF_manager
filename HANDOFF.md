@@ -14,8 +14,10 @@
 ## Git 狀態與下一步
 
 - 發布工作區為使用者指定的 PDF_manager 本機 Git 儲存庫，main 分支。
-- 本次使用者要求完成中英文版後推送；目前尚未提供遠端網址，未建立遠端儲存庫、未 Push。
-- 需取得正確 GitHub 儲存庫網址；若要新建，先確認名稱及 Private／Public。先前「不得建立公開庫」限制仍有效。
+- 使用者已明確同意建立 Public 儲存庫，目標為 https://github.com/Teafox113/PDF_manager，並開啟 Issues 供聯繫。
+- 本機既有四筆未發布提交的作者／提交者信箱已改為 GitHub noreply；原始歷史 bundle 備份留在發布工作區外，不得上傳該私人備份。
+- 此儲存庫的 user.email 已設為 212410984+Teafox113@users.noreply.github.com；其他專案及 GitHub 收信設定未改動。另一台電腦也需在該專案自行設定相同信箱。
+- 中英文 README 新增 Issues 聯繫說明。首次 Push 的實際結果以 git status、遠端 main 與發布檢查表為準。
 - 不可將其他 APP 的遠端直接拿來用；每個 APP 各自維護 Git 紀錄。
 - 自有程式碼尚未選定授權，不得宣稱整個專案採 MIT。
 - README_GITHUB_DRAFT.md、review_*、test-results 與離線 HTML 均由 .gitignore 排除。

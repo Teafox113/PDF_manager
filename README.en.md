@@ -120,3 +120,7 @@ node tests/test_ui.cjs
 Node.js and Playwright are test-only dependencies, not requirements for using or building the application. See the [test report](docs/TEST_REPORT.md) and [known limitations](docs/KNOWN_ISSUES.md).
 
 When reporting an issue, include the version, browser, reproduction steps, and redacted screenshots. Do not publicly upload personal information, internal PDFs, original stamp images, or credentials.
+
+## Contact
+
+For questions, support, or feature suggestions, please leave a message in this project's [GitHub Issues](https://github.com/Teafox113/PDF_manager/issues). Do not include personal information, confidential documents, or credentials in public comments.

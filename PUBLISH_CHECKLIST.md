@@ -13,10 +13,10 @@
 
 ## 推送前／發布決策
 
-- [ ] 確認目標 GitHub 儲存庫網址（目前沒有 remote）
-- [ ] 若需建立儲存庫，確認名稱及 Private／Public；未獲准不得建立公開庫
+- [x] 目標 GitHub 儲存庫：Teafox113/PDF_manager
+- [x] 使用者明確同意建立 Public 儲存庫及以 Issues 聯繫
 - [ ] 確認是否為自有程式碼選定開源授權（目前未選定）
-- [ ] 依儲存庫公開程度確認 Git 提交作者 Email
+- [x] 經使用者同意將既有四筆提交改為 GitHub noreply，保留私人本機備份；設定後續本機提交信箱
 - [ ] Push 並核對遠端 commit
 - [ ] 若另行發布 Release，再上傳新版 HTML；推送來源不等於發布 Release
 
