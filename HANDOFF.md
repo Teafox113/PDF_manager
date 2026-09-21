@@ -17,7 +17,8 @@
 - 使用者已明確同意建立 Public 儲存庫，目標為 https://github.com/Teafox113/PDF_manager，並開啟 Issues 供聯繫。
 - 本機既有四筆未發布提交的作者／提交者信箱已改為 GitHub noreply；原始歷史 bundle 備份留在發布工作區外，不得上傳該私人備份。
 - 此儲存庫的 user.email 已設為 212410984+Teafox113@users.noreply.github.com；其他專案及 GitHub 收信設定未改動。另一台電腦也需在該專案自行設定相同信箱。
-- 中英文 README 新增 Issues 聯繫說明。首次 Push 的實際結果以 git status、遠端 main 與發布檢查表為準。
+- 中英文 README 新增 Issues 聯繫說明。2026-09-21 首次 Push 成功（f31342d），本機 main 已追蹤 origin/main；GitHub 儲存庫公開且 Issues 啟用。
+- 此次只發布 Git 來源，未建立 GitHub Release、未上傳離線 HTML 附件。
 - 不可將其他 APP 的遠端直接拿來用；每個 APP 各自維護 Git 紀錄。
 - 自有程式碼尚未選定授權，不得宣稱整個專案採 MIT。
 - README_GITHUB_DRAFT.md、review_*、test-results 與離線 HTML 均由 .gitignore 排除。
