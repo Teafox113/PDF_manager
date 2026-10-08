@@ -36,10 +36,11 @@ const I18N = (() => {
   "⤓ 另存新檔": "⤓ Save PDF",
   "將左側每一頁各自存成 PDF，並打包成 ZIP": "Export each main page as a separate PDF in a ZIP",
   "⤓ 個別分頁": "⤓ Split to ZIP",
-  "PDF 頁面編輯器 v2.7.0-F": "PDF Page Manager v2.7.0-F",
+  "PDF 頁面編輯器 v2.7.1-F": "PDF Page Manager v2.7.1-F",
   "功能摘要": "Features",
   "PDF 頁面刪除、插入、拖曳重排、多選批次操作、縮圖旋轉、DOCX / 圖片來源載入、另存新 PDF、個別分頁 ZIP、圖片 / PDF 蓋章與裁切。": "Delete, insert, reorder, batch-select and rotate pages. Import DOCX or images, save PDFs, split to ZIP, and place or crop image / PDF stamps.",
-  "v2.7.0-F 變更內容": "What's new in v2.7.0-F",
+  "v2.7.1-F 變更內容": "What's new in v2.7.1-F",
+  "修正旋轉 PDF 的印章拖曳邊界、預覽與匯出座標。": "Fixed stamp movement bounds, previews, and export coordinates on rotated PDFs.",
   "四套佈景、繁體中文／English 即時切換與偏好記憶。": "Four themes, instant Traditional Chinese / English switching, and saved preferences.",
   "v2.6.2-F 變更內容": "What's new in v2.6.2-F",
   "右側來源拖曳支援多選：拖曳已選來源頁時會依選取順序整組插入左側。": "Drag multiple selected source pages into the main document in selection order.",
@@ -877,7 +878,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
     <button id="btn-save-pages" onclick="exportPagesAsZip()" disabled title="將左側每一頁各自存成 PDF，並打包成 ZIP">⤓ 個別分頁</button>
   </div>
   <button id="btn-about" onclick="toggleAbout()" style="background:#100f0d;border-color:#28251f;color:#6e6960;font-size:11px;">
-    FloofyFox · PDF Editor v2.7.0-F
+    FloofyFox · PDF Editor v2.7.1-F
   </button>
 </div>
 
@@ -886,15 +887,15 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
   <div id="about-close" onclick="toggleAbout()">✕</div>
   <div class="about-name">FloofyFox</div>
   <a class="about-link" href="https://github.com/Teafox113" target="_blank" rel="noopener noreferrer">github.com/Teafox113</a>
-  <div class="about-version">PDF 頁面編輯器 v2.7.0-F</div>
+  <div class="about-version">PDF 頁面編輯器 v2.7.1-F</div>
 
   <div class="about-section-title">功能摘要</div>
   <div class="about-features compact">
     PDF 頁面刪除、插入、拖曳重排、多選批次操作、縮圖旋轉、DOCX / 圖片來源載入、另存新 PDF、個別分頁 ZIP、圖片 / PDF 蓋章與裁切。
   </div>
 
-  <div class="about-section-title">v2.7.0-F 變更內容</div>
-  <div class="about-features">四套佈景、繁體中文／English 即時切換與偏好記憶。</div>
+  <div class="about-section-title">v2.7.1-F 變更內容</div>
+  <div class="about-features">修正旋轉 PDF 的印章拖曳邊界、預覽與匯出座標。</div>
 
   <div class="about-section-title">v2.6.2-F 變更內容</div>
   <div class="about-features" style="color:#FF9F0A;">
@@ -1592,8 +1593,26 @@ async function getPageNaturalSize(pg) {
     const img = await loadImage(pg.imageDataUrl);
     return { width: img.naturalWidth || img.width, height: img.naturalHeight || img.height };
   }
-  const pdf = await PDFLib.PDFDocument.load(pg.pdfBytes, { ignoreEncryption: true });
-  return pdf.getPage(pg.pageIndex).getSize();
+  const { width, height } = await getPdfPageGeometry(pg);
+  return { width, height };
+}
+
+// Stamps use the visible, rotated CropBox with a bottom-left origin.
+// Convert this space back to native PDF coordinates only when exporting.
+async function getPdfPageGeometry(pg) {
+  const pdf = await pdfjsLib.getDocument({ data: pg.pdfBytes.slice() }).promise;
+  try {
+    const page = await pdf.getPage(pg.pageIndex + 1);
+    const vp = page.getViewport({ scale: 1 });
+    const origin = vp.convertToPdfPoint(0, vp.height);
+    const x = vp.convertToPdfPoint(1, vp.height);
+    const y = vp.convertToPdfPoint(0, vp.height - 1);
+    return {
+      width: vp.width, height: vp.height,
+      toPdf: [x[0] - origin[0], x[1] - origin[1],
+        y[0] - origin[0], y[1] - origin[1], ...origin],
+    };
+  } finally { await pdf.destroy(); }
 }
 
 async function renderPagePreviewToCanvas(pg, canvas, targetW = 900) {
@@ -1866,13 +1885,21 @@ function buildCropBox(st) {
   return box;
 }
 
+function stampPointer(e) {
+  const rect = document.getElementById('stamp-page-canvas').getBoundingClientRect();
+  return {
+    sx: (e.clientX - rect.left) * stampEditor.pageSize.width / rect.width,
+    sy: (e.clientY - rect.top) * stampEditor.pageSize.height / rect.height,
+  };
+}
+
 function startStampDrag(e, id) {
   if (e.target.classList.contains('stamp-handle') || e.target.classList.contains('stamp-crop-handle')) return;
   e.preventDefault(); e.stopPropagation();
   stampEditor.activeStampId = id;
   const st = getActiveStamp();
   snapshotForUndo();
-  stampEditor.drag = { id, sx: e.clientX, sy: e.clientY, x: st.x, y: st.y };
+  stampEditor.drag = { id, ...stampPointer(e), x: st.x, y: st.y };
   renderStampOverlays();
 }
 
@@ -1882,7 +1909,7 @@ function startStampResize(e, id, corner = 'se') {
   const st = getActiveStamp();
   snapshotForUndo();
   stampEditor.resize = {
-    id, corner, sx: e.clientX, sy: e.clientY,
+    id, corner, ...stampPointer(e),
     x: st.x, y: st.y, width: st.width, height: st.height,
   };
   renderStampOverlays();
@@ -1896,7 +1923,7 @@ function startCropResize(e, id, corner) {
     stampEditor.cropDraftStampId = id;
   }
   stampEditor.cropDrag = {
-    id, corner, sx: e.clientX, sy: e.clientY,
+    id, corner, ...stampPointer(e),
     crop: { ...normalizedCrop(stampEditor.cropDraft) },
   };
   renderStampOverlays();
@@ -1910,7 +1937,7 @@ function startCropMove(e, id) {
     stampEditor.cropDraftStampId = id;
   }
   stampEditor.cropMove = {
-    id, sx: e.clientX, sy: e.clientY,
+    id, ...stampPointer(e),
     crop: { ...normalizedCrop(stampEditor.cropDraft) },
   };
   renderStampOverlays();
@@ -1919,16 +1946,18 @@ function startCropMove(e, id) {
 document.addEventListener('mousemove', e => {
   if (stampEditor.drag) {
     const st = getActiveStamp(); if (!st) return;
-    const dx = (e.clientX - stampEditor.drag.sx) / stampEditor.scale;
-    const dy = (e.clientY - stampEditor.drag.sy) / stampEditor.scale;
+    const pointer = stampPointer(e);
+    const dx = pointer.sx - stampEditor.drag.sx;
+    const dy = pointer.sy - stampEditor.drag.sy;
     st.x = Math.max(0, Math.min(stampEditor.pageSize.width - st.width, stampEditor.drag.x + dx));
     st.y = Math.max(0, Math.min(stampEditor.pageSize.height - st.height, stampEditor.drag.y - dy));
     renderStampOverlays();
   }
   if (stampEditor.resize) {
     const st = getActiveStamp(); if (!st) return;
-    const dx = (e.clientX - stampEditor.resize.sx) / stampEditor.scale;
-    const dy = (e.clientY - stampEditor.resize.sy) / stampEditor.scale;
+    const pointer = stampPointer(e);
+    const dx = pointer.sx - stampEditor.resize.sx;
+    const dy = pointer.sy - stampEditor.resize.sy;
     const corner = stampEditor.resize.corner;
     const right = stampEditor.resize.x + stampEditor.resize.width;
     const top = stampEditor.resize.y + stampEditor.resize.height;
@@ -1952,11 +1981,10 @@ document.addEventListener('mousemove', e => {
   }
   if (stampEditor.cropDrag) {
     const st = getActiveStamp(); if (!st) return;
-    const itemW = st.width * stampEditor.scale;
-    const itemH = st.height * stampEditor.scale;
+    const pointer = stampPointer(e);
     let { l, t, r, b } = stampEditor.cropDrag.crop;
-    const dx = (e.clientX - stampEditor.cropDrag.sx) / Math.max(1, itemW);
-    const dy = (e.clientY - stampEditor.cropDrag.sy) / Math.max(1, itemH);
+    const dx = (pointer.sx - stampEditor.cropDrag.sx) / Math.max(1, st.width);
+    const dy = (pointer.sy - stampEditor.cropDrag.sy) / Math.max(1, st.height);
     const corner = stampEditor.cropDrag.corner;
     if (corner.includes('w')) l += dx;
     if (corner.includes('e')) r -= dx;
@@ -1972,13 +2000,12 @@ document.addEventListener('mousemove', e => {
   }
   if (stampEditor.cropMove) {
     const st = getActiveStamp(); if (!st) return;
-    const itemW = st.width * stampEditor.scale;
-    const itemH = st.height * stampEditor.scale;
+    const pointer = stampPointer(e);
     const start = normalizedCrop(stampEditor.cropMove.crop);
     const spanX = cropSpanFor(start, 'x');
     const spanY = cropSpanFor(start, 'y');
-    const dx = (e.clientX - stampEditor.cropMove.sx) / Math.max(1, itemW);
-    const dy = (e.clientY - stampEditor.cropMove.sy) / Math.max(1, itemH);
+    const dx = (pointer.sx - stampEditor.cropMove.sx) / Math.max(1, st.width);
+    const dy = (pointer.sy - stampEditor.cropMove.sy) / Math.max(1, st.height);
     const l = Math.max(0, Math.min(1 - spanX, start.l + dx));
     const t = Math.max(0, Math.min(1 - spanY, start.t + dy));
     stampEditor.cropDraft = {
@@ -2699,7 +2726,16 @@ async function appendPageToPdfDocument(outDoc, pg, pdfCache) {
     page = outDoc.addPage(copied);
   }
 
-  await drawStampsOnPdfPage(outDoc, page, pg.stamps || []);
+  if (pg.stamps?.length) {
+    if (pg.sourceType !== 'image') {
+      const geometry = await getPdfPageGeometry(pg);
+      page.pushOperators(PDFLib.pushGraphicsState(), PDFLib.concatTransformationMatrix(...geometry.toPdf));
+      try { await drawStampsOnPdfPage(outDoc, page, pg.stamps); }
+      finally { page.pushOperators(PDFLib.popGraphicsState()); }
+    } else {
+      await drawStampsOnPdfPage(outDoc, page, pg.stamps);
+    }
+  }
   return page;
 }
 

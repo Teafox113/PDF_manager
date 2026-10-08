@@ -1,5 +1,12 @@
 # FUNCTION_MAP — pdf_editor.html 函式索引
 
+## v2.7.1-F 蓋章座標修正
+
+- `getPdfPageGeometry`：以 PDF.js 的可視頁面（CropBox／Rotate）取得尺寸與回到 PDF 原生座標的矩陣。
+- `getPageNaturalSize`：PDF 回傳可視尺寸；圖片沿用圖片尺寸。
+- `stampPointer`：滑鼠螢幕座標換成頁面座標，包含 CSS zoom 與捲動位移。
+- `appendPageToPdfDocument`：蓋章時套用可視座標轉換，保留原 PDF 頁面內容與旋轉資訊。
+
 ## v2.7.0-F 新增與整合
 
 - `I18N` / `text` / `template`：中英文詞典及參數插值；全域 `t`、`tr` 為捷徑。插值不作 HTML 解析，不翻譯文件資料。

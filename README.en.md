@@ -4,7 +4,9 @@ English · [繁體中文](README.md)
 
 A browser-based, page-oriented tool for organizing and combining PDFs without sending documents to an online conversion service.
 
-Current version: **v2.7.0-F**. The interface supports **Traditional Chinese / English** and four selectable themes.
+Current version: **v2.7.1-F**. The interface supports **Traditional Chinese / English** and four selectable themes.
+
+This update fixes invisible stamp-drag boundaries on rotated PDFs and aligns thumbnails with exported stamp positions while preserving the target page's vector content.
 
 ## Features
 
@@ -18,6 +20,8 @@ Current version: **v2.7.0-F**. The interface supports **Traditional Chinese / En
 This is a page-management tool. It does not currently provide PDF text editing, OCR, or digital-signature services. Image stamping overlays an image; it is not a verifiable digital signature.
 
 ## Quick start
+
+For offline use, visit the [v2.7.1-F release page](https://github.com/Teafox113/PDF_manager/releases/tag/v2.7.1-F), download `pdf_editor_offline_v2.7.1-F.html`, and open it in desktop Chrome or Edge.
 
 1. Download or clone the project and open [pdf_editor.html](pdf_editor.html) in desktop Chrome or Edge.
 2. Choose **Language / 語言** and **Theme** in the toolbar.
@@ -52,7 +56,7 @@ python build_offline.py
 Output:
 
 ```text
-release-assets/pdf_editor_offline_v2.7.0-F.html
+release-assets/pdf_editor_offline_v2.7.1-F.html
 ```
 
 Open that file directly in your browser. The builder verifies library and license-file hashes, embeds dependencies and full third-party notices, and refuses to overwrite an existing output by default. Offline HTML files are excluded from Git history; downloadable builds may be attached to a separate GitHub Release later.

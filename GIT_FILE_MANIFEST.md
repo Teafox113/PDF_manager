@@ -1,5 +1,7 @@
 # Git 預計納入清單
 
+v2.7.1-F 新增 `tests/test_stamp_geometry.cjs`，更新主程式、版本、發布說明與測試紀錄。使用者 PDF、測試 PNG 與離線 HTML 不納入 Git。
+
 本清單適用於 `PDF_manager`。v2.7.0-F 新增 `README.en.md`、`tests/test_ui.cjs`、`licenses/dingbat-to-unicode-1.0.1/LICENSE`；其餘現行來源、說明及授權檔更新。
 
 原始開發資料夾不納入；README_GITHUB_DRAFT.md、review_*、test-results、node_modules、快取及離線 HTML 皆排除。使用者修改的 README 草稿原檔保留在本機。下方為原始提交基礎清單。

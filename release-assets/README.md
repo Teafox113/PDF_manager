@@ -1,6 +1,8 @@
 # 離線成品
 
-現行版本：`pdf_editor_offline_v2.7.0-F.html`。
+現行版本：`pdf_editor_offline_v2.7.1-F.html`。
+
+版本下載頁：[v2.7.1-F](https://github.com/Teafox113/PDF_manager/releases/tag/v2.7.1-F)。下載 HTML 後用桌面版 Chrome／Edge 開啟，不需安裝。
 
 包含中英文介面、四套佈景、既有 v2.6.2-F 功能與完整第三方授權。由 About →「第三方授權 / Third-party licenses」閱讀原文；dingbat 已使用作者確認適用 1.0.1 的正式授權。
 

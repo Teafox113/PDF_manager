@@ -4,7 +4,9 @@
 
 本專案提供瀏覽器基底之以頁面為基礎用來整理、合併 PDF 的工具，不必把文件交給線上轉檔服務。
 
-目前版本：**v2.7.0-F**。介面支援 **繁體中文 / English**，並提供四套可切換佈景。
+目前版本：**v2.7.1-F**。介面支援 **繁體中文 / English**，並提供四套可切換佈景。
+
+本版修正旋轉 PDF 蓋章時的隱形拖曳邊界，並校正縮圖與匯出位置；保留目標頁面的原始向量內容。
 
 ## 能做什麼？
 
@@ -18,6 +20,8 @@
 本工具是頁面整理器，尚不含 PDF 文字編輯器、OCR 工具或數位簽章服務。圖片蓋章功能僅為覆蓋圖片，不等於具驗證能力的數位簽章。
 
 ## 快速開始
+
+離線版請到 [v2.7.1-F 下載頁](https://github.com/Teafox113/PDF_manager/releases/tag/v2.7.1-F)，下載 `pdf_editor_offline_v2.7.1-F.html` 後以桌面版 Chrome／Edge 開啟。
 
 1. 下載或複製專案，用桌面版 Chrome 或 Edge 開啟 [pdf_editor.html](pdf_editor.html)。
 2. 在工具列選擇 **Language / 語言** 與 **佈景 / Theme**。
@@ -52,7 +56,7 @@ python build_offline.py
 產出：
 
 ```text
-release-assets/pdf_editor_offline_v2.7.0-F.html
+release-assets/pdf_editor_offline_v2.7.1-F.html
 ```
 
 直接用瀏覽器開啟此檔即可使用離線版。建置會核對函式庫及授權檔雜湊、內嵌依賴及完整第三方條文；同名成品存在時停止，不自動覆寫。離線 HTML 不納入 Git 歷史；若日後另行發布 GitHub Release，才提供成品下載。
