@@ -2,11 +2,23 @@
 
 English · [繁體中文](README.md)
 
+> **v2.8.1-F** adds editable text/tables and clipboard images. Ordinary links no longer block erasure; rejection messages identify the main-PDF page and reason. Added objects are flattened on export.
+
+### Page editor
+
+- Select a main page and click Edit page, or double-click it. Use Ctrl+V to paste images, tables or text; the clipboard button depends on browser permissions.
+- Move/resize added objects; double-click text or tables to edit. Tables support cell editing and row/column insertion/deletion. Existing PDF tables are not converted to editable cells.
+- Area erasure replaces the edited page with a raster image, **not the whole document**. Other pages retain searchable text. Confirm before applying; session undo is available and source files are not overwritten.
+- Project-owned resource pruning removes unused shared resources and unreachable objects on PDF and per-page ZIP export. Original images still used on another page, or unsupported structures, cause rejection rather than modifying other pages.
+- Ordinary HTTP(S)/mailto links and explicit internal page destinations on other pages are rebuilt safely. Links on the rasterized page are removed; links pointing to that page remain. Links to removed/absent destination pages (including per-page ZIP output) are omitted rather than importing hidden source pages.
+- Forms, signatures, other annotations, JavaScript/chained actions, custom link appearances, unresolved destinations, layers, inline images (BI), Type3 fonts and some patterns/shadings/soft masks remain unsupported. Rejections report the main-PDF page and category, or a document-level scope. This is not document-wide sanitization.
+- No MuPDF/EmbedPDF/PDFium or new AGPL dependency is included. Existing third-party notices remain. A formal license for project-owned code still needs to be selected.
+
 A browser-based, page-oriented tool for organizing and combining PDFs without sending documents to an online conversion service.
 
-Current version: **v2.7.1-F**. The interface supports **Traditional Chinese / English** and four selectable themes.
+Current version: **v2.8.1-F**. The interface supports **Traditional Chinese / English** and four selectable themes.
 
-This update fixes invisible stamp-drag boundaries on rotated PDFs and aligns thumbnails with exported stamp positions while preserving the target page's vector content.
+This update adds page-content editing and limited area erasure, retaining the earlier stamp-coordinate fixes for rotated PDFs.
 
 ## Features
 
@@ -14,14 +26,15 @@ This update fixes invisible stamp-drag boundaries on rotated PDFs and aligns thu
 - **Insert content:** add pages from other PDFs, images, or DOCX documents; select and drag multiple source pages together.
 - **Combine pages:** stack multiple source pages vertically into a single page.
 - **Place stamps:** import image or PDF stamps, then move, resize, flip, or crop them.
+- **Edit pages:** add text, paste images/tables, edit table cells and rows/columns, and erase areas in supported documents.
 - **Export:** save the entire PDF, or export individual pages as separate PDFs in a ZIP archive.
 - **Customize the workspace:** switch languages instantly, choose one of four themes, change thumbnail size, and resize the side panel.
 
-This is a page-management tool. It does not currently provide PDF text editing, OCR, or digital-signature services. Image stamping overlays an image; it is not a verifiable digital signature.
+The editor can add text but cannot directly modify existing PDF text. OCR and digital-signature services are not included. Image stamping overlays an image; it is not a verifiable digital signature.
 
 ## Quick start
 
-For offline use, visit the [v2.7.1-F release page](https://github.com/Teafox113/PDF_manager/releases/tag/v2.7.1-F), download `pdf_editor_offline_v2.7.1-F.html`, and open it in desktop Chrome or Edge.
+For offline use, visit the [v2.8.1-F release page](https://github.com/Teafox113/PDF_manager/releases/tag/v2.8.1-F), download `pdf_editor_offline_v2.8.1-F.html`, and open it in desktop Chrome or Edge.
 
 1. Download or clone the project and open [pdf_editor.html](pdf_editor.html) in desktop Chrome or Edge.
 2. Choose **Language / 語言** and **Theme** in the toolbar.
@@ -56,10 +69,10 @@ python build_offline.py
 Output:
 
 ```text
-release-assets/pdf_editor_offline_v2.7.1-F.html
+release-assets/pdf_editor_offline_v2.8.1-F.html
 ```
 
-Open that file directly in your browser. The builder verifies library and license-file hashes, embeds dependencies and full third-party notices, and refuses to overwrite an existing output by default. Offline HTML files are excluded from Git history; downloadable builds may be attached to a separate GitHub Release later.
+Open that file directly in your browser. The builder verifies library and license-file hashes, embeds dependencies and full third-party notices, and refuses to overwrite an existing output by default. Offline HTML files are excluded from Git history and provided as GitHub Release assets.
 
 ## Privacy and data
 

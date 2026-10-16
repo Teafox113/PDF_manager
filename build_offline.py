@@ -305,6 +305,12 @@ def main():
     with open(src_path, "r", encoding="utf-8") as f:
         html = f.read()
 
+    # Project-owned page editing module; bundle it without a runtime file fetch.
+    for project_module in ("pdf_resource_cleaner.js", "page_editor.js"):
+        with open(os.path.join(here, project_module), "r", encoding="utf-8") as f:
+            module_code = f.read().replace("</script", "<\\/script")
+        html = html.replace(f'<script src="{project_module}"></script>', '<script>\n' + module_code + '\n</script>')
+
     # ── 步驟 1：下載並內嵌函式庫 ──
     print("\n[1/3] 下載函式庫")
     for lib in LIBS:

@@ -13,6 +13,8 @@
 ## 來源與版本
 
 - `pdf_editor.html` 是主程式來源。
+- `page_editor.js` 與 `pdf_resource_cleaner.js` 是本專案來源模組，離線建置會內嵌，必須一併維護與測試。
+- 消去後的 PDF／ZIP 輸出必須透過 `saveEditedPdf`，不得繞過資源清理；不支援的結構應拒絕，不可自動整份文件圖片化。
 - `version.json` 是版號唯一真實來源。
 - `build_offline.py` 依 `version.json` 產生離線版。
 - 發布版本、程式顯示版號、CHANGELOG 與檔名必須一致。

@@ -1,11 +1,11 @@
 {
-  "version": "2.7.1-F",
-  "release_date": "2026-10-08",
+  "version": "2.8.1-F",
+  "release_date": "2026-10-16",
   "channel": "Branch (Fable Dev)",
   "branch": "branch_v2",
   "branch_suffix": "-F",
   "branch_note": "由 Fable 模型接續的開發修訂線；分枝版號恆帶 -F 後綴，與主線 1.x 區隔。合併回主線時摘除後綴並升 MINOR。",
-  "notes": "修正旋轉 PDF 蓋章拖曳邊界、預覽與匯出座標，校正縮放與捲動時的滑鼠座標。",
+  "notes": "頁面編輯與普通超連結相容修正；安全重建連結，拒絕訊息顯示主 PDF 頁碼與原因。",
   "bump_rules": {
     "PATCH": "臭蟲修正、文字修正、UI 微調（不影響功能）",
     "MINOR": "新功能加入、顯著改善（向下相容）",
@@ -14,6 +14,16 @@
   },
   "output_filename_template": "pdf_editor_offline_v{version}.html",
   "history": [
+    {
+      "version": "2.8.1-F",
+      "date": "2026-10-16",
+      "summary": "普通超連結相容修正、安全重建目的頁參照，以及具頁碼與原因的拒絕訊息。"
+    },
+    {
+      "version": "2.8.0-F",
+      "date": "2026-10-16",
+      "summary": "未發布候選：頁面文字、圖片與表格編輯；單頁消去及自製 PDF 資源清理，其他頁文字保留。"
+    },
     {
       "version": "2.7.1-F",
       "date": "2026-10-08",

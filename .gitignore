@@ -42,5 +42,10 @@ README_GITHUB_DRAFT.md
 *.tmp
 *.bak
 
+# 私人測試文件與歷史備份不得提交
+*.pdf
+*.PDF
+*.bundle
+
 # GitHub Release 附件保留在本機，不納入 Git 歷史
 release-assets/*.html

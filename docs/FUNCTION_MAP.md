@@ -1,5 +1,36 @@
 # FUNCTION_MAP — pdf_editor.html 函式索引
 
+## v2.8.1-F 超連結與診斷
+
+- `readOrdinaryLinks`：驗證普通連結白名單、矩形／邊框／色彩、URI 協定與明確目的頁，回傳無原始 PDF 參照的資料。
+- `pdfLinkIdentity`：來源工作階段識別，讓消去後圖片頁仍可作為內部跳頁目的地，不保留原始 PDF 位元組。
+- `recordOutputLinks`／`rebuildOutputLinks`：記錄實際輸出頁並重建安全連結；不在輸出內的目的地不複製。
+- `pdfCleanError(reason,page)`／`pdfCleanAt`：保留具類別及頁碼的診斷，產生中英訊息，不包含文件文字或 URI。
+- `appendPageToPdfDocument(..., cleanLinks)`：清理模式中，原始註解暫時移出複製範圍，再於 finally 還原記憶體來源，避免隱藏頁被跟隨目的地複製。
+- `saveEditedPdf(doc,pages,outputPages)`：先重建連結，再清理與輸出；單頁 ZIP 提供實際頁面映射保留主 PDF 頁碼。
+
+## v2.8.0-F 未發布候選：page_editor.js
+
+- `pt`、`refreshPageEditorLanguage`：新增工具與對話框中英文字串。
+- `pageEditBusy`、`pageEraseActive`、`refreshPageObjectControls`、`resetPageEditorTools`、`runPageTask`、`pageEditError`：編輯狀態、鎖定、錯誤處理與控制項。
+- `validateRows`、`parseClipboardTable`：表格尺寸限制、惰性 HTML 解析與 TSV 轉換，不插入外部 HTML。
+- `openContentEditor`、`closeContentEditor`、`renderTableGrid`、`changeTableShape`、`editPageObject`：文字／表格草稿與儲存格列欄編輯。
+- `wrapPageText`、`renderPageContent`、`applyContentEditor`：Canvas 渲染新增內容並保留工作階段編輯資料。
+- `acceptPageClipboard`、`pastePageClipboard`：圖片／表格／文字貼上與剪貼簿權限降級。
+- `togglePageErase`、`erasePointer`、`erasePageArea`：框選與單頁圖片化；檢查來源、預檢完整輸出、原子提交候選頁面、保留工作階段復原。
+- `undoPageEdit`、`handlePageEditorKey`：編輯器復原與鍵盤事件隔離。
+- `build_offline.py`：建置時將本專案 `page_editor.js` 內嵌；第三方依賴仍依既有 hash 驗證。
+
+## v2.8.0-F 自製 pdf_resource_cleaner.js
+
+- `pdfCleanError`：一致且不包含文件內容的拒絕錯誤。
+- `pdfContentUsage`：辨識 PDF 名稱、字串、數字、陣列、字典與操作符，收集命名資源使用；不支援語法直接拒絕。
+- `pdfImageFingerprints`：原始圖片串流 SHA-256，保守檢查原圖是否仍存在於輸出。
+- `assertErasureSources`：來源大小、加密解析、表單／簽章／圖層／註解預檢。
+- `cleanPdfResources`：分頁獨立資源字典、遞迴 Form 使用分析、不可達物件回收；不修改使用中的原始圖片。
+- `saveEditedPdf`：所有 PDF／ZIP 出口的清理入口，無消去文件沿用既有輸出；清理錯誤直接阻止輸出。
+- 私有輔助 `skip`／`token`、`keysWithin`／`decode`／`usage`／`font`／`form`／`prune`／`walk`：詞彙解析、支援範圍限制、遞迴與可達性檢查。
+
 ## v2.7.1-F 蓋章座標修正
 
 - `getPdfPageGeometry`：以 PDF.js 的可視頁面（CropBox／Rotate）取得尺寸與回到 PDF 原生座標的矩陣。

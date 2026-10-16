@@ -1,5 +1,11 @@
 # Git 預計納入清單
 
+## v2.8.1-F（2026-10-16）
+
+在下方既有來源清單之外，新增 `page_editor.js`、`pdf_resource_cleaner.js`、`tests/test_page_editor.cjs`、`tests/test_resource_cleanup.cjs`、`tests/test_link_cleanup.cjs`。更新主程式、建置器、版本、雙語 README、操作與測試說明、忽略規則及校驗碼。
+
+GitHub Release 僅上傳 `pdf_editor_offline_v2.8.1-F.html` 與 `SHA256SUMS.txt`。不包含任何 PDF、測試截圖、私人診斷腳本或歷史備份；不遞迴同步工作目錄。
+
 v2.7.1-F 新增 `tests/test_stamp_geometry.cjs`，更新主程式、版本、發布說明與測試紀錄。使用者 PDF、測試 PNG 與離線 HTML 不納入 Git。
 
 本清單適用於 `PDF_manager`。v2.7.0-F 新增 `README.en.md`、`tests/test_ui.cjs`、`licenses/dingbat-to-unicode-1.0.1/LICENSE`；其餘現行來源、說明及授權檔更新。
