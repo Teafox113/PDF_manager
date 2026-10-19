@@ -2,6 +2,32 @@
 
 English · [繁體中文](README.md)
 
+> **v2.11.0-F** brings inline text formatting, undo/redo, unexported-change warnings, atomic source imports and cancellable PDF/ZIP exports.
+
+### Atomic imports and cancellable exports
+
+- Source batches replace the old list only after every file succeeds. Failed PDFs, images or DOCX preserve the old sources, selection and main document; the error identifies the failing position in the batch. Unsupported formats, multiple DOCX files and failed DOCX page renders are rejected rather than silently skipped.
+- Cancel a PDF/ZIP export with Cancel export or Esc. Checkpoints between pages and before download preserve edits, create no partial download and do not mark changes exported. A current page conversion, resource cleanup or ZIP packing step must finish before cancellation takes effect; cancellation is not instantaneous.
+- Progress has accessible semantics and a keyboard-focusable cancel button. Source imports exclude overlapping imports/exports. Always verify the resulting downloaded file.
+- Synthetic offline tests include a 120-page text PDF with page-count, order and text checks; this is not a large scanned-image stress-test certification.
+
+### Reliability and workflow polish
+
+- Redo with Ctrl+Shift+Z/Ctrl+Y, in both the main view and page editor. Selecting an object or applying unchanged text no longer consumes undo steps; one drag is one step.
+- Unexported-change status, confirmation before replacing the main document, and browser close/reload warnings. Replacement is committed only after successful parsing; failures retain the current session.
+- PDF/ZIP export uses a fixed snapshot and locks editing/duplicate exports while processing. Failures unlock the interface and retain changes.
+- Live text count, draft status and format/page-bound warnings. Responsive page width, scrollable formatting controls and an opaque editing workspace improve smaller-window use.
+
+**Warnings are not autosave.** Generating a download does not confirm that the browser saved it; verify the file yourself. Editable text/table data remains session-only. No cloud upload or background persistence was added. This release is not a commercial security certification or a claim of universal browser compatibility.
+
+> Includes the inline text editor developed in the v2.9.0-F review build: type directly on the page with font, size, color, bold, italic, underline, alignment, line spacing and box width controls.
+
+### Inline text editor
+
+Click Add text to type on the page; double-click added text to edit it again. Formatting applies to the whole box, not individual text selections. Ctrl+B/I/U toggle bold/italic/underline; Ctrl+Enter applies and Esc cancels the draft. Switching tools or clicking the page editor's Done button also applies text first. Drag or resize after applying.
+
+Fonts come from the local system, with browser fallback if unavailable; no fonts are downloaded or bundled. Added text is still flattened to an image on export; existing PDF text is not directly editable. Tables retain the existing cell editor. Text exceeding page bounds is rejected instead of silently shrinking the font or clipping content.
+
 > **v2.8.1-F** adds editable text/tables and clipboard images. Ordinary links no longer block erasure; rejection messages identify the main-PDF page and reason. Added objects are flattened on export.
 
 ### Page editor
@@ -16,7 +42,7 @@ English · [繁體中文](README.md)
 
 A browser-based, page-oriented tool for organizing and combining PDFs without sending documents to an online conversion service.
 
-Current version: **v2.8.1-F**. The interface supports **Traditional Chinese / English** and four selectable themes.
+Current version: **v2.11.0-F**. The interface supports **Traditional Chinese / English** and four selectable themes.
 
 This update adds page-content editing and limited area erasure, retaining the earlier stamp-coordinate fixes for rotated PDFs.
 
@@ -34,7 +60,7 @@ The editor can add text but cannot directly modify existing PDF text. OCR and di
 
 ## Quick start
 
-For offline use, visit the [v2.8.1-F release page](https://github.com/Teafox113/PDF_manager/releases/tag/v2.8.1-F), download `pdf_editor_offline_v2.8.1-F.html`, and open it in desktop Chrome or Edge.
+For offline use, visit the [v2.11.0-F release page](https://github.com/Teafox113/PDF_manager/releases/tag/v2.11.0-F), download `pdf_editor_offline_v2.11.0-F.html`, and open it in desktop Chrome or Edge.
 
 1. Download or clone the project and open [pdf_editor.html](pdf_editor.html) in desktop Chrome or Edge.
 2. Choose **Language / 語言** and **Theme** in the toolbar.

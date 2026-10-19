@@ -1,5 +1,38 @@
 # 維護交接
 
+## 2026-10-19 — v2.11.0-F 發布授權
+
+- 使用者要求「更新 git」，授權更新既有 Teafox113/PDF_manager 與版本 Release。
+- v2.9／v2.10 為未獨立發布的審閱版，功能整合於 v2.11.0-F。下方「本機候選／未發布」為開發歷史；實際狀態以遠端 main、tag 及 Release 為準。
+- 只同步明確來源清單及兩個附件，保留原始專案與所有舊成品。私人文件僅供本機記憶體隱私比對，不保存擷取物或上傳。
+
+## 2026-10-19 — v2.11.0-F 載入與匯出防護候選
+
+- 仍僅本機來源與新成品，未同步 Git 工作區或發布。原始目錄及舊成品不動，未讀取私人 PDF。
+- `loadSourceFiles` 持有 documentIO 鎖，傳入獨立 nextPages 給三個來源處理器；全部成功後才提交陣列、名稱、數量及選取。失敗保留舊來源，DOCX 臨時 iframe 在 finally 清除；不跳過失敗頁。PDF.js 來源文件解析後 destroy。
+- `beginExport` 建立單次 task；`requestExportCancel` 僅設旗標；`exportCheckpoint` 讓出事件迴圈後檢查，不能宣稱能立即中斷第三方函式。PDF／ZIP 下載前最後檢查；取消不更新 exportedRevision。仍必須通過 saveEditedPdf 清理。
+- `setDocumentBusy(false)` 清除 task、隱藏取消按鈕、恢復焦點；Esc／Tab／Enter／Space 在 busy 時只處理取消控件。來源載入不提供取消。
+- `tests/test_io_safety.cjs` 全合成：批次失敗保留、格式拒絕、DOCX 中途渲染失敗、互斥、合成長文件、PDF／ZIP 取消與再次匯出。DOCX 渲染失敗案例注入 converter/render 結果，不宣稱已驗證真實 DOCX 排版忠實度。
+
+## 2026-10-19 — v2.10.0-F 可靠性與操作打磨候選
+
+- 僅在本機發布來源副本開發；未同步 F 槽 Git 工作區，未 Commit／Push／公開發布。
+- `historyRevisions` WeakMap 將快照陣列對應 revision，undo/redo 恢復該標記；`snapshotForUndo` 清空 redo。保留深拷貝 content.rows，PDF bytes 仍共用不可變來源。
+- `hasUnexportedChanges` 合併文件 revision 與文字草稿檢查。下載成功呼叫只能表示已交給瀏覽器，不代表已寫入磁碟；不可將提示稱作自動儲存。
+- `loadMainFile` 確認後先解析下一份 PDF，再整批替換；`documentIO` 管控載入／匯出互斥與 inert UI。PDF/ZIP 使用 clonePageForUndo 快照；仍必須通過 saveEditedPdf 清理。
+- 主文件載入時重設 undo/redo/revision；匯出失敗不更新 exportedRevision。真實下載測試與記憶體攔截測試分開。
+- `renderStampEditor` 暫存 canvas 完成後才提交，sequence 排除過期渲染。ResizeObserver 只處理寬度變更，renderWorkWidth 避免重複重繪。
+- 新 `tests/test_workflow_polish.cjs` 全合成，涵蓋換檔取消／失敗、互斥匯出、失敗解鎖、redo、消去後重做及窄視窗。
+
+## 2026-10-19 — v2.9.0-F 頁內文字審閱候選
+
+- 僅修改本機 E 槽發布來源副本，未同步 Git 發布工作區或 Push；不覆蓋 v2.8.1-F 離線版。
+- `openContentEditor('text')` 轉接 `openInlineText`，將既有 textarea 與控制項移入頁面及上方工具列；表格維持原對話框，關閉時控制項回原容器。
+- `readInlineText` 讀取限定字型及格式，`updateInlineText` 即時預覽；`pageTextFont` 與 `renderPageContent` 共用字型及行框基線。絕不插入使用者 HTML。
+- `applyContentEditor` 為同步驗證／套用，回傳成功與否，讓切換工具及關閉編輯器先提交草稿；超頁失敗時仍保留草稿。
+- mousedown.detail=2 處理重繪會移除目標節點的雙擊；輸入法 isComposing／229 不執行快捷鍵。格式為整框，非富文字片段模型。
+- 新測試 `tests/test_inline_text.cjs` 只含合成內容。沒有使用私人 PDF、下載字型、引入外部編輯器或改動既有第三方授權。
+
 ## 2026-10-16 — v2.8.1-F 發布授權
 
 - 使用者已完成測試並授權將本版更新到既有公開儲存庫；發布前再次檢查私人測試文件未納入。

@@ -1,5 +1,9 @@
 # 離線成品
 
+本次發布：`pdf_editor_offline_v2.11.0-F.html`，包含來源批次載入失敗保護、可取消 PDF／ZIP 匯出與無障礙進度提示，以及先前的重做、未匯出提醒與頁內文字編輯。Release 附件僅此 HTML 與 `SHA256SUMS.txt`；舊成品保留。
+
+本機審閱候選：`pdf_editor_offline_v2.9.0-F.html`，頁面內文字輸入與格式工具列。尚未發布到 GitHub；下方為目前公開版本。
+
 `pdf_editor_offline_v2.8.1-F.html` 新增頁面編輯，修正普通超連結阻擋其他頁消去及診斷訊息。舊成品保留，不覆蓋。
 
 現行版本：`pdf_editor_offline_v2.8.1-F.html`。

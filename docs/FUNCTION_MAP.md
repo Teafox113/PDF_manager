@@ -1,5 +1,16 @@
 # FUNCTION_MAP — pdf_editor.html 函式索引
 
+## v2.11.0-F 來源交易與匯出取消
+
+- `loadSourceFiles`：驗證批次格式、鎖定操作，以 nextPages 暫存；成功才替換，失敗保留原狀並統一清理。
+- `appendSourcePDF`／`appendSourceImage`／`loadSourceDocx`：接受 target 陣列；PDF 解析後 destroy，圖片先解碼，DOCX 任一頁失敗即拒絕整批。
+- `beginExport`：鎖定介面並建立當次取消 task、顯示及聚焦取消按鈕。
+- `requestExportCancel`：設定取消旗標，顯示等待目前步驟完成。
+- `exportCheckpoint`：讓出事件迴圈後檢查旗標並拋出專用取消錯誤；置於頁間及下載之前。
+- `reportExportCancelled`：顯示保留編輯且無下載的結果，不修改文件或版本。
+- `saveAsPDF`／`exportPagesAsZip`：使用固定快照與取消檢查；只有下載成功呼叫後更新匯出版本。
+- `showProgress`／`setDocumentBusy`：進度 ARIA、保留取消訊息、結束時清理 task 與恢復焦點。
+
 ## v2.8.1-F 超連結與診斷
 
 - `readOrdinaryLinks`：驗證普通連結白名單、矩形／邊框／色彩、URI 協定與明確目的頁，回傳無原始 PDF 參照的資料。
@@ -87,3 +98,24 @@
 | 縮圖大小 | `THUMB_SIZES` `cycleThumbSize` | 三段縮放，切換時清快取重渲染 |
 | 可拖曳分隔線 | IIFE（splitter mousedown/mousemove/mouseup/dblclick/resize） | P9-3：右側寬度 220px～60%，localStorage 記憶，雙擊重設 |
 | 初始化 | 檔尾三行 | updateToolbar / updateUndoBtn / setStatus |
+# v2.9.0-F 頁內文字新增函式（2026-10-19）
+
+- `pageTextFont(content)`：限定本機字型，建立 CSS／Canvas 共用字型字串。
+- `readInlineText()`：讀取頁內文字與整框格式。
+- `openInlineText(content, stampId)`：初始化頁面內 textarea 與文字工具列，保留文字框左上位置。
+- `updateInlineText()`：依頁面比例、格式與換行更新頁內預覽。
+- `openContentEditor()`：文字改走頁內模式，表格沿用對話框。
+- `applyContentEditor()`：同步回傳套用結果；拒絕越界、空內容刪除該文字物件，支援復原。
+- `closeContentEditor()`：取消草稿、還原控制項位置與舊物件顯示。
+- `renderPageContent()`：支援字型、粗斜體、底線、對齊、行距及框寬，匯出定稿圖片。
+
+# v2.10.0-F 工作流程打磨（2026-10-19）
+
+- `redo()`：恢復重做快照與 revision；`snapshotForUndo`／`undo` 維護雙向紀錄。
+- `hasUnexportedChanges()`／`refreshSessionState()`：依文件 revision 與草稿顯示未匯出狀態。
+- `setDocumentBusy(value)`：載入與匯出的 UI／重複操作互斥及焦點還原。
+- `downloadDocument(bytes,type,name)`：交付瀏覽器下載並延遲釋放 Blob URL。
+- `loadMainFile(file,confirmed)`：確認捨棄後解析，成功才替換。
+- `pageDraftChanged()`／`inlineTextIssue(height)`：草稿異動與即時格式／越界檢查。
+- `undoPageEdit(isRedo)`：在頁面編輯器維持目前頁 ID 的復原或重做。
+- `renderStampEditor()`：暫存 canvas／sequence 驗證後提交，依工作區寬度呈現。

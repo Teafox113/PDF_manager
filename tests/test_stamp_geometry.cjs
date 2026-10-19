@@ -32,7 +32,9 @@ const asset = process.env.PDF_MANAGER_ASSET || path.join(root, `release-assets/p
         },spec);
         await page.locator('#file-main').setInputFiles({name:'synthetic.pdf',mimeType:'application/pdf',buffer:Buffer.from(bytes)});
       }
-      await page.waitForFunction(previousId=>state.mainPages.length===1 && state.mainPages[0].id!==previousId && document.querySelector('#left-thumbs canvas'),previousId);
+      // Each case deliberately discards the preceding synthetic editing session.
+      if(await page.locator('#modal-overlay').isVisible())await page.locator('#modal-ok').click();
+      await page.waitForFunction(previousId=>state.mainPages.length===1 && state.mainPages[0].id!==previousId && !documentIO.busy && document.querySelector('#left-thumbs canvas'),previousId);
       await page.locator('#left-thumbs .thumb-card').first().click();
       await page.locator('#btn-stamp').click();
       await page.waitForFunction(()=>document.getElementById('stamp-overlay').classList.contains('show') && stampEditor.pageSize);
@@ -47,7 +49,7 @@ const asset = process.env.PDF_MANAGER_ASSET || path.join(root, `release-assets/p
       // A 55-screen-pixel move must stay under the pointer despite body zoom=1.1.
       await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();
       await page.mouse.move(box.x+box.width/2+55,box.y+box.height/2+55,{steps:5});await page.mouse.up();
-      const moved=await page.locator('.stamp-item').boundingBox();
+      const moved=await page.evaluate(()=>document.querySelector('.stamp-item')?.getBoundingClientRect().toJSON());
       assert.ok(Math.abs(moved.x-box.x-55)<2,'zoom X');assert.ok(Math.abs(moved.y-box.y-55)<2,'zoom Y');
       await page.mouse.move(moved.x+moved.width/2,moved.y+moved.height/2);await page.mouse.down();
       await page.mouse.move(moved.x+moved.width/2,1850,{steps:20});await page.mouse.up();
@@ -59,6 +61,7 @@ const asset = process.env.PDF_MANAGER_ASSET || path.join(root, `release-assets/p
       assert.equal(bounds.y,0);assert.ok(Math.abs(bounds.bottomGap)<2,JSON.stringify(bounds));
       if(spec.rotation===90 && spec.crop){
         await page.setViewportSize({width:900,height:700});
+        await page.waitForFunction(()=>document.getElementById('stamp-page-canvas').width<800);
         await page.evaluate(()=>{getActiveStamp().y=stampEditor.pageSize.height/2;renderStampOverlays();});
         await page.locator('.stamp-item').scrollIntoViewIfNeeded();
         const b=await page.locator('.stamp-item').boundingBox();
@@ -78,6 +81,7 @@ const asset = process.env.PDF_MANAGER_ASSET || path.join(root, `release-assets/p
         const resized=await page.evaluate(()=>({w:getActiveStamp().width,h:getActiveStamp().height}));
         assert.ok(resized.w>widthBefore,JSON.stringify({resized,widthBefore,handle}));assert.ok(Math.abs(resized.w/resized.h-2)<0.001);
         await page.setViewportSize({width:1440,height:1900});
+        await page.waitForFunction(()=>document.getElementById('stamp-page-canvas').width>900);
         await page.evaluate(()=>{getActiveStamp().y=0;renderStampOverlays();});
       }
       const capture=spec.rotation===90 && spec.crop;

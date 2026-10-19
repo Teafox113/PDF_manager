@@ -36,10 +36,10 @@ const I18N = (() => {
   "⤓ 另存新檔": "⤓ Save PDF",
   "將左側每一頁各自存成 PDF，並打包成 ZIP": "Export each main page as a separate PDF in a ZIP",
   "⤓ 個別分頁": "⤓ Split to ZIP",
-  "PDF 頁面編輯器 v2.8.1-F": "PDF Page Manager v2.8.1-F",
+  "PDF 頁面編輯器 v2.11.0-F": "PDF Page Manager v2.11.0-F",
   "功能摘要": "Features",
   "PDF 頁面刪除、插入、拖曳重排、多選批次操作、縮圖旋轉、DOCX / 圖片來源載入、另存新 PDF、個別分頁 ZIP、圖片 / PDF 蓋章與裁切。": "Delete, insert, reorder, batch-select and rotate pages. Import DOCX or images, save PDFs, split to ZIP, and place or crop image / PDF stamps.",
-  "v2.8.1-F 變更內容": "What's new in v2.8.1-F",
+  "v2.11.0-F 變更內容": "What's new in v2.11.0-F",
   "修正旋轉 PDF 的印章拖曳邊界、預覽與匯出座標。": "Fixed stamp movement bounds, previews, and export coordinates on rotated PDFs.",
   "四套佈景、繁體中文／English 即時切換與偏好記憶。": "Four themes, instant Traditional Chinese / English switching, and saved preferences.",
   "v2.6.2-F 變更內容": "What's new in v2.6.2-F",
@@ -589,7 +589,7 @@ button.success:hover:not(:disabled) { background: rgba(212, 180, 131, .22); bord
 /* ── 蓋章編輯器 ── */
 #stamp-overlay {
   display: none; position: fixed; inset: 0; z-index: 120;
-  background: rgba(0,0,0,.76); padding: 16px;
+  background: var(--ui-bg); padding: 16px;
 }
 #stamp-overlay.show { display: flex; flex-direction: column; }
 #stamp-toolbar {
@@ -603,10 +603,10 @@ button.success:hover:not(:disabled) { background: rgba(212, 180, 131, .22); bord
 #stamp-work {
   flex: 1; min-height: 0; overflow: auto; border-radius: 16px;
   background: #0d0c0a; border: 0.5px solid rgba(255,235,200,.1);
-  display: flex; align-items: flex-start; justify-content: center; padding: 22px;
+  display: flex; align-items: flex-start; justify-content: flex-start; padding: 18px;
 }
 #stamp-page-wrap {
-  position: relative; flex-shrink: 0; box-shadow: 0 18px 44px rgba(0,0,0,.46);
+  position: relative; flex-shrink: 0; margin-inline:auto; box-shadow: 0 18px 44px rgba(0,0,0,.26);
 }
 #stamp-page-canvas { display: block; background:#fff; border-radius: 4px; }
 #page-edit-toolbar { display:flex; flex-wrap:wrap; gap:7px; padding:8px 0; align-items:center; }
@@ -618,6 +618,27 @@ button.success:hover:not(:disabled) { background: rgba(212, 180, 131, .22); bord
 #page-content-dialog label { display:inline-flex; align-items:center; gap:6px; margin:0 12px 10px 0; }
 #pe-font-size { width:64px; }
 #pe-text-value { width:100%; box-sizing:border-box; margin:12px 0; resize:vertical; }
+#pe-text-toolbar[hidden], #pe-text-extras[hidden] { display:none; }
+#pe-text-toolbar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding:10px; margin-bottom:8px; border:1px solid var(--ui-border); border-radius:10px; color:var(--ui-text); background:var(--ui-bg); }
+#pe-format-controls, #pe-text-extras { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+#pe-format-controls label { display:inline-flex; align-items:center; gap:4px; margin:0; font-size:12px; }
+#pe-text-toolbar input, #pe-text-toolbar select { color:var(--ui-text); background:var(--ui-bg); border:1px solid var(--ui-border); padding:4px; }
+#pe-text-toolbar input[type=number] { width:64px; }
+#pe-text-toolbar .btn-row { display:flex; gap:6px; }
+#pe-inline-hint { flex-basis:100%; font-size:11px; opacity:.8; }
+#pe-draft-status { flex-basis:100%; font-size:12px; color:var(--ui-muted); }
+#pe-draft-status.error { color:#c93434; font-weight:600; }
+#pe-text-toolbar { flex-shrink:0; max-height:34vh; overflow-y:auto; }
+#stamp-toolbar, #page-edit-toolbar { flex-shrink:0; }
+#stamp-toolbar { background:var(--ui-panel); }
+#stamp-work { min-height:120px; }
+#stamp-overlay { overflow:auto; }
+#session-state { font-size:11px; border:1px solid var(--ui-border); border-radius:6px; padding:3px 7px; }
+#document-busy[hidden] { display:none; }
+#document-busy { position:fixed; inset:0; z-index:400; display:grid; place-items:center; background:#0008; cursor:progress; }
+#document-busy span { background:var(--ui-panel); color:var(--ui-text); padding:20px 28px; border-radius:12px; border:1px solid var(--ui-border); }
+body.document-busy #progress-wrap { z-index:410; }
+#stamp-page-wrap #pe-text-value { position:absolute; z-index:25; margin:0; border:0; outline:1px solid #168ad6; box-shadow:0 0 0 3px #168ad633; border-radius:0; resize:none; background:transparent; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-all; user-select:text; transform-origin:top left; }
 #page-content-dialog textarea, #pe-grid input, #pe-font-size { color:var(--ui-text); background:var(--ui-bg); border:1px solid var(--ui-border); padding:7px; user-select:text; }
 #pe-grid-wrap { overflow:auto; max-height:45vh; margin:12px 0; }
 #pe-grid { border-collapse:collapse; }
@@ -873,6 +894,8 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
   <button class="primary" onclick="openMainPDF()">⊕ 開啟主 PDF</button>
   <div class="toolbar-sep"></div>
   <button id="btn-undo" onclick="undo()" disabled title="Ctrl+Z">↩ 復原</button>
+  <button id="btn-redo" onclick="redo()" disabled title="Ctrl+Shift+Z / Ctrl+Y" data-pe-text="↪ 重做">↪ 重做</button>
+  <span id="session-state" role="status" aria-live="polite"></span>
   <div class="toolbar-sep"></div>
   <div id="sel-menu-wrap">
     <button id="btn-selmenu" onclick="toggleSelMenu(event)" disabled title="批次選取工具">✓ 選取 ▾</button>
@@ -900,7 +923,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
     <button id="btn-save-pages" onclick="exportPagesAsZip()" disabled title="將左側每一頁各自存成 PDF，並打包成 ZIP">⤓ 個別分頁</button>
   </div>
   <button id="btn-about" onclick="toggleAbout()" style="background:#100f0d;border-color:#28251f;color:#6e6960;font-size:11px;">
-    FloofyFox · PDF Editor v2.8.1-F
+    FloofyFox · PDF Editor v2.11.0-F
   </button>
 </div>
 
@@ -909,15 +932,15 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
   <div id="about-close" onclick="toggleAbout()">✕</div>
   <div class="about-name">FloofyFox</div>
   <a class="about-link" href="https://github.com/Teafox113" target="_blank" rel="noopener noreferrer">github.com/Teafox113</a>
-  <div class="about-version">PDF 頁面編輯器 v2.8.1-F</div>
+  <div class="about-version">PDF 頁面編輯器 v2.11.0-F</div>
 
   <div class="about-section-title">功能摘要</div>
   <div class="about-features compact">
     PDF 頁面刪除、插入、拖曳重排、多選批次操作、縮圖旋轉、DOCX / 圖片來源載入、另存新 PDF、個別分頁 ZIP、圖片 / PDF 蓋章與裁切。
   </div>
 
-  <div class="about-section-title">v2.8.1-F 變更內容</div>
-  <div class="about-features" data-pe-text="普通超連結相容修正；消去阻擋訊息顯示頁碼與原因。">普通超連結相容修正；消去阻擋訊息顯示頁碼與原因。</div>
+  <div class="about-section-title">v2.11.0-F 變更內容</div>
+  <div class="about-features" data-pe-text="來源批次載入失敗保護、可取消匯出與無障礙進度提示。">來源批次載入失敗保護、可取消匯出與無障礙進度提示。</div>
 
   <div class="about-section-title">v2.6.2-F 變更內容</div>
   <div class="about-features" style="color:#FF9F0A;">
@@ -997,7 +1020,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
 </div>
 
 <!-- ── Modal ── -->
-<div id="modal-overlay">
+<div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-msg">
   <div id="modal-box">
     <h3 id="modal-title">確認</h3>
     <p id="modal-msg"></p>
@@ -1029,7 +1052,12 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
     <button id="pe-edit" onclick="editPageObject()" disabled data-pe-text="修改文字／表格">修改文字／表格</button>
     <button id="pe-erase" onclick="togglePageErase()" data-pe-text="框選消去" disabled>框選消去</button>
     <button id="pe-undo" onclick="undoPageEdit()" data-pe-text="復原">復原</button>
+    <button id="pe-redo" onclick="undoPageEdit(true)" disabled data-pe-text="↪ 重做">↪ 重做</button>
     <span data-pe-text="Ctrl+V 貼上；雙擊新增的文字或表格可修改">Ctrl+V 貼上；雙擊新增的文字或表格可修改</span>
+  </div>
+  <div id="pe-text-toolbar" role="toolbar" aria-label="Text formatting / 文字工具列" hidden>
+    <span id="pe-inline-hint" data-pe-text="直接輸入；格式套用整個文字框。Ctrl+Enter 完成，Esc 取消；完成後拖曳移動。">直接輸入；格式套用整個文字框。Ctrl+Enter 完成，Esc 取消；完成後拖曳移動。</span>
+    <span id="pe-draft-status" role="status" aria-live="polite"></span>
   </div>
   <div id="stamp-work">
     <div id="stamp-page-wrap">
@@ -1041,9 +1069,19 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
 <div id="page-content-overlay" role="dialog" aria-modal="true" aria-labelledby="page-content-title" hidden>
   <div id="page-content-dialog">
     <h2 id="page-content-title" data-pe-text="文字／表格內容">文字／表格內容</h2>
+    <div id="pe-format-controls">
     <label><span data-pe-text="字級">字級</span> <input id="pe-font-size" type="number" min="8" max="72" value="18"></label>
     <label><span data-pe-text="顏色">顏色</span> <input id="pe-color" type="color" value="#111111"></label>
     <label><input id="pe-bold" type="checkbox"><span data-pe-text="粗體">粗體</span></label>
+    <div id="pe-text-extras" hidden>
+      <label><span data-pe-text="字型">字型</span><select id="pe-font-family" aria-label="Font / 字型"><option value="sans-serif" data-pe-text="黑體">黑體</option><option value="serif" data-pe-text="明體">明體</option><option value="monospace" data-pe-text="等寬">等寬</option><option value="Microsoft JhengHei">Microsoft JhengHei</option><option value="Arial">Arial</option><option value="Times New Roman">Times New Roman</option></select></label>
+      <label><input id="pe-italic" type="checkbox"><span data-pe-text="斜體">斜體</span></label>
+      <label><input id="pe-underline" type="checkbox"><span data-pe-text="底線">底線</span></label>
+      <label><span data-pe-text="對齊">對齊</span><select id="pe-align" aria-label="Alignment / 對齊"><option value="left" data-pe-text="靠左">靠左</option><option value="center" data-pe-text="置中">置中</option><option value="right" data-pe-text="靠右">靠右</option></select></label>
+      <label><span data-pe-text="行距">行距</span><select id="pe-line-height" aria-label="Line spacing / 行距"><option value="1.2">1.2</option><option value="1.4" selected>1.4</option><option value="1.6">1.6</option><option value="2">2.0</option></select></label>
+      <label><span data-pe-text="框寬（pt）">框寬（pt）</span><input id="pe-text-width" type="number" min="40" max="2000" value="280" aria-label="Text box width / 文字框寬"></label>
+    </div>
+    </div>
     <textarea id="pe-text-value" rows="7" maxlength="10000" aria-label="Text / 文字"></textarea>
     <div id="pe-table-controls">
       <button id="pe-add-row" onclick="changeTableShape('row',1)" data-pe-text="插入列">插入列</button>
@@ -1054,18 +1092,20 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
     </div>
     <div id="pe-grid-wrap"><table id="pe-grid"></table></div>
     <p data-pe-text="另存 PDF 後新增內容會定稿；消去只將編輯頁轉成圖片，其他頁文字保留。">另存 PDF 後新增內容會定稿；消去只將編輯頁轉成圖片，其他頁文字保留。</p>
-    <div class="btn-row"><button id="pe-apply" onclick="applyContentEditor()" data-pe-text="套用內容">套用內容</button><button id="pe-cancel" onclick="closeContentEditor()" data-pe-text="取消">取消</button></div>
+    <div class="btn-row"><button id="pe-apply" class="primary" onclick="applyContentEditor()" data-pe-text="套用內容">套用內容</button><button id="pe-cancel" onclick="closeContentEditor()" data-pe-text="取消">取消</button></div>
   </div>
 </div>
 
 <!-- ── 進度 ── -->
 <div id="progress-wrap">
-  <div id="progress-text">處理中...</div>
-  <div id="progress-bar-track"><div id="progress-bar-fill"></div></div>
+  <div id="progress-text" role="status" aria-live="polite">處理中...</div>
+  <div id="progress-bar-track" role="progressbar" aria-labelledby="progress-text" aria-valuemin="0" aria-valuemax="100"><div id="progress-bar-fill"></div></div>
+  <button id="cancel-export" hidden onclick="requestExportCancel()" data-pe-text="取消匯出">取消匯出</button>
 </div>
 
 <!-- ── Toast ── -->
 <div id="toast"></div>
+<div id="document-busy" hidden role="status" aria-live="polite"><span data-pe-text="處理中，請稍候">處理中，請稍候</span></div>
 
 <!-- ── 隱藏 input ── -->
 <input type="file" id="file-main" accept=".pdf" style="display:none" onchange="handleMainFile(event)">
@@ -1109,6 +1149,10 @@ const stampEditor = {
 };
 
 const undoStack  = [];
+const redoStack = [];
+const historyRevisions = new WeakMap();
+let editRevision=0, revisionSerial=0, exportedRevision=0;
+const documentIO={busy:false};
 const MAX_UNDO   = 30;
 const thumbCache = new Map();     // id → dataURL
 const THUMB_RENDER_MAX_ACTIVE = 3;
@@ -1210,20 +1254,82 @@ function clonePageForUndo(pg) {
 //  Undo
 // ════════════════════════════════
 function snapshotForUndo() {
-  undoStack.push(state.mainPages.map(clonePageForUndo));
+  const snapshot=state.mainPages.map(clonePageForUndo);historyRevisions.set(snapshot,editRevision);
+  undoStack.push(snapshot);redoStack.length=0;editRevision=++revisionSerial;
   if (undoStack.length > MAX_UNDO) undoStack.shift();
   updateUndoBtn();
 }
 function undo() {
-  if (!undoStack.length) return;
+  if (!undoStack.length || documentIO.busy) return;
+  const current=state.mainPages.map(clonePageForUndo);historyRevisions.set(current,editRevision);redoStack.push(current);
   state.mainPages = undoStack.pop();
+  editRevision=historyRevisions.get(state.mainPages)??++revisionSerial;
   state.selectedMain.clear();
   resetThumbRendering();
   renderMainThumbs(); updateMainHeader(); updateToolbar(); updateUndoBtn();
   setStatus(t('已復原')); showToast(t('↩ 已復原上一步'));
 }
+function redo() {
+  if(!redoStack.length || documentIO.busy)return;
+  const current=state.mainPages.map(clonePageForUndo);historyRevisions.set(current,editRevision);undoStack.push(current);
+  state.mainPages=redoStack.pop();editRevision=historyRevisions.get(state.mainPages)??++revisionSerial;
+  state.selectedMain.clear();resetThumbRendering();renderMainThumbs();updateMainHeader();updateToolbar();updateUndoBtn();
+  setStatus(pt('已重做'));showToast(pt('已重做'));
+}
+function hasUnexportedChanges() {
+  return editRevision!==exportedRevision || !!(window.pageDraftChanged && pageDraftChanged());
+}
+function refreshSessionState() {
+  const el=document.getElementById('session-state');if(!el || !window.pt)return;
+  el.textContent=pt(hasUnexportedChanges()?'有尚未匯出的修改':state.mainPages.length?'本機工作階段':'尚未載入文件');
+  el.title=pt('不會自動儲存文件；匯出後請確認下載檔案。');
+}
+function setDocumentBusy(value) {
+  if(value)documentIO.previousFocus=document.activeElement;
+  documentIO.busy=value;document.body.classList.toggle('document-busy',value);
+  document.getElementById('document-busy').hidden=!value;
+  for(const id of ['toolbar','main','stamp-overlay','page-content-overlay','modal-overlay'])document.getElementById(id).inert=value;
+  document.getElementById('main').setAttribute('aria-busy',String(value));
+  if(!value){documentIO.exportTask=null;document.getElementById('cancel-export').hidden=true;}
+  if(!value){if(documentIO.previousFocus?.isConnected&&!documentIO.previousFocus.disabled)documentIO.previousFocus.focus();documentIO.previousFocus=null;}
+}
+// Cancellation is cooperative: yield between pages and before handing a download
+// to the browser. Never mark the revision exported when cancelled or failed.
+function beginExport() {
+  setDocumentBusy(true);
+  const task={cancelled:false};documentIO.exportTask=task;
+  const button=document.getElementById('cancel-export');
+  button.hidden=false;button.disabled=false;button.removeAttribute('aria-disabled');button.textContent=pt('取消匯出');button.focus();
+  return task;
+}
+function requestExportCancel() {
+  const task=documentIO.exportTask;if(!task || task.cancelled)return;
+  task.cancelled=true;
+  const button=document.getElementById('cancel-export');button.setAttribute('aria-disabled','true');
+  button.textContent=pt('正在取消，等待目前步驟完成…');
+  document.getElementById('progress-text').textContent=pt('正在取消，等待目前步驟完成…');
+}
+async function exportCheckpoint(task) {
+  await new Promise(resolve=>setTimeout(resolve,0));
+  if(task.cancelled){const error=new Error('Export cancelled');error.exportCancelled=true;throw error;}
+}
+function reportExportCancelled() {
+  const message=pt('匯出已取消；編輯內容保留，未產生下載。');setStatus(message);showToast(message,3000);
+}
+function downloadDocument(bytes,type,name) {
+  const url=URL.createObjectURL(new Blob([bytes],{type}));
+  const a=Object.assign(document.createElement('a'),{href:url,download:name});document.body.append(a);a.click();a.remove();
+  // Allow the browser to consume the blob before releasing it.
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
+window.addEventListener('beforeunload',e=>{
+  if(hasUnexportedChanges()||documentIO.busy){e.preventDefault();e.returnValue='';}
+});
 function updateUndoBtn() {
   document.getElementById('btn-undo').disabled = !undoStack.length;
+  document.getElementById('btn-redo').disabled = !redoStack.length;
+  if(window.refreshPageObjectControls)refreshPageObjectControls();
+  refreshSessionState();
   document.getElementById('st-undo-hint').textContent =
     undoStack.length ? tr`可復原 ${undoStack.length} 步（Ctrl+Z）` : '';
 }
@@ -1235,8 +1341,10 @@ function uid() { return Math.random().toString(36).slice(2) + Date.now().toStrin
 function setStatus(msg) { document.getElementById('st-msg').textContent = msg; }
 function showProgress(text, pct) {
   document.getElementById('progress-wrap').style.display = 'block';
-  document.getElementById('progress-text').textContent = text;
-  document.getElementById('progress-bar-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = documentIO.exportTask?.cancelled ? pt('正在取消，等待目前步驟完成…') : text;
+  const value=Math.max(0,Math.min(100,Number(pct)||0));
+  document.getElementById('progress-bar-fill').style.width = value + '%';
+  document.getElementById('progress-bar-track').setAttribute('aria-valuenow',String(Math.round(value)));
 }
 function hideProgress() { document.getElementById('progress-wrap').style.display = 'none'; }
 
@@ -1247,15 +1355,19 @@ function showToast(msg, dur = 1800) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.style.display = 'none', dur);
 }
+let modalPreviousFocus=null;
 function showModal(title, msg, onOk) {
+  modalPreviousFocus=document.activeElement;
   document.getElementById('modal-title').textContent = title;
   document.getElementById('modal-msg').textContent = msg;
   document.getElementById('modal-input').style.display = 'none';
   document.getElementById('modal-overlay').classList.add('show');
   document.getElementById('modal-ok').onclick = () => { closeModal(); onOk?.(); };
+  document.querySelector('#modal-box .btn-row button:last-child')?.focus();
 }
 // 帶輸入欄的 Modal（P8-D 頁碼範圍）
 function showInputModal(title, msg, placeholder, onOk, defaultValue = '') {
+  modalPreviousFocus=document.activeElement;
   document.getElementById('modal-title').textContent = title;
   document.getElementById('modal-msg').textContent = msg;
   const input = document.getElementById('modal-input');
@@ -1264,9 +1376,12 @@ function showInputModal(title, msg, placeholder, onOk, defaultValue = '') {
   const submit = () => { const v = input.value.trim(); closeModal(); if (v) onOk?.(v); };
   document.getElementById('modal-ok').onclick = submit;
   input.onkeydown = e => { if (e.key === 'Enter') submit(); };
-  setTimeout(() => input.focus(), 50);
+  input.focus();
 }
-function closeModal() { document.getElementById('modal-overlay').classList.remove('show'); }
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('show');
+  if(modalPreviousFocus?.isConnected)modalPreviousFocus.focus();modalPreviousFocus=null;
+}
 
 // ════════════════════════════════
 //  開啟檔案
@@ -1284,21 +1399,28 @@ async function handleSourceFile(e) {
 // ════════════════════════════════
 //  載入主 PDF
 // ════════════════════════════════
-async function loadMainFile(file) {
+async function loadMainFile(file, confirmed=false) {
+  if(documentIO.busy)return;
+  if(!confirmed && hasUnexportedChanges()) {
+    showModal(pt('更換主文件？'),pt('目前有尚未匯出的修改。繼續將捨棄本次工作階段；請先匯出需要的內容。'),()=>loadMainFile(file,true));return;
+  }
+  setDocumentBusy(true);let pdfDoc;
   setStatus(t('載入主 PDF 中...')); showProgress(t('讀取 PDF...'), 10);
   try {
     const pdfBytes = new Uint8Array(await file.arrayBuffer());
-    const pdfDoc   = await pdfjsLib.getDocument({ data: pdfBytes.slice() }).promise;
+    pdfDoc   = await pdfjsLib.getDocument({ data: pdfBytes.slice() }).promise;
     const n = pdfDoc.numPages;
-    undoStack.length = 0; resetThumbRendering();
-    state.mainPages = []; state.selectedMain.clear(); state.mainFileName = file.name;
+    const nextPages=[];
     for (let i = 1; i <= n; i++) {
       showProgress(tr`讀取頁面 ${i}/${n}`, 10 + (i/n)*85);
-      state.mainPages.push({ id: uid(), sourceType: 'main_pdf', sourcePath: file.name, pageIndex: i-1, pdfBytes, imageDataUrl: null });
+      nextPages.push({ id: uid(), sourceType: 'main_pdf', sourcePath: file.name, pageIndex: i-1, pdfBytes, imageDataUrl: null });
     }
+    undoStack.length=0;redoStack.length=0;editRevision=exportedRevision=++revisionSerial;resetThumbRendering();
+    state.mainPages=nextPages;state.selectedMain.clear();state.mainFileName=file.name;
     hideProgress(); renderMainThumbs(); updateMainHeader(); updateToolbar(); updateUndoBtn();
     setStatus(tr`已載入：${file.name}（${n} 頁）`);
-  } catch(err) { hideProgress(); alert(t('無法讀取 PDF：') + err.message); setStatus(t('載入失敗')); }
+  } catch(err) { hideProgress(); alert(pt('無法載入此 PDF，原工作階段已保留。請確認檔案未損壞且不需密碼。')); setStatus(t('載入失敗')); }
+  finally {setDocumentBusy(false);if(pdfDoc)await pdfDoc.destroy();}
 }
 
 // ════════════════════════════════
@@ -1308,7 +1430,7 @@ const IMG_EXTS = ['jpg','jpeg','png','gif','bmp','webp'];
 
 // 統一入口：接受 File 陣列，重置狀態後逐一 append
 async function loadSourceFiles(files) {
-  if (!files.length) return;
+  if (!files.length || documentIO.busy) return;
 
   const hasPdfOrImg = files.some(f => {
     const e = f.name.split('.').pop().toLowerCase();
@@ -1326,53 +1448,73 @@ async function loadSourceFiles(files) {
     return;
   }
 
-  // Reset
-  state.sourcePages = []; state.selectedSource.clear();
-  state.sourceFileCount = files.length;
-  state.sourceFileName = files.length === 1 ? files[0].name : tr`${files.length} 個檔案`;
+  // Reject ambiguous batches instead of silently ignoring files.
+  if(docxFiles.length>1 || docxFiles.some(f=>/\.doc$/i.test(f.name)) || pdfImgFiles.length+docxFiles.length!==files.length) {
+    alert(pt('請選擇 PDF／圖片，或單一 DOCX；不支援舊版 DOC 或其他格式。'));return;
+  }
+  const nextPages=[];
+  let failedIndex=0;
+  setDocumentBusy(true);
 
   setStatus(t('載入來源中...')); showProgress(t('讀取檔案...'), 5);
 
   try {
     if (docxFiles.length) {
       // 僅 DOCX 模式（取第一個）
-      await loadSourceDocx(docxFiles[0]);
+      await loadSourceDocx(docxFiles[0],nextPages);
     } else {
       // PDF + 圖片批次
       for (let fi = 0; fi < pdfImgFiles.length; fi++) {
+        failedIndex=fi;
         const file = pdfImgFiles[fi];
         const ext  = file.name.split('.').pop().toLowerCase();
         const baseP = 5 + (fi / pdfImgFiles.length) * 90;
         if (ext === 'pdf') {
-          await appendSourcePDF(file, baseP, 90 / pdfImgFiles.length);
+          await appendSourcePDF(file, baseP, 90 / pdfImgFiles.length,nextPages);
         } else if (IMG_EXTS.includes(ext)) {
-          await appendSourceImage(file);
+          await appendSourceImage(file,nextPages);
         }
       }
       hideProgress();
     }
+    if(!nextPages.length)throw new Error('Empty source');
+    state.sourcePages=nextPages;state.selectedSource.clear();
+    state.sourceFileCount=files.length;
+    state.sourceFileName=files.length===1?files[0].name:tr`${files.length} 個檔案`;
     renderSourceThumbs(); updateSourceHeader(); updateToolbar();
     setStatus(tr`來源已載入：${state.sourceFileName}（${state.sourcePages.length} 頁）`);
-  } catch(err) { hideProgress(); alert(t('載入失敗：') + err.message); setStatus(t('載入失敗')); }
+  } catch(err) {
+    alert(pt('來源載入失敗；舊來源及主文件均已保留。請檢查檔案格式、密碼或損壞情況。')+' ('+(failedIndex+1)+'/'+files.length+')');
+    setStatus(t('載入失敗'));
+  } finally {
+    hideProgress();setDocumentBusy(false);
+    const wrap=document.getElementById('docx-iframe-wrap');wrap.replaceChildren();
+    wrap.style.cssText='position:fixed;left:-9999px;top:0;width:0;height:0;overflow:hidden;z-index:-1;';
+  }
 }
 
 // 相容舊呼叫點（拖曳單檔）
 async function loadSourceFile(file) { await loadSourceFiles([file]); }
 
 // Append 模式 — 不 reset state
-async function appendSourcePDF(file, baseProgress = 10, progressRange = 85) {
+async function appendSourcePDF(file, baseProgress = 10, progressRange = 85, target = state.sourcePages) {
   const pdfBytes = new Uint8Array(await file.arrayBuffer());
   const pdfDoc   = await pdfjsLib.getDocument({ data: pdfBytes.slice() }).promise;
+  try {
   const n = pdfDoc.numPages;
   for (let i = 1; i <= n; i++) {
     showProgress(tr`${file.name} 第 ${i}/${n} 頁`, baseProgress + (i/n)*progressRange);
-    state.sourcePages.push({ id: uid(), sourceType: 'source_pdf', sourcePath: file.name, pageIndex: i-1, pdfBytes, imageDataUrl: null });
+    target.push({ id: uid(), sourceType: 'source_pdf', sourcePath: file.name, pageIndex: i-1, pdfBytes, imageDataUrl: null });
   }
+  } finally {await pdfDoc.destroy();}
 }
 
-async function appendSourceImage(file) {
+async function appendSourceImage(file, target = state.sourcePages) {
   const dataUrl = await fileToDataUrl(file);
-  state.sourcePages.push({ id: uid(), sourceType: 'image', sourcePath: file.name, pageIndex: 0, pdfBytes: null, imageDataUrl: dataUrl });
+  // Decode before commit so a corrupt image cannot replace a working source list.
+  const img=await loadImage(dataUrl);
+  if(!img.naturalWidth || !img.naturalHeight)throw new Error('Invalid image');
+  target.push({ id: uid(), sourceType: 'image', sourcePath: file.name, pageIndex: 0, pdfBytes: null, imageDataUrl: dataUrl });
 }
 
 // ────────────────────────────────
@@ -1385,11 +1527,9 @@ async function appendSourceImage(file) {
 const A4_W = 794;
 const A4_H = 1123;
 
-async function loadSourceDocx(file) {
+async function loadSourceDocx(file, target = state.sourcePages) {
   if (typeof mammoth === 'undefined') {
-    hideProgress();
-    alert(t('mammoth 函式庫未載入，請確認網路後重新整理。'));
-    return;
+    throw new Error('DOCX converter unavailable');
   }
 
   showProgress(t('解析 DOCX...'), 10);
@@ -1403,12 +1543,10 @@ async function loadSourceDocx(file) {
     });
     bodyHtml = result.value;
   } catch(e) {
-    hideProgress();
-    alert(t('DOCX 解析失敗（僅支援 .docx）\n') + e.message);
-    return;
+    throw new Error('DOCX conversion failed');
   }
 
-  if (!bodyHtml.trim()) { hideProgress(); alert(t('DOCX 內容為空')); return; }
+  if (!bodyHtml.trim()) throw new Error('Empty DOCX');
 
   showProgress(t('建立預覽...'), 30);
 
@@ -1494,7 +1632,7 @@ async function loadSourceDocx(file) {
 
   showProgress(tr`共 ${pageRanges.length} 頁，截圖中...`, 55);
 
-  // sourcePages / selectedSource / sourceFileName 已由 loadSourceFiles 重置
+  // Stage every rendered page; loadSourceFiles commits only the complete batch.
 
   for (let p = 0; p < pageRanges.length; p++) {
     const { top, height } = pageRanges[p];
@@ -1521,8 +1659,7 @@ async function loadSourceDocx(file) {
         scrollY: -top,
       });
     } catch(err) {
-      console.warn(tr`第 ${p+1} 頁截圖失敗`, err);
-      continue;
+      throw new Error('DOCX page render failed');
     }
 
     // 裁切成固定 A4 比例的 canvas
@@ -1531,7 +1668,7 @@ async function loadSourceDocx(file) {
     out.height = Math.round(height * 2);
     out.getContext('2d').drawImage(canvas, 0, 0);
 
-    state.sourcePages.push({
+    target.push({
       id: uid(), sourceType: 'image',
       sourcePath: file.name, pageIndex: p,
       pdfBytes: null,
@@ -1544,10 +1681,7 @@ async function loadSourceDocx(file) {
   wrap.style.cssText = 'position:fixed;left:-9999px;top:0;width:0;height:0;overflow:hidden;z-index:-1;';
   hideProgress();
 
-  if (!state.sourcePages.length) {
-    alert(t('截圖失敗，請確認瀏覽器允許 iframe 操作。'));
-    setStatus(t('DOCX 截圖失敗'));
-  }
+  if (!target.length) throw new Error('Empty DOCX render');
 }
 
 function fileToDataUrl(file) {
@@ -1735,6 +1869,7 @@ async function openStampEditor() {
 
 function closeStampEditor() {
   if (window.pageEditBusy && pageEditBusy()) return;
+  if (window.applyContentEditor && pageEdit.draft?.kind==='text' && !applyContentEditor()) return;
   if (window.resetPageEditorTools) resetPageEditorTools();
   document.getElementById('stamp-overlay').classList.remove('show');
   stampEditor.drag = null; stampEditor.resize = null; stampEditor.cropDrag = null; stampEditor.cropMove = null; stampEditor.cropMode = false;
@@ -1853,11 +1988,14 @@ async function renderStampEditor() {
   if (!pg) return;
   const canvas = document.getElementById('stamp-page-canvas');
   const wrap = document.getElementById('stamp-page-wrap');
-  [...wrap.querySelectorAll('.stamp-item')].forEach(el => el.remove());
-
+  const sequence=stampEditor.renderSequence=(stampEditor.renderSequence||0)+1;
   const work = document.getElementById('stamp-work');
-  const targetW = Math.min(980, Math.max(520, work.clientWidth - 80));
-  const { size, scale } = await renderPagePreviewToCanvas(pg, canvas, targetW);
+  const workWidth=work.clientWidth,targetW = Math.min(980, Math.max(180, workWidth - 40));
+  const preview=document.createElement('canvas');
+  const { size, scale } = await renderPagePreviewToCanvas(pg, preview, targetW);
+  if(sequence!==stampEditor.renderSequence || pg!==getActiveStampPage())return;
+  canvas.width=preview.width;canvas.height=preview.height;canvas.getContext('2d').drawImage(preview,0,0);
+  stampEditor.renderWorkWidth=workWidth;
   stampEditor.pageSize = size; stampEditor.scale = scale;
   canvas.style.width = canvas.width + 'px';
   canvas.style.height = canvas.height + 'px';
@@ -1873,6 +2011,7 @@ function renderStampOverlays() {
   const pg = getActiveStampPage();
   for (const st of (pg?.stamps || [])) addStampElement(st);
   updateStampControls();
+  if (window.updateInlineText) updateInlineText();
 }
 
 function addStampElement(st) {
@@ -1956,7 +2095,6 @@ function startStampDrag(e, id) {
   e.preventDefault(); e.stopPropagation();
   stampEditor.activeStampId = id;
   const st = getActiveStamp();
-  snapshotForUndo();
   stampEditor.drag = { id, ...stampPointer(e), x: st.x, y: st.y };
   renderStampOverlays();
 }
@@ -1966,7 +2104,6 @@ function startStampResize(e, id, corner = 'se') {
   e.preventDefault(); e.stopPropagation();
   stampEditor.activeStampId = id;
   const st = getActiveStamp();
-  snapshotForUndo();
   stampEditor.resize = {
     id, corner, ...stampPointer(e),
     x: st.x, y: st.y, width: st.width, height: st.height,
@@ -2008,8 +2145,11 @@ document.addEventListener('mousemove', e => {
     const pointer = stampPointer(e);
     const dx = pointer.sx - stampEditor.drag.sx;
     const dy = pointer.sy - stampEditor.drag.sy;
-    st.x = Math.max(0, Math.min(stampEditor.pageSize.width - st.width, stampEditor.drag.x + dx));
-    st.y = Math.max(0, Math.min(stampEditor.pageSize.height - st.height, stampEditor.drag.y - dy));
+    const x = Math.max(0, Math.min(stampEditor.pageSize.width - st.width, stampEditor.drag.x + dx));
+    const y = Math.max(0, Math.min(stampEditor.pageSize.height - st.height, stampEditor.drag.y - dy));
+    if(!stampEditor.drag.changed && Math.hypot(x-st.x,y-st.y)*stampEditor.scale<2)return;
+    if(!stampEditor.drag.changed){snapshotForUndo();stampEditor.drag.changed=true;}
+    st.x=x;st.y=y;
     renderStampOverlays();
   }
   if (stampEditor.resize) {
@@ -2031,6 +2171,8 @@ document.addEventListener('mousemove', e => {
     if (corner.includes('n')) newH = Math.min(newH, stampEditor.pageSize.height - stampEditor.resize.y);
     else newH = Math.min(newH, top);
     newW = newH * stampAspect(st);
+    if(!stampEditor.resize.changed && Math.abs(newW-st.width)*stampEditor.scale<2)return;
+    if(!stampEditor.resize.changed){snapshotForUndo();stampEditor.resize.changed=true;}
     st.width = newW; st.height = newH;
     st.x = corner.includes('w') ? right - newW : stampEditor.resize.x;
     st.y = corner.includes('s') ? top - newH : stampEditor.resize.y;
@@ -2078,7 +2220,7 @@ document.addEventListener('mousemove', e => {
   }
 });
 document.addEventListener('mouseup', () => {
-  if (stampEditor.drag || stampEditor.resize || stampEditor.cropDrag || stampEditor.cropMove) invalidateStampPage();
+  if (stampEditor.drag?.changed || stampEditor.resize?.changed || stampEditor.cropDrag || stampEditor.cropMove) invalidateStampPage();
   stampEditor.drag = null; stampEditor.resize = null; stampEditor.cropDrag = null; stampEditor.cropMove = null;
 });
 
@@ -3146,31 +3288,40 @@ async function mergeSourceToOnePage() {
 //  另存新 PDF
 // ════════════════════════════════
 async function saveAsPDF() {
+  if(documentIO.busy)return;
+  if(window.pageDraftChanged && pageEdit.draft && !applyContentEditor())return;
   if (!state.mainPages.length) { alert(t('沒有可儲存的頁面')); return; }
+  const task=beginExport();
+  const pages=state.mainPages.map(clonePageForUndo), outputRevision=editRevision;
   showProgress(t('準備輸出 PDF...'), 5); setStatus(t('輸出中...'));
   try {
     const outDoc   = await PDFLib.PDFDocument.create();
-    const total    = state.mainPages.length;
+    const total    = pages.length;
     const pdfCache = new Map();
 
     for (let i = 0; i < total; i++) {
-      const pg = state.mainPages[i];
+      await exportCheckpoint(task);
+      const pg = pages[i];
       showProgress(tr`合成第 ${i+1}/${total} 頁...`, 5 + (i/total)*90);
       await appendPageToPdfDocument(outDoc, pg, pdfCache);
     }
     showProgress(t('寫入檔案...'), 97);
-    const bytes = await saveEditedPdf(outDoc, state.mainPages);
-    const url   = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
-    const baseName = (state.mainFileName || 'output').replace(/\.pdf$/i, '');
-    const a = Object.assign(document.createElement('a'), { href: url, download: baseName + '_edited.pdf' });
-    a.click(); URL.revokeObjectURL(url);
+    await exportCheckpoint(task);
+    const bytes = await saveEditedPdf(outDoc, pages);
+    await exportCheckpoint(task);
+    const baseName = sanitizeFileStem((state.mainFileName || 'output').replace(/\.pdf$/i, ''));
+    const downloadName=baseName+'_edited.pdf';downloadDocument(bytes,'application/pdf',downloadName);
+    exportedRevision=outputRevision;refreshSessionState();
     hideProgress();
-    setStatus(tr`已輸出：${a.download}（${total} 頁）`);
-    showToast(tr`⤓ 已儲存 ${a.download}`, 3000);
-  } catch(err) { hideProgress(); alert(t('輸出失敗：') + (err.pageEditMessage||err.message)); setStatus(t('輸出失敗')); }
+    setStatus(tr`已輸出：${downloadName}（${total} 頁）`);
+    showToast(pt('已產生下載，請確認檔案已存妥。'), 3000);
+  } catch(err) { hideProgress();if(err.exportCancelled)reportExportCancelled();else {alert(t('輸出失敗：') + (err.pageEditMessage||err.message)); setStatus(t('輸出失敗'));} }
+  finally {setDocumentBusy(false);}
 }
 
 function exportPagesAsZip() {
+  if(documentIO.busy)return;
+  if(window.pageDraftChanged && pageEdit.draft && !applyContentEditor())return;
   if (!state.mainPages.length) { alert(t('沒有可儲存的頁面')); return; }
   const baseName = sanitizeFileStem((state.mainFileName || 'pages').replace(/\.pdf$/i, ''));
   showInputModal(
@@ -3178,8 +3329,11 @@ function exportPagesAsZip() {
     tr`輸入檔名前綴，將輸出 ${state.mainPages.length} 個 PDF 並打包為 ZIP`,
     baseName,
     async val => {
+      if(documentIO.busy)return;
+      const task=beginExport();
+      const pages=state.mainPages.map(clonePageForUndo),outputRevision=editRevision;
       const stem = sanitizeFileStem(val);
-      const total = state.mainPages.length;
+      const total = pages.length;
       const pad = Math.max(2, String(total).length);
       const pdfCache = new Map();
       const files = [];
@@ -3187,24 +3341,25 @@ function exportPagesAsZip() {
       showProgress(t('準備個別分頁...'), 5); setStatus(t('個別分頁輸出中...'));
       try {
         for (let i = 0; i < total; i++) {
+          await exportCheckpoint(task);
           showProgress(tr`建立第 ${i + 1}/${total} 頁 PDF...`, 5 + (i / total) * 75);
           const num = String(i + 1).padStart(pad, '0');
-          const bytes = await makeSinglePagePdf(state.mainPages[i], pdfCache);
+          const bytes = await makeSinglePagePdf(pages[i], pdfCache);
           files.push({ name: `${stem}_${num}.pdf`, data: bytes });
         }
 
         showProgress(t('打包 ZIP...'), 88);
+        await exportCheckpoint(task);
         const zipBytes = createZip(files);
+        await exportCheckpoint(task);
         const zipName = `${stem}_pages.zip`;
-        const url = URL.createObjectURL(new Blob([zipBytes], { type: 'application/zip' }));
-        const a = Object.assign(document.createElement('a'), { href: url, download: zipName });
-        a.click(); URL.revokeObjectURL(url);
+        downloadDocument(zipBytes,'application/zip',zipName);exportedRevision=outputRevision;refreshSessionState();
         hideProgress();
         setStatus(tr`已輸出：${zipName}（${total} 個 PDF）`);
-        showToast(tr`⤓ 已儲存 ${zipName}`, 3000);
+        showToast(pt('已產生下載，請確認檔案已存妥。'), 3000);
       } catch(err) {
-        hideProgress(); alert(t('個別分頁輸出失敗：') + (err.pageEditMessage||err.message)); setStatus(t('輸出失敗'));
-      }
+        hideProgress();if(err.exportCancelled)reportExportCancelled();else {alert(t('個別分頁輸出失敗：') + (err.pageEditMessage||err.message)); setStatus(t('輸出失敗'));}
+      } finally {setDocumentBusy(false);}
     },
     baseName
   );
@@ -3214,9 +3369,29 @@ function exportPagesAsZip() {
 //  鍵盤快捷鍵
 // ════════════════════════════════
 document.addEventListener('keydown', e => {
+  if(documentIO.busy){
+    if(documentIO.exportTask){
+      if(e.key==='Escape'){e.preventDefault();requestExportCancel();}
+      else if(e.key==='Tab'){e.preventDefault();document.getElementById('cancel-export').focus();}
+      else if((e.key==='Enter'||e.key===' ')&&document.activeElement.id==='cancel-export'){e.preventDefault();requestExportCancel();}
+      else e.preventDefault();
+    }else e.preventDefault();
+    return;
+  }
+  if(document.getElementById('modal-overlay').classList.contains('show')) {
+    if(e.key==='Escape'){e.preventDefault();closeModal();}
+    if(e.key==='Tab'){
+      const fields=[...document.querySelectorAll('#modal-box input,#modal-box button')].filter(el=>!el.disabled&&el.getClientRects().length);
+      const first=fields[0],last=fields.at(-1);
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}
+    }
+    return;
+  }
   if (window.handlePageEditorKey && handlePageEditorKey(e)) return;
   if (document.activeElement.closest('input, textarea, select, [contenteditable="true"]')) return;
-  if ((e.ctrlKey || e.metaKey) && e.key === 'z') { e.preventDefault(); undo(); return; }
+  if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase()==='y'||(e.shiftKey&&e.key.toLowerCase()==='z'))) { e.preventDefault(); redo(); return; }
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); return; }
   const tag = document.activeElement.tagName;
   if ((e.ctrlKey || e.metaKey) && e.key === 'a' && !['INPUT','SELECT','TEXTAREA'].includes(tag)) {
     e.preventDefault(); selectAllPages(); return;

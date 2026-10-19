@@ -6,6 +6,25 @@ const PAGE_EDIT_LIMITS = { rows: 60, cols: 20, cell: 2000, text: 10000, pixels: 
 // closed on unsupported structures or surviving shared source images.
 const PAGE_ERASURE_ENABLED = true;
 const PAGE_EDIT_TEXT = {
+  '取消匯出':'Cancel export',
+  '正在取消，等待目前步驟完成…':'Cancelling; waiting for the current step…',
+  '匯出已取消；編輯內容保留，未產生下載。':'Export cancelled. Edits are preserved; no download was generated.',
+  '來源載入失敗；舊來源及主文件均已保留。請檢查檔案格式、密碼或損壞情況。':'Source import failed. The previous sources and main document are preserved. Check the format, password or file integrity.',
+  '請選擇 PDF／圖片，或單一 DOCX；不支援舊版 DOC 或其他格式。':'Choose PDFs/images or one DOCX. Legacy DOC and other formats are not supported.',
+  '來源批次載入失敗保護、可取消匯出與無障礙進度提示。':'Atomic source imports, cancellable exports and accessible progress feedback.',
+  '↪ 重做':'↪ Redo', '已重做':'Redo applied', '有尚未匯出的修改':'Changes not exported', '本機工作階段':'Local session', '尚未載入文件':'No document loaded',
+  '不會自動儲存文件；匯出後請確認下載檔案。':'Documents are not saved automatically; verify your downloaded file after export.',
+  '已產生下載，請確認檔案已存妥。':'Download generated. Please verify the file was saved.',
+  '更換主文件？':'Replace the main document?', '目前有尚未匯出的修改。繼續將捨棄本次工作階段；請先匯出需要的內容。':'There are changes that have not been exported. Continuing discards this session; export anything you need first.',
+  '無法載入此 PDF，原工作階段已保留。請確認檔案未損壞且不需密碼。':'Cannot load this PDF. Your current session is preserved. Check that the file is valid and does not require a password.',
+  '字級需為 8–72，框寬需在頁面寬度範圍內。':'Font size must be 8–72 and box width must fit within the page.',
+  '草稿尚未套用':'Draft not applied', '可套用':'Ready to apply', '文字':'characters', '未修改':'Unchanged',
+  '穩定性與操作打磨：重做、未匯出提醒、即時文字檢查與視窗自適應。':'Workflow polish: redo, unexported-change warnings, live text validation and responsive page editing.',
+  '頁面內直接輸入文字，搭配字型與段落格式工具列。':'Type text directly on the page with font and paragraph formatting tools.',
+  '直接輸入；格式套用整個文字框。Ctrl+Enter 完成，Esc 取消；完成後拖曳移動。':'Type on the page; formatting affects the whole text box. Ctrl+Enter to finish, Esc to cancel; drag after finishing.',
+  '字型':'Font', '黑體':'Sans serif', '明體':'Serif', '等寬':'Monospace', '斜體':'Italic', '底線':'Underline',
+  '對齊':'Alignment', '靠左':'Left', '置中':'Center', '靠右':'Right', '行距':'Line spacing', '框寬（pt）':'Width (pt)',
+  '文字超出本頁範圍；請減少內容、字級或調整框寬。':'Text exceeds the page bounds; reduce the content/font size or adjust the box width.',
   '普通超連結相容修正；消去阻擋訊息顯示頁碼與原因。':'Ordinary link compatibility; erasure errors show page numbers and reasons.',
   '頁面編輯測試版：貼上圖片、文字、可編輯表格與局部消去。':'Page editor preview: paste images, text, editable tables, and erase areas.',
   '✕ 刪除物件':'✕ Delete object',
@@ -45,13 +64,15 @@ function refreshPageEditorLanguage() {
   document.getElementById('pe-erase').textContent = pt(pageEdit.erase ? '取消消去' : '框選消去');
   document.getElementById('pe-erase').disabled = !PAGE_ERASURE_ENABLED;
   document.getElementById('pe-erase').title = pt('框選消去；僅編輯頁圖片化，不支援的文件會拒絕操作。');
+  updateInlineText();refreshSessionState();
 }
 function pageEditBusy() { return pageEdit.busy; }
-function pageEraseActive() { return pageEdit.erase || pageEdit.busy; }
+function pageEraseActive() { return pageEdit.erase || pageEdit.busy || pageEdit.draft?.kind==='text'; }
 function refreshPageObjectControls() {
   const st = getActiveStamp();
   document.getElementById('pe-edit').disabled = !st?.content;
   document.getElementById('pe-undo').disabled = !undoStack.length;
+  document.getElementById('pe-redo').disabled = !redoStack.length;
 }
 function resetPageEditorTools() {
   pageEdit.erase = false; pageEdit.start = null;
@@ -108,6 +129,7 @@ function parseClipboardTable(html, plain) {
 }
 function openContentEditor(kind, content = null, stampId = null) {
   if (pageEdit.busy || !getActiveStampPage() || !stampEditor.pageSize) return;
+  if(pageEdit.draft?.kind==='text' && !applyContentEditor())return;
   pageEdit.erase = false; document.getElementById('stamp-page-wrap').classList.remove('erasing');
   pageEdit.previousFocus = document.activeElement;
   pageEdit.draft = {kind,stampId,pageId:getActiveStampPage().id,row:0,col:0,
@@ -116,6 +138,7 @@ function openContentEditor(kind, content = null, stampId = null) {
   document.getElementById('pe-color').value = content?.color || '#111111';
   document.getElementById('pe-bold').checked = !!content?.bold;
   document.getElementById('pe-text-value').value = content?.text || '';
+  if(kind==='text') { openInlineText(content,stampId);return; }
   document.getElementById('pe-text-value').hidden = kind!=='text';
   document.getElementById('pe-table-controls').hidden = kind!=='table';
   document.getElementById('pe-table-controls').style.display = kind==='table' ? 'flex' : 'none';
@@ -126,11 +149,114 @@ function openContentEditor(kind, content = null, stampId = null) {
   (kind==='text' ? document.getElementById('pe-text-value') : document.querySelector('#pe-grid input'))?.focus();
 }
 function closeContentEditor() {
+  const dialog=document.getElementById('page-content-dialog'),toolbar=document.getElementById('pe-text-toolbar');
+  if(pageEdit.draft?.kind==='text') {
+    const field=document.getElementById('pe-text-value');field.removeAttribute('style');field.hidden=true;
+    dialog.insertBefore(document.getElementById('pe-format-controls'),document.getElementById('pe-table-controls'));
+    dialog.insertBefore(field,document.getElementById('pe-table-controls'));
+    dialog.append(document.getElementById('pe-apply').parentElement);
+    document.getElementById('pe-text-extras').hidden=true;
+    document.querySelectorAll('.stamp-item').forEach(el=>el.style.visibility='');
+  }
+  toolbar.hidden=true;
   document.getElementById('page-content-overlay').hidden = true;
   pageEdit.draft = null;
   if (pageEdit.previousFocus?.isConnected) pageEdit.previousFocus.focus();
   pageEdit.previousFocus = null;
+  refreshSessionState();
 }
+const PAGE_TEXT_FONTS=['sans-serif','serif','monospace','Microsoft JhengHei','Arial','Times New Roman'];
+function pageTextFont(content) {
+  const family=PAGE_TEXT_FONTS.includes(content.fontFamily)?content.fontFamily:'sans-serif';
+  return `${content.italic?'italic ':''}${content.bold?'bold ':''}${content.fontSize}px ${family.includes(' ')?'"'+family+'"':family}`;
+}
+function readInlineText() {
+  return {kind:'text',text:document.getElementById('pe-text-value').value,
+    fontSize:Math.max(8,Math.min(72,Number(document.getElementById('pe-font-size').value)||18)),
+    color:document.getElementById('pe-color').value,bold:document.getElementById('pe-bold').checked,
+    italic:document.getElementById('pe-italic').checked,underline:document.getElementById('pe-underline').checked,
+    fontFamily:document.getElementById('pe-font-family').value,align:document.getElementById('pe-align').value,
+    lineHeight:Number(document.getElementById('pe-line-height').value)||1.4,
+    boxWidth:Math.max(40,Math.min(stampEditor.pageSize.width,Number(document.getElementById('pe-text-width').value)||280))};
+}
+function openInlineText(content,stampId) {
+  const old=getActiveStampPage().stamps?.find(st=>st.id===stampId),size=stampEditor.pageSize,d=pageEdit.draft;
+  d.x=old?.x??size.width*.08;d.top=old?size.height-old.y-old.height:size.height*.08;
+  // Adopt visible size after an earlier drag-resize; keep the top-left anchored.
+  const ratio=old?old.width/(content?.boxWidth||renderPageContent(content).width):1;
+  document.getElementById('pe-font-size').value=Math.max(8,Math.min(72,(content?.fontSize||18)*ratio));
+  document.getElementById('pe-font-family').value=PAGE_TEXT_FONTS.includes(content?.fontFamily)?content.fontFamily:'sans-serif';
+  document.getElementById('pe-italic').checked=!!content?.italic;
+  document.getElementById('pe-underline').checked=!!content?.underline;
+  document.getElementById('pe-align').value=content?.align||'left';
+  document.getElementById('pe-line-height').value=String(content?.lineHeight||1.4);
+  document.getElementById('pe-text-width').value=old?.width||Math.min(320,size.width*.8);
+  const toolbar=document.getElementById('pe-text-toolbar');
+  toolbar.prepend(document.getElementById('pe-format-controls'));
+  toolbar.insertBefore(document.getElementById('pe-apply').parentElement,document.getElementById('pe-inline-hint'));
+  toolbar.hidden=false;document.getElementById('pe-text-extras').hidden=false;
+  document.getElementById('page-content-overlay').hidden=true;
+  const field=document.getElementById('pe-text-value');field.hidden=false;
+  document.getElementById('stamp-page-wrap').append(field);
+  stampEditor.drag=null;stampEditor.resize=null;stampEditor.cropMode=false;
+  d.initialInline=JSON.stringify(readInlineText());
+  refreshPageEditorLanguage();updateInlineText();field.focus();field.setSelectionRange(field.value.length,field.value.length);
+  field.scrollIntoView({block:'nearest',inline:'nearest'});
+}
+function updateInlineText() {
+  const d=pageEdit.draft;if(d?.kind!=='text')return;
+  const c=readInlineText(),field=document.getElementById('pe-text-value'),scale=stampEditor.scale;
+  const measure=document.createElement('canvas').getContext('2d');measure.font=pageTextFont(c);
+  const height=wrapPageText(measure,c.text,c.boxWidth-20).length*c.fontSize*c.lineHeight+20;
+  const issue=inlineTextIssue(height),status=document.getElementById('pe-draft-status');
+  status.textContent=issue?pt(issue):`${c.text.length} / ${PAGE_EDIT_LIMITS.text} ${pt('文字')} · ${pt(pageDraftChanged()?'草稿尚未套用':'未修改')} · ${pt('可套用')}`;
+  status.classList.toggle('error',!!issue);field.setAttribute('aria-invalid',String(!!issue));field.setAttribute('aria-describedby','pe-draft-status');
+  d.x=Math.max(0,Math.min(d.x,stampEditor.pageSize.width-c.boxWidth));
+  const visibleHeight=Math.max(1,Math.min(height,stampEditor.pageSize.height-d.top));
+  Object.assign(field.style,{left:d.x*scale+'px',top:d.top*scale+'px',width:c.boxWidth+'px',height:visibleHeight+'px',
+    padding:'10px',font:pageTextFont(c),lineHeight:String(c.lineHeight),color:c.color,textAlign:c.align,
+    textDecoration:c.underline?'underline':'none',transform:`scale(${scale})`});
+  document.querySelectorAll('.stamp-item').forEach(el=>{el.style.visibility=el.dataset.id===d.stampId?'hidden':'';});
+  refreshSessionState();
+}
+function inlineTextIssue(height) {
+  const d=pageEdit.draft;if(d?.kind!=='text')return null;
+  const size=Number(document.getElementById('pe-font-size').value),width=Number(document.getElementById('pe-text-width').value);
+  if(!Number.isFinite(size)||size<8||size>72||!Number.isFinite(width)||width<40||width>stampEditor.pageSize.width)return '字級需為 8–72，框寬需在頁面寬度範圍內。';
+  if(document.getElementById('pe-text-value').value.length>PAGE_EDIT_LIMITS.text)return '資料過大；表格最多 60 列、20 欄，每格 2000 字，文字最多 10000 字。';
+  if(height>stampEditor.pageSize.height-d.top)return '文字超出本頁範圍；請減少內容、字級或調整框寬。';
+  return null;
+}
+function pageDraftChanged() {
+  const d=pageEdit.draft;if(!d)return false;
+  if(d.kind==='text')return d.stampId?JSON.stringify(readInlineText())!==d.initialInline:!!document.getElementById('pe-text-value').value.trim();
+  return true;
+}
+let pageResizeTimer,lastPageWorkWidth=0;
+new ResizeObserver(entries=>{
+  const width=entries[0].target.clientWidth;
+  if(width===lastPageWorkWidth)return;lastPageWorkWidth=width;clearTimeout(pageResizeTimer);
+  if(!document.getElementById('stamp-overlay').classList.contains('show'))return;
+  pageResizeTimer=setTimeout(()=>{if(getActiveStampPage()&&!pageEdit.busy&&!documentIO.busy&&stampEditor.renderWorkWidth!==width)renderStampEditor().catch(()=>setStatus(pt('編輯失敗；原頁未套用此變更')));},150);
+}).observe(document.getElementById('stamp-work'));
+document.getElementById('pe-text-value').addEventListener('input',updateInlineText);
+document.getElementById('pe-format-controls').addEventListener('input',updateInlineText);
+// Commit before switching tools or closing the page editor; toolbar/text clicks
+// keep native selection, IME composition, clipboard and text undo intact.
+document.getElementById('stamp-page-wrap').addEventListener('mousedown',e=>{
+  const item=e.target.closest('.stamp-item');
+  if(e.detail!==2||!item||pageEraseActive()||e.target.closest('.stamp-handle,.stamp-crop-handle'))return;
+  const st=getActiveStampPage()?.stamps?.find(s=>s.id===item.dataset.id);if(!st?.content)return;
+  // Selection redraw detaches the first mousedown target, so native click and
+  // dblclick may never fire. The second mousedown still carries detail=2.
+  e.preventDefault();e.stopImmediatePropagation();stampEditor.activeStampId=st.id;
+  pageEdit.ignoreOpeningClickUntil=e.timeStamp+250;openContentEditor(st.content.kind,st.content,st.id);
+},true);
+document.getElementById('stamp-overlay').addEventListener('click',e=>{
+  if(pageEdit.draft?.kind!=='text'||e.target.closest('#pe-text-toolbar,#pe-text-value'))return;
+  if(e.timeStamp<pageEdit.ignoreOpeningClickUntil && e.target.closest('#stamp-page-wrap')){e.preventDefault();e.stopImmediatePropagation();return;}
+  if(!applyContentEditor()){e.preventDefault();e.stopImmediatePropagation();}
+},true);
 function renderTableGrid() {
   const grid = document.getElementById('pe-grid'); grid.replaceChildren();
   pageEdit.draft.rows.forEach((row,r)=>{
@@ -169,13 +295,13 @@ function wrapPageText(ctx, value, width) {
   return lines;
 }
 function renderPageContent(content) {
-  const scale=3, pad=10, lineHeight=content.fontSize*1.4;
+  const scale=3, pad=10, lineHeight=content.fontSize*(content.lineHeight||1.4);
   const measure=document.createElement('canvas').getContext('2d');
-  const font=`${content.bold?'bold ':''}${content.fontSize}px sans-serif`;measure.font=font;
+  const font=pageTextFont(content);measure.font=font;
   let width,height,lines,colWidths,rowHeights;
   if(content.kind==='text') {
-    lines=wrapPageText(measure,content.text,560);
-    width=Math.max(40,...lines.map(line=>measure.measureText(line).width))+pad*2;
+    lines=wrapPageText(measure,content.text,content.boxWidth?content.boxWidth-pad*2:560);
+    width=content.boxWidth||Math.max(40,...lines.map(line=>measure.measureText(line).width))+pad*2;
     height=lines.length*lineHeight+pad*2;
   } else {
     colWidths=content.rows[0].map((_,c)=>Math.min(260,Math.max(80,...content.rows.map(row=>measure.measureText(row[c]).width+pad*2))));
@@ -187,7 +313,18 @@ function renderPageContent(content) {
     throw pageEditError('資料過大；表格最多 60 列、20 欄，每格 2000 字，文字最多 10000 字。');
   const canvas=document.createElement('canvas');canvas.width=Math.ceil(width*scale);canvas.height=Math.ceil(height*scale);
   const ctx=canvas.getContext('2d');ctx.scale(scale,scale);ctx.font=font;ctx.textBaseline='top';ctx.fillStyle=content.color;
-  if(content.kind==='text')lines.forEach((line,i)=>ctx.fillText(line,pad,pad+i*lineHeight));
+  if(content.kind==='text')lines.forEach((line,i)=>{
+    const textWidth=measure.measureText(line).width;
+    const x=content.align==='center'?(width-textWidth)/2:content.align==='right'?width-pad-textWidth:pad;
+    let y=pad+i*lineHeight;
+    if(content.boxWidth) {
+      // Match the textarea's CSS line box rather than canvas textBaseline=top.
+      const metrics=measure.measureText('Mg'),ascent=metrics.fontBoundingBoxAscent??content.fontSize*.8,descent=metrics.fontBoundingBoxDescent??content.fontSize*.2;
+      ctx.textBaseline='alphabetic';y+=(lineHeight-ascent-descent)/2+ascent;
+    }
+    ctx.fillText(line,x,y);
+    if(content.underline){ctx.fillRect(x,y+(content.boxWidth?content.fontSize/12:content.fontSize+1),textWidth,Math.max(.7,content.fontSize/18));}
+  });
   else {
     ctx.fillStyle='#fff';ctx.fillRect(0,0,width,height);ctx.strokeStyle='#444';ctx.lineWidth=1;
     let y=0;
@@ -198,19 +335,29 @@ function renderPageContent(content) {
   }
   return {imageDataUrl:canvas.toDataURL('image/png'),naturalW:canvas.width,naturalH:canvas.height,width,height};
 }
-async function applyContentEditor() {
+function applyContentEditor() {
   const d=pageEdit.draft;if(!d || pageEdit.busy)return;
   try {
     const pg=getActiveStampPage();if(pg?.id!==d.pageId)throw pageEditError('頁面已變更，請重新開啟編輯器');
-    const content={kind:d.kind,fontSize:Math.max(8,Math.min(72,Number(document.getElementById('pe-font-size').value)||18)),
+    if(d.kind==='text') {
+      const issue=inlineTextIssue();if(issue)throw pageEditError(issue);
+      if(d.stampId && !pageDraftChanged()){closeContentEditor();renderStampOverlays();return true;}
+    }
+    const content=d.kind==='text'?readInlineText():{kind:d.kind,fontSize:Math.max(8,Math.min(72,Number(document.getElementById('pe-font-size').value)||18)),
       color:document.getElementById('pe-color').value,bold:document.getElementById('pe-bold').checked};
     if(d.kind==='text'){
       content.text=document.getElementById('pe-text-value').value;
-      if(!content.text.trim())throw pageEditError('請輸入文字');
+      if(!content.text.trim()) {
+        if(d.stampId && pg.stamps?.some(st=>st.id===d.stampId)) {
+          snapshotForUndo();pg.stamps=pg.stamps.filter(st=>st.id!==d.stampId);stampEditor.activeStampId=null;invalidateStampPage(pg);
+        }
+        closeContentEditor();renderStampOverlays();return true;
+      }
       if(content.text.length>PAGE_EDIT_LIMITS.text)throw pageEditError('資料過大；表格最多 60 列、20 欄，每格 2000 字，文字最多 10000 字。');
     }else content.rows=validateRows(d.rows);
     const rendered=renderPageContent(content), old=pg.stamps?.find(st=>st.id===d.stampId);
     const {width:pageW,height:pageH}=stampEditor.pageSize;
+    if(d.kind==='text' && rendered.height>pageH-d.top)throw pageEditError('文字超出本頁範圍；請減少內容、字級或調整框寬。');
     const factor=Math.min(1,pageW*.8/rendered.width,pageH*.8/rendered.height);
     const width=old ? Math.min(old.width,pageW*.9) : rendered.width*factor;
     const height=width*rendered.naturalH/rendered.naturalW;
@@ -220,12 +367,14 @@ async function applyContentEditor() {
       x:Math.max(0,Math.min(old?.x??pageW*.08,pageW-width*fit)),
       y:Math.max(0,Math.min(old?.y??pageH-height*fit-pageH*.08,pageH-height*fit)),
       flipX:false,flipY:false,crop:{l:0,t:0,r:0,b:0}};
+    if(d.kind==='text')Object.assign(stamp,{width:rendered.width,height:rendered.height,x:d.x,y:pageH-d.top-rendered.height});
     snapshotForUndo();pg.stamps ||= [];
     if(old)pg.stamps[pg.stamps.indexOf(old)]=stamp;else pg.stamps.push(stamp);
     stampEditor.activeStampId=stamp.id;stampEditor.cropMode=false;stampEditor.cropDraft=null;
     invalidateStampPage(pg);closeContentEditor();renderStampOverlays();
     document.querySelector('.stamp-item.active')?.scrollIntoView({block:'nearest',inline:'nearest'});
-  }catch(e){alert(pt(e.pageEditMessage||'編輯失敗；原頁未套用此變更'));}
+    return true;
+  }catch(e){alert(pt(e.pageEditMessage||'編輯失敗；原頁未套用此變更'));return false;}
 }
 async function acceptPageClipboard({html='',text='',image=null}) {
   if(!getActiveStampPage() || !stampEditor.pageSize)return;
@@ -348,9 +497,9 @@ async function erasePageArea(pg,rect) {
   stampEditor.activeStampId=null;invalidateStampPage(state.mainPages[index]);
   await renderStampEditor();setStatus(pt('消去完成；本頁已重新建立'));
 }
-async function undoPageEdit() {
-  if(pageEdit.busy || !undoStack.length)return;
-  const id=getActiveStampPage()?.id;resetPageEditorTools();undo();
+async function undoPageEdit(isRedo=false) {
+  if(pageEdit.busy || documentIO.busy || !(isRedo?redoStack:undoStack).length)return;
+  const id=getActiveStampPage()?.id;resetPageEditorTools();isRedo?redo():undo();
   const index=state.mainPages.findIndex(pg=>pg.id===id);
   if(index<0){closeStampEditor();return;}
   state.selectedMain=new Set([index]);stampEditor.pageIndex=index;stampEditor.activeStampId=null;
@@ -359,6 +508,15 @@ async function undoPageEdit() {
 function handlePageEditorKey(e) {
   if(!document.getElementById('stamp-overlay').classList.contains('show'))return false;
   if(pageEdit.busy){e.preventDefault();return true;}
+  if(pageEdit.draft?.kind==='text') {
+    if(e.isComposing||e.keyCode===229)return true;
+    if(e.key==='Escape'){e.preventDefault();closeContentEditor();return true;}
+    if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();applyContentEditor();return true;}
+    if((e.ctrlKey||e.metaKey)&&['b','i','u'].includes(e.key.toLowerCase())) {
+      e.preventDefault();const id={b:'pe-bold',i:'pe-italic',u:'pe-underline'}[e.key.toLowerCase()];
+      const field=document.getElementById(id);field.checked=!field.checked;updateInlineText();
+    }return true;
+  }
   if(!document.getElementById('page-content-overlay').hidden){
     if(e.key==='Escape'){e.preventDefault();closeContentEditor();}
     if(e.key==='Tab'){
@@ -370,6 +528,7 @@ function handlePageEditorKey(e) {
   }
   if(document.getElementById('modal-overlay').classList.contains('show'))return true;
   if(e.target.closest?.('input,textarea,select'))return true;
+  if((e.ctrlKey||e.metaKey)&&(e.key.toLowerCase()==='y'||(e.shiftKey&&e.key.toLowerCase()==='z'))){e.preventDefault();undoPageEdit(true);return true;}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();undoPageEdit();return true;}
   if(e.key==='Escape'){e.preventDefault();if(pageEdit.erase)togglePageErase();else closeStampEditor();return true;}
   if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();deleteActiveStamp();refreshPageObjectControls();return true;}

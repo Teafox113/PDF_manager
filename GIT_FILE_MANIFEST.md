@@ -1,5 +1,9 @@
 # Git 預計納入清單
 
+## v2.11.0-F 本次發布清單
+
+包含 v2.9.0-F 頁內文字、v2.10.0-F 工作流程打磨及本次來源／匯出防護，新增純合成 `tests/test_inline_text.cjs`、`tests/test_workflow_polish.cjs`、`tests/test_io_safety.cjs`；更新主程式、page_editor.js、版本、既有測試與文件。離線 HTML、測試截圖及測試輸出持續排除；沒有私人 PDF 或新增第三方執行依賴。
+
 ## v2.8.1-F（2026-10-16）
 
 在下方既有來源清單之外，新增 `page_editor.js`、`pdf_resource_cleaner.js`、`tests/test_page_editor.cjs`、`tests/test_resource_cleanup.cjs`、`tests/test_link_cleanup.cjs`。更新主程式、建置器、版本、雙語 README、操作與測試說明、忽略規則及校驗碼。
