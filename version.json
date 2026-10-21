@@ -1,11 +1,11 @@
 {
-  "version": "2.11.0-F",
-  "release_date": "2026-10-19",
+  "version": "2.13.0-F",
+  "release_date": "2026-10-21",
   "channel": "Branch (Fable Dev)",
   "branch": "branch_v2",
   "branch_suffix": "-F",
   "branch_note": "由 Fable 模型接續的開發修訂線；分枝版號恆帶 -F 後綴，與主線 1.x 區隔。合併回主線時摘除後綴並升 MINOR。",
-  "notes": "本機候選：來源批次載入失敗保護、可取消匯出與無障礙進度提示。",
+  "notes": "本機候選：裁切結果預覽、移動框／鍵盤微調、重設、輸入診斷與處理階段進度。",
   "bump_rules": {
     "PATCH": "臭蟲修正、文字修正、UI 微調（不影響功能）",
     "MINOR": "新功能加入、顯著改善（向下相容）",
@@ -14,6 +14,16 @@
   },
   "output_filename_template": "pdf_editor_offline_v{version}.html",
   "history": [
+    {
+      "version": "2.13.0-F",
+      "date": "2026-10-21",
+      "summary": "未發布候選：裁切互動與結果預覽打磨，取消拖曳還原，欄位錯誤提示與階段進度。"
+    },
+    {
+      "version": "2.12.0-F",
+      "date": "2026-10-21",
+      "summary": "未發布候選：實際裁切頁面、固定紙張／自訂框及毫米座標；依另一頁尺寸等比例置中，保留 PDF 文字／向量。"
+    },
     {
       "version": "2.11.0-F",
       "date": "2026-10-19",

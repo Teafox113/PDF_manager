@@ -1,5 +1,28 @@
 # 維護交接
 
+## 2026-10-21 — v2.13.0-F 發布授權
+
+- 使用者要求完成版本更新日誌並推送既有 GitHub 專案；發布內容合併 v2.12 裁切／尺寸校正及 v2.13 操作打磨。
+- 中英文 README 與正式 CHANGELOG 對應 v2.13.0-F。下方及 version.json 的候選描述保留建置時開發歷史；發布狀態以遠端 main、tag 與 Release 為準。
+- 不重建已測試成品、不覆蓋舊版或上層原始專案。同步只用明確檔案清單，Release 僅有離線 HTML 與校驗碼。
+- 私人 PDF 僅於本機記憶體比對發布內容，不保存擷取物、不進 Git／Release；Git 作者繼續使用 noreply，聯繫請至 Issues。
+
+## 2026-10-21 — v2.13.0-F 本機操作打磨
+
+- 僅修改本機發布來源，未同步 F 槽或推送；保留 v2.12 及所有舊成品。
+- page_geometry 新增結果預覽、移動／重畫、鍵盤 mm 位移、重設與 pointer 取消還原。拖曳結束才清除快照，lostpointercapture 在正常 pointerup 後不還原。
+- 欄位診斷共用 geometryCropIssue；reset 不改文件 history。結果預覽禁止 pointer 拖曳但仍可用數值／鍵盤定位。
+- progress callback 是選填，既有消去與直接 fit 呼叫可不傳；UI 成功／失敗皆隱藏 progress。沒有新增背景保存或雲端傳送。
+- tests/test_geometry_polish.cjs 僅合成文件，核對構圖像素、pointer rollback、欄位、進度與失敗／過期渲染防護；不是完整商用品質或資安認證。
+
+## 2026-10-21 — v2.12.0-F 頁面裁切／尺寸校正開發
+
+- 使用者要求 A4／B4／自訂裁切與依文件另一頁尺寸等比例校正；只做本機審閱版，未取得本版 GitHub 發布要求。
+- 新模組 page_geometry.js 內嵌於離線建置；數值 mm／資料 pt；preview pointer 由實際 DOM rect 換算，不依固定 UI zoom。
+- 裁切復用 erasePageArea keepInside 分支及原圖指紋清理；不要改成只調 CropBox 後宣稱刪除。驗證全份候選後才 snapshot／commit。
+- 校正將來源 visible 座標反轉為 Form matrix，drawPage 同 xScale/yScale 並置中；保留文字與向量，不複製來源註解。requiresLinkRebuild 確保其他頁內部連結不引入已替換舊頁；geometryChanged 目標用 Fit。
+- 參考頁原始 bytes／頁索引不動；新物件定稿，Undo 保留原本工作階段物件。全部測試使用合成檔，不讀私人 PDF、不新增第三方套件。
+
 ## 2026-10-19 — v2.11.0-F 發布授權
 
 - 使用者要求「更新 git」，授權更新既有 Teafox113/PDF_manager 與版本 Release。

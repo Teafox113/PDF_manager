@@ -1,5 +1,15 @@
 # Git 預計納入清單
 
+## v2.13.0-F 本次發布清單
+
+包含下方 v2.12 來源，另新增純合成 `tests/test_geometry_polish.cjs`，更新 page_geometry.js、page_editor.js、介面版號、文件及校驗碼。測試截圖／PDF、私人資料與離線 HTML 不納入 Git 歷史。
+
+相對 v2.11 新增三個檔案：`page_geometry.js`、`tests/test_page_geometry.cjs`、`tests/test_geometry_polish.cjs`。Release 附件僅 `pdf_editor_offline_v2.13.0-F.html` 與 `SHA256SUMS.txt`；下方候選狀態為開發歷史。
+
+## 本機候選 v2.12.0-F（尚未提交／發布）
+
+新增本專案模組 `page_geometry.js` 與純合成 `tests/test_page_geometry.cjs`。更新主程式、page_editor.js、pdf_resource_cleaner.js、build_offline.py、AGENTS、版號及文件。離線 HTML、所有測試輸出與私人 PDF 持續排除。發布時須同步新模組，否則來源版缺少裁切／校正功能。
+
 ## v2.11.0-F 本次發布清單
 
 包含 v2.9.0-F 頁內文字、v2.10.0-F 工作流程打磨及本次來源／匯出防護，新增純合成 `tests/test_inline_text.cjs`、`tests/test_workflow_polish.cjs`、`tests/test_io_safety.cjs`；更新主程式、page_editor.js、版本、既有測試與文件。離線 HTML、測試截圖及測試輸出持續排除；沒有私人 PDF 或新增第三方執行依賴。

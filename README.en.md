@@ -2,6 +2,26 @@
 
 English · [繁體中文](README.md)
 
+> **v2.13.0-F** adds page cropping and proportional reference-page fitting, with result previews, precise positioning and operation safeguards. See the [changelog](CHANGELOG.md) for details.
+
+### Crop workflow polish
+
+- Toggle Show cropped result to inspect the retained-area composition, then turn it off to return to selection view. Pointer dragging is disabled in result preview.
+- Choose Draw a new box or Move box for custom crops. Focus the preview and use arrow keys for 1 mm movement, Shift for 10 mm, or Alt for 0.1 mm. Numeric fields remain available; Reset crop box restores the full original page.
+- Esc during dragging or a pointercancel interruption restores the pre-drag rectangle. Esc otherwise closes the dialog. Cancelling/resetting a selection does not consume document undo steps.
+- Distinct field errors cover invalid numbers, negative positions, undersized dimensions and out-of-bounds boxes. Application progress identifies preparation, rebuilding/fitting and complete-output validation.
+- Estimated sampling dpi follows page-size/processing limits, not the actual detail of an input scan. Screen previews are lower resolution; inspect exported quality yourself.
+
+### Crop and normalize page sizes
+
+Double-click a main-document page to open the page editor:
+
+- **Crop page:** choose A4 (210 × 297 mm), JIS B4 (257 × 364 mm), ISO B4 (250 × 353 mm), or a custom rectangle. Drag to move a fixed paper box; drag to draw a custom box, or enter left/top/width/height in mm. Landscape is available for presets. A box larger than the page is rejected, not silently scaled. The blue rectangle is the retained area.
+- **Fit to reference page:** select another page in the same document. For example, open page 3 and choose page 4 as the reference. The complete visible page is uniformly scaled and centered with margins, without distortion or clipping. The reference is unchanged. Crop scan margins first if necessary; there is no automatic edge detection.
+- Cropping rebuilds only the affected page as an image, up to about 300 dpi subject to a 24-million-pixel/side-length limit. Outside pixels are discarded; text searchability, editable added objects and links on that page are lost. Other pages are not rasterized.
+- Fitting preserves original PDF text/vectors; scanned images do not gain OCR. Added objects are flattened and links removed on the fitted page. Ordinary internal links pointing to it use whole-page fitting.
+- Session undo/redo is available; original files are never overwritten. Crop uses the existing conservative erasure checks and refuses shared original images or unsupported structures. This is not document-wide sanitization. See known limitations for forms, signatures and complex annotations.
+
 > **v2.11.0-F** brings inline text formatting, undo/redo, unexported-change warnings, atomic source imports and cancellable PDF/ZIP exports.
 
 ### Atomic imports and cancellable exports
@@ -42,7 +62,7 @@ Fonts come from the local system, with browser fallback if unavailable; no fonts
 
 A browser-based, page-oriented tool for organizing and combining PDFs without sending documents to an online conversion service.
 
-Current version: **v2.11.0-F**. The interface supports **Traditional Chinese / English** and four selectable themes.
+Current version: **v2.13.0-F**. The interface supports **Traditional Chinese / English** and four selectable themes.
 
 This update adds page-content editing and limited area erasure, retaining the earlier stamp-coordinate fixes for rotated PDFs.
 
@@ -60,7 +80,7 @@ The editor can add text but cannot directly modify existing PDF text. OCR and di
 
 ## Quick start
 
-For offline use, visit the [v2.11.0-F release page](https://github.com/Teafox113/PDF_manager/releases/tag/v2.11.0-F), download `pdf_editor_offline_v2.11.0-F.html`, and open it in desktop Chrome or Edge.
+For offline use, visit the [v2.13.0-F release page](https://github.com/Teafox113/PDF_manager/releases/tag/v2.13.0-F), download `pdf_editor_offline_v2.13.0-F.html`, and open it in desktop Chrome or Edge.
 
 1. Download or clone the project and open [pdf_editor.html](pdf_editor.html) in desktop Chrome or Edge.
 2. Choose **Language / 語言** and **Theme** in the toolbar.

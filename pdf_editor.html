@@ -36,10 +36,10 @@ const I18N = (() => {
   "⤓ 另存新檔": "⤓ Save PDF",
   "將左側每一頁各自存成 PDF，並打包成 ZIP": "Export each main page as a separate PDF in a ZIP",
   "⤓ 個別分頁": "⤓ Split to ZIP",
-  "PDF 頁面編輯器 v2.11.0-F": "PDF Page Manager v2.11.0-F",
+  "PDF 頁面編輯器 v2.13.0-F": "PDF Page Manager v2.13.0-F",
   "功能摘要": "Features",
   "PDF 頁面刪除、插入、拖曳重排、多選批次操作、縮圖旋轉、DOCX / 圖片來源載入、另存新 PDF、個別分頁 ZIP、圖片 / PDF 蓋章與裁切。": "Delete, insert, reorder, batch-select and rotate pages. Import DOCX or images, save PDFs, split to ZIP, and place or crop image / PDF stamps.",
-  "v2.11.0-F 變更內容": "What's new in v2.11.0-F",
+  "v2.13.0-F 變更內容": "What's new in v2.13.0-F",
   "修正旋轉 PDF 的印章拖曳邊界、預覽與匯出座標。": "Fixed stamp movement bounds, previews, and export coordinates on rotated PDFs.",
   "四套佈景、繁體中文／English 即時切換與偏好記憶。": "Four themes, instant Traditional Chinese / English switching, and saved preferences.",
   "v2.6.2-F 變更內容": "What's new in v2.6.2-F",
@@ -923,7 +923,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
     <button id="btn-save-pages" onclick="exportPagesAsZip()" disabled title="將左側每一頁各自存成 PDF，並打包成 ZIP">⤓ 個別分頁</button>
   </div>
   <button id="btn-about" onclick="toggleAbout()" style="background:#100f0d;border-color:#28251f;color:#6e6960;font-size:11px;">
-    FloofyFox · PDF Editor v2.11.0-F
+    FloofyFox · PDF Editor v2.13.0-F
   </button>
 </div>
 
@@ -932,15 +932,15 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
   <div id="about-close" onclick="toggleAbout()">✕</div>
   <div class="about-name">FloofyFox</div>
   <a class="about-link" href="https://github.com/Teafox113" target="_blank" rel="noopener noreferrer">github.com/Teafox113</a>
-  <div class="about-version">PDF 頁面編輯器 v2.11.0-F</div>
+  <div class="about-version">PDF 頁面編輯器 v2.13.0-F</div>
 
   <div class="about-section-title">功能摘要</div>
   <div class="about-features compact">
     PDF 頁面刪除、插入、拖曳重排、多選批次操作、縮圖旋轉、DOCX / 圖片來源載入、另存新 PDF、個別分頁 ZIP、圖片 / PDF 蓋章與裁切。
   </div>
 
-  <div class="about-section-title">v2.11.0-F 變更內容</div>
-  <div class="about-features" data-pe-text="來源批次載入失敗保護、可取消匯出與無障礙進度提示。">來源批次載入失敗保護、可取消匯出與無障礙進度提示。</div>
+  <div class="about-section-title">v2.13.0-F 變更內容</div>
+  <div class="about-features" data-pe-text="裁切結果預覽、移動框、鍵盤微調與即時輸入診斷。">裁切結果預覽、移動框、鍵盤微調與即時輸入診斷。</div>
 
   <div class="about-section-title">v2.6.2-F 變更內容</div>
   <div class="about-features" style="color:#FF9F0A;">
@@ -1051,6 +1051,8 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
     <button id="pe-table" onclick="openContentEditor('table')" data-pe-text="加入表格">加入表格</button>
     <button id="pe-edit" onclick="editPageObject()" disabled data-pe-text="修改文字／表格">修改文字／表格</button>
     <button id="pe-erase" onclick="togglePageErase()" data-pe-text="框選消去" disabled>框選消去</button>
+    <button id="pe-page-crop" onclick="openPageGeometry('crop')" data-pe-text="裁切頁面">裁切頁面</button>
+    <button id="pe-page-fit" onclick="openPageGeometry('fit')" data-pe-text="符合參考頁尺寸">符合參考頁尺寸</button>
     <button id="pe-undo" onclick="undoPageEdit()" data-pe-text="復原">復原</button>
     <button id="pe-redo" onclick="undoPageEdit(true)" disabled data-pe-text="↪ 重做">↪ 重做</button>
     <span data-pe-text="Ctrl+V 貼上；雙擊新增的文字或表格可修改">Ctrl+V 貼上；雙擊新增的文字或表格可修改</span>
@@ -1288,7 +1290,7 @@ function setDocumentBusy(value) {
   if(value)documentIO.previousFocus=document.activeElement;
   documentIO.busy=value;document.body.classList.toggle('document-busy',value);
   document.getElementById('document-busy').hidden=!value;
-  for(const id of ['toolbar','main','stamp-overlay','page-content-overlay','modal-overlay'])document.getElementById(id).inert=value;
+  for(const id of ['toolbar','main','stamp-overlay','page-content-overlay','modal-overlay','page-geometry-overlay']){const el=document.getElementById(id);if(el)el.inert=value;}
   document.getElementById('main').setAttribute('aria-busy',String(value));
   if(!value){documentIO.exportTask=null;document.getElementById('cancel-export').hidden=true;}
   if(!value){if(documentIO.previousFocus?.isConnected&&!documentIO.previousFocus.disabled)documentIO.previousFocus.focus();documentIO.previousFocus=null;}
@@ -1812,10 +1814,12 @@ async function renderPagePreviewToCanvas(pg, canvas, targetW = 900) {
     canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
   } else {
     const pdf  = await pdfjsLib.getDocument({ data: pg.pdfBytes.slice() }).promise;
+    try {
     const page = await pdf.getPage(pg.pageIndex + 1);
     const vp = page.getViewport({ scale });
     canvas.width = vp.width; canvas.height = vp.height;
     await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+    } finally { await pdf.destroy(); }
   }
   return { size, scale };
 }
@@ -2915,7 +2919,7 @@ function sanitizeFileStem(name) {
 }
 
 async function appendPageToPdfDocument(outDoc, pg, pdfCache, cleanLinks=false) {
-  cleanLinks=cleanLinks||!!pg.requiresResourceCleanup||state.mainPages.some(p=>p.requiresResourceCleanup);
+  cleanLinks=cleanLinks||!!pg.requiresResourceCleanup||!!pg.requiresLinkRebuild||state.mainPages.some(p=>p.requiresResourceCleanup||p.requiresLinkRebuild);
   let links=[];
   let page;
   if (pg.sourceType === 'image') {
@@ -3538,5 +3542,6 @@ function refreshInterfaceLanguage() {
 </script>
 <script src="pdf_resource_cleaner.js"></script>
 <script src="page_editor.js"></script>
+<script src="page_geometry.js"></script>
 </body>
 </html>

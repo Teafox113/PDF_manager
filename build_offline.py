@@ -306,7 +306,7 @@ def main():
         html = f.read()
 
     # Project-owned page editing module; bundle it without a runtime file fetch.
-    for project_module in ("pdf_resource_cleaner.js", "page_editor.js"):
+    for project_module in ("pdf_resource_cleaner.js", "page_editor.js", "page_geometry.js"):
         with open(os.path.join(here, project_module), "r", encoding="utf-8") as f:
             module_code = f.read().replace("</script", "<\\/script")
         html = html.replace(f'<script src="{project_module}"></script>', '<script>\n' + module_code + '\n</script>')

@@ -467,28 +467,38 @@ document.addEventListener('mouseup',e=>{
   togglePageErase();if(rect.width<2 || rect.height<2)return;
   showModal(pt('確定消去此區域？'),pt('只重建本頁，清除框選區域；本頁文字及表格將定稿。其他頁不轉成圖片。若含不支援的結構或其他頁仍使用原圖片，操作會拒絕。這不是整份文件的個資清理。'),()=>runPageTask(()=>erasePageArea(pg,rect)));
 });
-async function erasePageArea(pg,rect) {
+async function erasePageArea(pg,rect,keepInside=false,progress=async()=>{}) {
   if(!PAGE_ERASURE_ENABLED)throw pageEditError('消去尚未開放；正在驗證保留其他頁文字的刪除引擎。');
   const index=stampEditor.pageIndex,size=await getPageNaturalSize(pg);
   const originalPages=state.mainPages;
+  await progress('正在準備頁面',10);
   await assertErasureSources(originalPages);
   const source=await PDFLib.PDFDocument.create();await appendPageToPdfDocument(source,pg,new Map(),true);
   const originalImages=await pdfImageFingerprints(await PDFLib.PDFDocument.load(await source.save(),{updateMetadata:false}));
   if(![rect.x,rect.y,rect.width,rect.height].every(Number.isFinite) || rect.width<=0 || rect.height<=0)throw Error('Invalid rectangle');
   const scale=Math.min(300/72,Math.sqrt(PAGE_EDIT_LIMITS.pixels/(size.width*size.height)),16000/Math.max(size.width,size.height));
   const canvas=document.createElement('canvas');
+  await progress('正在重建裁切區域',35);
   await renderPagePreviewToCanvas(pg,canvas,Math.max(1,Math.round(size.width*scale)));
   await drawStampsOnCanvas(canvas,pg);
   const sx=canvas.width/size.width,sy=canvas.height/size.height;
   const left=Math.max(0,Math.floor(rect.x*sx)),top=Math.max(0,Math.floor(rect.y*sy));
   const right=Math.min(canvas.width,Math.ceil((rect.x+rect.width)*sx)),bottom=Math.min(canvas.height,Math.ceil((rect.y+rect.height)*sy));
-  const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(left,top,right-left,bottom-top);
-  const imageDataUrl=canvas.toDataURL('image/png');
+  let output=canvas,outputSize=size;
+  if(keepInside){
+    if(left>=right||top>=bottom||rect.x<0||rect.y<0||rect.x+rect.width>size.width+.01||rect.y+rect.height>size.height+.01)throw Error('Invalid crop');
+    output=document.createElement('canvas');output.width=Math.max(1,Math.round(rect.width*sx));output.height=Math.max(1,Math.round(rect.height*sy));
+    const ctx=output.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,output.width,output.height);
+    ctx.drawImage(canvas,rect.x*sx,rect.y*sy,rect.width*sx,rect.height*sy,0,0,output.width,output.height);
+    outputSize={width:rect.width,height:rect.height};
+  }else{const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(left,top,right-left,bottom-top);}
+  const imageDataUrl=output.toDataURL('image/png');
   const hashes=[...new Set([...originalImages,...originalPages.flatMap(p=>p.erasureImageHashes||[])])];
   // Do not spread the edited pg: never retain its source PDF bytes or objects.
   const replacement={id:pg.id,sourceType:'image',sourcePath:pg.sourcePath,pageIndex:0,
-    imageDataUrl,pageSize:{width:size.width,height:size.height},stamps:[],origin:pg.origin,rasterized:true,linkSourceIdentity:pdfLinkIdentity(pg)};
+    imageDataUrl,pageSize:{width:outputSize.width,height:outputSize.height},stamps:[],origin:pg.origin,rasterized:true,linkSourceIdentity:pdfLinkIdentity(pg)};
   const candidate=originalPages.map((p,i)=>({... (i===index?replacement:p),requiresResourceCleanup:true,erasureImageHashes:hashes}));
+  await progress('正在檢查完整輸出',70);
   const probe=await PDFLib.PDFDocument.create(),cache=new Map();
   for(const p of candidate)await appendPageToPdfDocument(probe,p,cache);
   await saveEditedPdf(probe,candidate); // Validate the entire output before committing any edit.

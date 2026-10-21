@@ -77,7 +77,7 @@ function rebuildOutputLinks(doc){
       else {const target=records.find(r=>r.identity?.key===identity?.key&&r.identity?.index===link.targetIndex);
         // A removed/absent destination (including per-page ZIP) must never pull
         // an off-tree source page and its original streams into the output.
-        if(!target)continue;obj.Dest=[target.page.ref,...(target.pg.rasterized?['Fit']:link.destination)];
+        if(!target)continue;obj.Dest=[target.page.ref,...((target.pg.rasterized||target.pg.geometryChanged)?['Fit']:link.destination)];
       }
       annotations.push(doc.context.register(doc.context.obj(obj)));
     }

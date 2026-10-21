@@ -1,5 +1,23 @@
 # FUNCTION_MAP — pdf_editor.html 函式索引
 
+## v2.13.0-F 裁切操作打磨
+
+- `resetGeometryRect`：還原完整頁、清除結果預覽及切回重畫模式，不建立文件 Undo。
+- `geometryCropIssue`：回傳具體診斷與欄位 ID；`geometryValid` 共用同一組裁切有效性檢查。
+- `moveGeometryRect`：mm 鍵盤位移及頁面邊界限制；`cancelGeometryDrag` 還原 pointer 起點快照。
+- `refreshGeometryPreview`：選框／實際裁切構圖、aria-invalid、有效尺寸摘要與取樣 dpi。
+- `geometryProgress`：顯示階段進度並讓出事件迴圈；`erasePageArea`／`fitPageToReference` 接受可選進度 callback，提交前仍完整預檢。
+
+## v2.12.0-F — page_geometry.js
+
+- `openPageGeometry`／`closePageGeometry`：本機裁切／參考頁預覽，隔離背景操作及焦點，丟棄過期非同步結果。
+- `geoEl`／`geometryBackground`：對話框元素定位與背景 inert 狀態。
+- `writeGeometryRect`／`readGeometryRect`／`presetGeometryRect`／`centerGeometryRect`：mm 與 PDF pt 轉換、固定紙張、橫直向及定位。
+- `selectGeometryReference`／`geometryValid`／`refreshGeometryPreview`／`geometryPoint`：參考頁尺寸、有效性、等比例預覽及縮放無關的 pointer 座標。
+- `invertPageMatrix`／`fitPageToReference`：以 PDF.js 可見座標的反矩陣正規化原頁，使用既有 [pdf-lib embedPage](https://pdf-lib.js.org/docs/api/classes/pdfdocument#embedpage) 及相同 xScale/yScale 置中；預檢全部輸出後提交單次 undo。
+- `erasePageArea(pg,rect,keepInside)`：新增 keepInside 分支以裁切區重建圖片；共用來源影像指紋與安全預檢，不是 CropBox 隱藏。
+- `appendPageToPdfDocument`：requiresLinkRebuild 保證尺寸校正後重建普通連結；`rebuildOutputLinks` 將 geometryChanged 目的頁改為 Fit，避免沿用失效座標。
+
 ## v2.11.0-F 來源交易與匯出取消
 
 - `loadSourceFiles`：驗證批次格式、鎖定操作，以 nextPages 暫存；成功才替換，失敗保留原狀並統一清理。

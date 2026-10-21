@@ -1,5 +1,39 @@
 # Changelog
 
+## v2.13.0-F（2026-10-21）
+
+本次正式更新整合 v2.12.0-F 的裁切／尺寸校正與 v2.13.0-F 操作打磨。v2.12 未獨立發布；下方「本機候選／未發布」為開發歷史。
+
+### 新增與改善
+
+- 頁面裁切支援 A4、B4 JIS／ISO、橫直向、自訂框、毫米位置／尺寸及置中；固定框只裁不縮放，超界時明確拒絕。
+- 依同一文件的另一頁尺寸等比例縮放、置中補白，保留原 PDF 文字／向量；支援旋轉與 CropBox 位移，不拉伸或裁掉內容。
+- 裁切結果構圖預覽、自訂框移動／重畫、1／10／0.1 mm 鍵盤微調與完整頁重設。
+- Esc／pointercancel／意外失去 pointer capture 還原未完成拖曳；取消後舊非同步預覽不會重開對話框。
+- 具體欄位錯誤、aria-invalid、處理階段進度及估計取樣 dpi；無效輸入不顯示 NaN。失敗保留草稿與文件，支援工作階段復原／重做。
+- 校正後安全重建其他頁指向該頁的普通內部連結，避免帶回舊頁與隱藏資源。未新增第三方執行依賴。
+
+### 驗證與限制
+
+- 新增純合成 `test_page_geometry.cjs`、`test_geometry_polish.cjs`；幾何、取消與錯誤復原、既有編輯／匯出／超連結／資源清理回歸通過，詳細範圍見 `docs/TEST_REPORT.md`。
+- 裁切只將受影響頁面重建為圖片，該頁文字無法搜尋；其他頁不圖片化。校正保留原 PDF 文字／向量，但不含 OCR。兩種操作均將該頁新增物件定稿並移除該頁連結。
+- 共用原圖或不支援結構採保守拒絕。非全文件個資清理，沒有自動儲存、邊緣偵測或去傾斜；進度不是精確耗時預估，套用期間不支援中途取消。
+- 沿用已測試離線成品，不重建或覆蓋舊版；私人測試 PDF、擷取物與測試截圖不發布。
+
+### English summary
+
+- Crop pages to A4, JIS/ISO B4 or custom millimeter rectangles; fit a page proportionally to another page in the same document with centered margins.
+- Preview crop composition, move/redraw/reset the selection, and nudge it by 1/10/0.1 mm. Interrupted drags roll back; field diagnostics and staged progress make failures explicit.
+- Crop rasterizes only the affected page; fitting preserves original PDF text/vectors. Added objects are flattened and links removed on the affected page. Other pages retain their text.
+- Synthetic regression coverage expanded without new runtime dependencies. Unsupported/shared-image structures are refused; no OCR, autosave or document-wide sanitization. Original documents and older builds remain unchanged.
+
+## v2.12.0-F — 本機審閱候選（2026-10-21）
+
+- 新增頁面裁切：A4、JIS／ISO B4、橫直向、自訂拖曳框、毫米位置／尺寸與置中；固定框只裁不縮放，超出頁面拒絕。
+- 裁切沿用消去預檢與整份輸出資源清理；只重建裁切頁圖片，不保留框外像素，其他頁不圖片化。複雜結構／共用原圖仍保守拒絕。
+- 新增依同文件另一頁等比例置中校正，處理旋轉與 CropBox 位移，保留原 PDF 文字／向量。該頁新增物件定稿，連結移除；指向該頁的普通連結改整頁適配。
+- 新增預覽對話框、鍵盤與輸入防護、失敗不提交及復原／重做；新增本專案來源模組 page_geometry.js，未新增第三方套件。未發布 GitHub，不覆蓋舊版或私人文件。
+
 ## v2.11.0-F（2026-10-19）
 
 使用者授權發布，整合下方 v2.9.0-F、v2.10.0-F 審閱版功能；以下「未發布」敘述為當時開發紀錄。
