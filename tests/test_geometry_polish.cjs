@@ -8,7 +8,7 @@ const asset=process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_ed
  try{
   const page=await(await browser.newContext({offline:true,viewport:{width:1400,height:1000}})).newPage(),errors=[],requests=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
-  await page.goto(pathToFileURL(asset).href);await page.locator('#language-select').selectOption('en');
+  await page.goto(pathToFileURL(asset).href);await page.evaluate(()=>pdfManagerEngineReady);await page.locator('#language-select').selectOption('en');
   const bytes=await page.evaluate(async()=>{const d=await PDFLib.PDFDocument.create(),p=d.addPage([1000,1400]);p.drawRectangle({x:100,y:900,width:100,height:50,color:PDFLib.rgb(1,0,0)});d.addPage([500,700]).drawText('KEEP',{x:30,y:650});return Array.from(await d.save());});
   await page.locator('#file-main').setInputFiles({name:'synthetic-polish.pdf',mimeType:'application/pdf',buffer:Buffer.from(bytes)});await page.waitForFunction(()=>!documentIO.busy&&state.mainPages.length===2);
   await page.locator('#left-thumbs .thumb-card').first().dblclick();await page.waitForFunction(()=>stampEditor.pageSize);

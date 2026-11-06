@@ -8,7 +8,7 @@ const asset=process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_ed
  try{
  const context=await browser.newContext({offline:true,viewport:{width:1440,height:1000}}),page=await context.newPage();const errors=[],requests=[],dialogs=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});page.on('dialog',async d=>{dialogs.push(d.message());await d.dismiss();});
- await page.goto(pathToFileURL(asset).href);await page.locator('#language-select').selectOption('en');
+ await page.goto(pathToFileURL(asset).href);await page.evaluate(()=>pdfManagerEngineReady);await page.locator('#language-select').selectOption('en');
  async function fixture(rotation=0,crop=false){
   const data=await page.evaluate(async({rotation,crop})=>{const d=await PDFLib.PDFDocument.create();
    const p=d.addPage([1000,1400]);p.drawText('OUTSIDE_PRIVATE_SYNTHETIC',{x:10,y:1380,size:10});p.drawText('INSIDE_VECTOR',{x:160,y:540,size:18});
@@ -19,7 +19,7 @@ const asset=process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_ed
   await page.waitForFunction(()=>!documentIO.busy&&state.mainPages.length===4);
   await page.locator('#left-thumbs .thumb-card').first().dblclick();await page.waitForFunction(()=>stampEditor.pageSize);
  }
- async function exportText(){return page.evaluate(async()=>{const d=await PDFLib.PDFDocument.create(),cache=new Map();for(const p of state.mainPages)await appendPageToPdfDocument(d,p,cache);const bytes=await saveEditedPdf(d,state.mainPages);const pdf=await pdfjsLib.getDocument({data:bytes}).promise;const result=[];for(let i=1;i<=pdf.numPages;i++){const p=await pdf.getPage(i);result.push({text:(await p.getTextContent()).items.map(t=>t.str).join(' '),size:[p.getViewport({scale:1}).width,p.getViewport({scale:1}).height]});}await pdf.destroy();return result;});}
+ async function exportText(){return page.evaluate(async()=>{const d=await PDFLib.PDFDocument.create(),cache=new Map();for(const p of state.mainPages)await appendPageToPdfDocument(d,p,cache);const bytes=await saveEditedPdf(d,state.mainPages);const pdf=await loadLocalPdf(bytes).promise;const result=[];for(let i=1;i<=pdf.numPages;i++){const p=await pdf.getPage(i);result.push({text:(await p.getTextContent()).items.map(t=>t.str).join(' '),size:[p.getViewport({scale:1}).width,p.getViewport({scale:1}).height]});}await pdf.loadingTask.destroy();return result;});}
  // Vector fitting across all rotations and CropBox offsets. Measure coloured
  // pixels against original display space to catch inverse-matrix errors.
  for(const rotation of [0,90,180,270])for(const crop of [false,true]){

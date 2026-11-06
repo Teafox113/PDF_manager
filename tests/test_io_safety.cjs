@@ -10,7 +10,7 @@ const asset=process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_ed
   const errors=[],requests=[],dialogs=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
   page.on('dialog',async d=>{dialogs.push(d.message());await d.dismiss();});
-  await page.goto(pathToFileURL(asset).href);await page.locator('#language-select').selectOption('en');
+  await page.goto(pathToFileURL(asset).href);await page.evaluate(()=>pdfManagerEngineReady);await page.locator('#language-select').selectOption('en');
   const bytes=await page.evaluate(async()=>{const d=await PDFLib.PDFDocument.create();for(let i=0;i<4;i++)d.addPage([420,594]).drawText('SYNTHETIC '+i,{x:30,y:500,size:16});window.sample=Array.from(await d.save());return window.sample;});
   const file=name=>({name,mimeType:'application/pdf',buffer:Buffer.from(bytes)});
   await page.locator('#file-main').setInputFiles(file('main.pdf'));await page.waitForFunction(()=>!documentIO.busy&&state.mainPages.length===4);
@@ -91,7 +91,7 @@ const asset=process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_ed
   const large=await page.evaluate(async()=>{const d=await PDFLib.PDFDocument.create();for(let i=0;i<120;i++)d.addPage([420,594]).drawText('STRESS '+i,{x:20,y:500});return Array.from(await d.save());});
   await page.locator('#file-main').setInputFiles({name:'synthetic-120.pdf',mimeType:'application/pdf',buffer:Buffer.from(large)});
   await page.waitForFunction(()=>!documentIO.busy&&state.mainPages.length===120);await page.evaluate(()=>saveAsPDF());
-  const stress=await page.evaluate(async()=>{const pdf=await pdfjsLib.getDocument({data:new Uint8Array(downloads.at(-1).data)}).promise;const result={pages:pdf.numPages,first:(await(await pdf.getPage(1)).getTextContent()).items.map(i=>i.str).join(''),last:(await(await pdf.getPage(120)).getTextContent()).items.map(i=>i.str).join('')};await pdf.destroy();return result;});
+  const stress=await page.evaluate(async()=>{const pdf=await loadLocalPdf(new Uint8Array(downloads.at(-1).data)).promise;const result={pages:pdf.numPages,first:(await(await pdf.getPage(1)).getTextContent()).items.map(i=>i.str).join(''),last:(await(await pdf.getPage(120)).getTextContent()).items.map(i=>i.str).join('')};await pdf.loadingTask.destroy();return result;});
   assert.deepEqual(stress,{pages:120,first:'STRESS 0',last:'STRESS 119'});
   assert.deepEqual(errors,[]);assert.deepEqual(requests,[]);assert.deepEqual(dialogs,[]);
   console.log('PASS IO safety: atomic batches, invalid formats/images/DOCX, render cleanup, concurrency guard, PDF/ZIP cancellation and retry, accessible keyboard progress, 120-page text/order, offline.');

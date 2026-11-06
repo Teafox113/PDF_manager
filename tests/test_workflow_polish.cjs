@@ -10,7 +10,7 @@ const asset=process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_ed
   const errors=[],requests=[],dialogs=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
   page.on('dialog',async d=>{dialogs.push(d.message());await d.dismiss();});
-  await page.goto(pathToFileURL(asset).href);await page.locator('#language-select').selectOption('en');
+  await page.goto(pathToFileURL(asset).href);await page.evaluate(()=>pdfManagerEngineReady);await page.locator('#language-select').selectOption('en');
   const bytes=await page.evaluate(async()=>{const d=await PDFLib.PDFDocument.create();d.addPage([420,594]).drawText('SYNTHETIC_ORIGINAL',{x:25,y:25,size:12});return Array.from(await d.save());});
   await page.locator('#file-main').setInputFiles({name:'workflow.pdf',mimeType:'application/pdf',buffer:Buffer.from(bytes)});
   await page.waitForFunction(()=>state.mainPages.length===1&&!documentIO.busy);
@@ -96,7 +96,7 @@ const asset=process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_ed
   assert.equal(await page.evaluate(()=>!!state.mainPages[0].pdfBytes),false);
   await page.locator('#pe-undo').click();assert.equal(await page.evaluate(()=>!!state.mainPages[0].pdfBytes),true);
   await page.locator('#pe-redo').click();assert.equal(await page.evaluate(()=>!!state.mainPages[0].pdfBytes),false);
-  const erased=await page.evaluate(async()=>{const d=await PDFLib.PDFDocument.create();await appendPageToPdfDocument(d,state.mainPages[0],new Map());const bytes=await saveEditedPdf(d,state.mainPages);const pdf=await pdfjsLib.getDocument({data:bytes}).promise;const text=(await (await pdf.getPage(1)).getTextContent()).items.map(i=>i.str).join('');await pdf.destroy();return text;});
+  const erased=await page.evaluate(async()=>{const d=await PDFLib.PDFDocument.create();await appendPageToPdfDocument(d,state.mainPages[0],new Map());const bytes=await saveEditedPdf(d,state.mainPages);const pdf=await loadLocalPdf(bytes).promise;const text=(await (await pdf.getPage(1)).getTextContent()).items.map(i=>i.str).join('');await pdf.loadingTask.destroy();return text;});
   assert.equal(erased,'','redo exports the replacement, not original PDF streams');
   assert.deepEqual(errors,[]);assert.deepEqual(requests,[]);assert.deepEqual(dialogs,[]);
   console.log('PASS workflow: real undo/redo, no-op selection/edit, grouped drag, live validation, responsive draft, atomic replacement, unsaved guard, export snapshot/locking/failure recovery, private offline operation.');

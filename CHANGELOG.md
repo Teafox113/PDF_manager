@@ -1,5 +1,33 @@
 # Changelog
 
+## v2.14.0-F — 2026-11-05
+
+- PDF.js 3.11.174 → 6.5.438：實際升級主引擎及 Worker；原生 ESM 主模組，file:// 專用 classic Worker 相容橋接，禁止退回主執行緒解析。
+- 內嵌 CMap、Foxit／Liberation 2.1.5 OFL 字型、JBIG2／OpenJPEG／QCMS WebAssembly 及 ICC，完全離線。新增套件／資源雜湊與授權原文。
+- 保留 connect-src none 與禁止 JavaScript eval；僅允許 wasm-unsafe-eval 供解碼器。未加入 PDF scripting manager／QuickJS／XFA。
+- 適配新版文件生命週期，正常、失敗及預覽完成後回收 Worker；處理模組啟動時序及啟動失敗。
+- 新版 viewport 已包含 UserUnit，避免再次乘倍；合併 v2.13.1 的旋轉實際紙張尺寸修正。
+- 擴增合成回歸，包含 CJK／JPX／ICC／Worker、紙張尺寸、裁切、消去、文字／表格、實際 PDF／ZIP 下載及 120 頁文件。
+- 不改寫舊成品；Edge 內建閱讀器 Ctrl＋] 問題仍未確診。
+
+以下為歷史紀錄；舊版本狀態不代表目前版本。
+
+
+## v2.13.2-F — 本機安全修補版（2026-11-05，未發布）
+
+- 所有產品 PDF.js 載入統一使用 `pdf_security.js` 的 `loadLocalPdf`，僅接受本機位元組，固定 `isEvalSupported: false`、`enableXfa: false`；呼叫者不能透過參數覆寫。這是 Mozilla 對 CVE-2024-4367 的官方緩解方式。
+- 離線 CSP 移除 `unsafe-eval`，拒絕主頁與繼承政策的 Blob Worker 執行動態程式碼；仍保留現有內嵌腳本所需的 unsafe-inline，因此不是 Manifest V3 成品。
+- 新增純合成安全回歸：入口繞過掃描、選項／URL 防護、真實 DOM 事件觸發 CSP 驗證及 PDF 顯示／文字擷取。
+- 沿用已固定雜湊與授權的 PDF.js 3.11.174，並未升級為 6.x，也不宣稱所有依賴均無漏洞；現代主版遷移與 Chrome 版評估見 `docs/CHROME_EXTENSION_ASSESSMENT.md`。
+- 包含 v2.13.1 旋轉尺寸修正。不讀取私人測試文件，不同步 Git 工作區、不推送；舊成品保留但沒有回補安全修正，請改用新版。
+
+## v2.13.1-F — 本機測試版（2026-10-22，未發布）
+
+- 修正工具列旋轉 PDF 後把圖片像素當成 PDF 點數，造成整份 PDF／個別分頁紙張尺寸放大的問題。旋轉前記錄可見頁面實際尺寸，90° 旋轉後交換寬高，包含 CropBox、原始旋轉與 UserUnit。
+- 圖片頁沿用既有尺寸規則，已有 pageSize 的頁面保留實際尺寸；連續旋轉不累積放大。完成轉圖後才記錄復原，轉圖失敗不增加復原步數。
+- 新增純合成 `tests/test_rotation_size.cjs`，涵蓋旋轉、偏移裁切框、尺寸單位、復原／重做與 PDF／ZIP 匯出。
+- 本版仍沿用旋轉頁點陣化，不恢復舊版已放大的文件，不代表修復 Edge 的 Ctrl＋] 快捷鍵或強制開啟為 100%。沒有新增第三方依賴；僅本機交付，未推送 Git。
+
 ## v2.13.0-F（2026-10-21）
 
 本次正式更新整合 v2.12.0-F 的裁切／尺寸校正與 v2.13.0-F 操作打磨。v2.12 未獨立發布；下方「本機候選／未發布」為開發歷史。

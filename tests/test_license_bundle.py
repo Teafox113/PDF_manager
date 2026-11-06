@@ -13,7 +13,8 @@ from license_bundle import embed_notices, load_manifest, verify_bundle
 class LicenseTests(unittest.TestCase):
     def test_archived_texts_match_manifest(self):
         manifest = load_manifest()
-        self.assertEqual(len(manifest['bundles']), 5)
+        self.assertEqual(len(manifest['bundles']), 3)
+        self.assertTrue(any(c['name']=='pdfjs-dist-offline-resources' and c['version']=='6.5.438' for c in manifest['components']))
         self.assertEqual(manifest['provisional_decisions'], [])
         component = next(c for c in manifest['components'] if c['name'] == 'dingbat-to-unicode')
         self.assertEqual(component['status'], 'upstream-confirmed')

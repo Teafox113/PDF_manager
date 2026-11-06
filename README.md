@@ -2,6 +2,10 @@
 
 [English](README.en.md) · 繁體中文
 
+> **v2.14.0-F**：PDF.js 本體由 3.11.174 升級至 **6.5.438**，不是僅套用先前緩解。單檔離線版包含真實背景 Worker、CMap、字型、影像解碼及 ICC 資源，並整合旋轉紙張尺寸修正。[安全說明](docs/SECURITY_DEPENDENCIES.md) · [測試報告](docs/TEST_REPORT.md)。
+
+請從原始 PDF 重新載入、旋轉並匯出確認。此修正不會自動還原舊輸出檔的尺寸；旋轉仍會將該頁轉成圖片。Edge 的 Ctrl＋] 快捷鍵問題尚未確認，瀏覽器開啟縮放也不保證為 100%。
+
 > **v2.13.0-F**：新增裁切／參考頁尺寸校正，並改善結果預覽、精確定位及防誤操作。完整變更見 [更新日誌](CHANGELOG.md)。
 
 ### 裁切操作打磨
@@ -46,7 +50,7 @@
 
 按「加入文字」即可在頁面文字框輸入；雙擊已新增的文字可重新編輯。格式套用整個文字框，尚不支援同框內局部文字混合格式。Ctrl+B／I／U 切換粗體／斜體／底線；Ctrl+Enter 套用，Esc 取消本次修改。切換工具或按頁面編輯器「完成」也會先套用文字；完成後可拖曳移動及縮放。
 
-字型使用本機已安裝字型，缺少時由瀏覽器替代，不下載或附帶字型。新增文字匯出仍會定稿為圖片；不直接修改原 PDF 文字。表格仍使用原有儲存格編輯器。文字超出頁面時會阻擋套用，不悄悄縮小字級或裁掉內容。
+字型使用本機已安裝字型，缺少時由瀏覽器替代，新增文字不下載字型；PDF 顯示引擎另內嵌有授權的替代字型。新增文字匯出仍會定稿為圖片；不直接修改原 PDF 文字。表格仍使用原有儲存格編輯器。文字超出頁面時會阻擋套用，不悄悄縮小字級或裁掉內容。
 
 > **v2.8.1-F**：新增文字、剪貼簿圖片及可編輯表格功能；修正普通超連結阻擋消去，拒絕訊息顯示主 PDF 頁碼與原因。新增內容匯出後定稿為圖片。
 
@@ -62,7 +66,7 @@
 
 本專案提供瀏覽器基底之以頁面為基礎用來整理、合併 PDF 的工具，不必把文件交給線上轉檔服務。
 
-目前版本：**v2.13.0-F**。介面支援 **繁體中文 / English**，並提供四套可切換佈景。
+目前版本：**v2.14.0-F**。介面支援 **繁體中文 / English**，並提供四套可切換佈景。
 
 本版新增頁面內容編輯與有限範圍的框選消去，並保留先前旋轉 PDF 蓋章座標修正。
 
@@ -80,7 +84,7 @@
 
 ## 快速開始
 
-離線版請到 [v2.13.0-F 下載頁](https://github.com/Teafox113/PDF_manager/releases/tag/v2.13.0-F)，下載 `pdf_editor_offline_v2.13.0-F.html` 後以桌面版 Chrome／Edge 開啟。
+離線版請到 [v2.14.0-F 下載頁](https://github.com/Teafox113/PDF_manager/releases/tag/v2.14.0-F)，下載 `pdf_editor_offline_v2.14.0-F.html` 後以桌面版 Chrome／Edge 開啟。
 
 1. 下載或複製專案，用桌面版 Chrome 或 Edge 開啟 [pdf_editor.html](pdf_editor.html)。
 2. 在工具列選擇 **Language / 語言** 與 **佈景 / Theme**。
@@ -115,7 +119,7 @@ python build_offline.py
 產出：
 
 ```text
-release-assets/pdf_editor_offline_v2.8.1-F.html
+release-assets/pdf_editor_offline_v2.14.0-F.html
 ```
 
 直接用瀏覽器開啟此檔即可使用離線版。建置會核對函式庫及授權檔雜湊、內嵌依賴及完整第三方條文；同名成品存在時停止，不自動覆寫。離線 HTML 不納入 Git 歷史，透過 GitHub Release 附件提供下載。
@@ -123,7 +127,7 @@ release-assets/pdf_editor_offline_v2.8.1-F.html
 ## 隱私與資料
 
 - 應用程式在瀏覽器本機解析、編排與輸出文件，沒有設計文件上傳 API。
-- 來源版會向 cdnjs 請求 JavaScript，這不等同文件上傳，但來源版不是完全離線執行。
+- 來源版會向 cdnjs / jsDelivr 請求 JavaScript，這不等同文件上傳，但來源版不是完全離線執行。
 - 離線成品內嵌函式庫，使用內容安全政策限制外部連線。
 - `localStorage` 只保存介面偏好，不保存文件內容。
 - 處理機密資料時，應使用經驗證的離線成品並遵循所在組織的資料規範。功能測試不等於全面資安稽核。
@@ -156,7 +160,7 @@ release-assets/           本機離線成品（HTML 不納入 Git）
 
 | 函式庫 | 版本 | 宣告授權 |
 | --- | --- | --- |
-| PDF.js | 3.11.174 | Apache-2.0 |
+| PDF.js | 6.5.438 | Apache-2.0 |
 | pdf-lib | 1.17.1 | MIT |
 | html2canvas | 1.4.1 | MIT |
 | Mammoth | 1.6.0 | BSD-2-Clause |
@@ -187,3 +191,10 @@ Node.js / Playwright 僅用於測試，不是使用或打包工具的必要依�
 ## 聯繫
 
 如需聯繫、提出問題或功能建議，請至本專案的 [GitHub Issues](https://github.com/Teafox113/PDF_manager/issues) 留言。請勿在公開留言中提供個資、機密文件或憑證。
+
+
+### 引擎建置與回歸
+
+請使用允許 WebAssembly 的新版桌面 Chrome／Edge。建置驗證固定公開套件及資源雜湊，快取放在忽略提交的 `test-results/dependency-cache/`，不需 npm 執行依賴。來源 HTML 使用 ESM，開發時請透過本機 HTTP 伺服器（`python -m http.server`）開啟；直接雙擊請用建置後的離線 HTML。
+
+測試環境需要 Playwright、Pillow 及 Python（可用 `PYTHON` 選定）：`node tests/run_regression.cjs`；另設 `BROWSER_CHANNEL=msedge` 重跑。`python -m unittest discover -s tests -v` 驗證授權及建置防護。回歸均為合成文件，發布測試不可設定 `PDF_MANAGER_TEST_PDF`。

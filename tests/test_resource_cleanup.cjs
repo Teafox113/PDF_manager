@@ -4,10 +4,10 @@ const {pathToFileURL}=require('node:url'),{chromium}=require('playwright');
 const root=path.resolve(__dirname,'..');
 const version=JSON.parse(fs.readFileSync(path.join(root,'version.json'))).version;
 const asset=process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_editor_offline_v${version}.html`);
-(async()=>{const browser=await chromium.launch({channel:'chrome',headless:true});try{
+(async()=>{const browser=await chromium.launch({channel:process.env.BROWSER_CHANNEL||'chrome',headless:true});try{
  const context=await browser.newContext({offline:true});const page=await context.newPage();const errors=[],network=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?:/.test(r.url()))network.push(r.url());});
- await page.goto(pathToFileURL(asset).href);
+ await page.goto(pathToFileURL(asset).href);await page.evaluate(()=>pdfManagerEngineReady);
  const lexical=await page.evaluate(()=>{
    const enc=new TextEncoder();const u=pdfContentUsage(enc.encode('% /Fake Do\nBT /F#31 12 Tf (/Ghost Do \\( nested \\)) Tj ET /Real#20Image Do'));
    const rejected=['BI /W 1 ID x EI','/X Do /Y','(unterminated','/Im#Z0 Do','<< /Key 1 0 R >> BDC','/Unknown foo'];
@@ -39,9 +39,9 @@ const asset=process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_ed
    const secret='ERASE_MARKER_482971',hex=Array.from(secret,c=>c.charCodeAt(0).toString(16).padStart(2,'0')).join('').toUpperCase();
    const leaked=parsed.context.enumerateIndirectObjects().some(([,obj])=>{if(!(obj instanceof L.PDFRawStream))return false;const s=new TextDecoder('latin1').decode(L.decodePDFRawStream(obj).decode());return s.includes(secret)||s.toUpperCase().includes(hex);});
    const images=parsed.context.enumerateIndirectObjects().filter(([,obj])=>obj.dict?.get(N('Subtype'))?.toString()==='/Image').map(([,obj])=>obj.dict.get(N('Width')).asNumber());
-   const pdf=await pdfjsLib.getDocument({data:bytes.slice()}).promise;const texts=[],pictures=[];
+   const pdf=await loadLocalPdf(bytes.slice()).promise;const texts=[],pictures=[];
    for(let n=1;n<=2;n++){const p=await pdf.getPage(n);texts.push((await p.getTextContent()).items.map(t=>t.str).join(' '));const vp=p.getViewport({scale:1}),cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;await p.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;pictures.push(cv.toDataURL().split(',')[1]);}
-   await pdf.destroy();
+   await pdf.loadingTask.destroy();
    const single=await L.PDFDocument.load(await makeSinglePagePdf(state.mainPages[1],new Map()));
    const zipImages=single.context.enumerateIndirectObjects().filter(([,obj])=>obj.dict?.get(N('Subtype'))?.toString()==='/Image').length;
    // Reintroducing the old source image must be rejected on subsequent export.
@@ -62,8 +62,8 @@ const asset=process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_ed
   const geometry=await page.evaluate(async rotation=>{
    const d=await PDFLib.PDFDocument.create(),p=d.addPage([600,400]);p.setCropBox(30,20,540,340);p.setRotation(PDFLib.degrees(rotation));
    p.drawRectangle({x:80,y:80,width:60,height:40,color:PDFLib.rgb(0,0,1)});const bytes=await d.save();
-   const pdf=await pdfjsLib.getDocument({data:bytes.slice()}).promise,pg=await pdf.getPage(1),vp=pg.getViewport({scale:1});
-   const r=vp.convertToViewportRectangle([80,80,140,120]);const rect={x:Math.min(r[0],r[2])-2,y:Math.min(r[1],r[3])-2,width:Math.abs(r[2]-r[0])+4,height:Math.abs(r[3]-r[1])+4};await pdf.destroy();
+   const pdf=await loadLocalPdf(bytes.slice()).promise,pg=await pdf.getPage(1),vp=pg.getViewport({scale:1});
+   const r=[...vp.convertToViewportPoint(80,80),...vp.convertToViewportPoint(140,120)];const rect={x:Math.min(r[0],r[2])-2,y:Math.min(r[1],r[3])-2,width:Math.abs(r[2]-r[0])+4,height:Math.abs(r[3]-r[1])+4};await pdf.loadingTask.destroy();
    state.mainPages=[{id:uid(),sourceType:'main_pdf',pdfBytes:bytes,pageIndex:0}];state.selectedMain=new Set([0]);await openStampEditor();await erasePageArea(getActiveStampPage(),rect);
    const out=await PDFLib.PDFDocument.create();await appendPageToPdfDocument(out,getActiveStampPage(),new Map());const exported=await saveEditedPdf(out,state.mainPages);
    const cv=document.createElement('canvas');await renderPdfPageToCanvasAtWidth(exported,0,cv,vp.width);const data=cv.getContext('2d').getImageData(0,0,cv.width,cv.height).data;

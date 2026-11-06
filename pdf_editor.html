@@ -36,10 +36,10 @@ const I18N = (() => {
   "⤓ 另存新檔": "⤓ Save PDF",
   "將左側每一頁各自存成 PDF，並打包成 ZIP": "Export each main page as a separate PDF in a ZIP",
   "⤓ 個別分頁": "⤓ Split to ZIP",
-  "PDF 頁面編輯器 v2.13.0-F": "PDF Page Manager v2.13.0-F",
+  "PDF 頁面編輯器 v2.14.0-F": "PDF Page Manager v2.14.0-F",
   "功能摘要": "Features",
   "PDF 頁面刪除、插入、拖曳重排、多選批次操作、縮圖旋轉、DOCX / 圖片來源載入、另存新 PDF、個別分頁 ZIP、圖片 / PDF 蓋章與裁切。": "Delete, insert, reorder, batch-select and rotate pages. Import DOCX or images, save PDFs, split to ZIP, and place or crop image / PDF stamps.",
-  "v2.13.0-F 變更內容": "What's new in v2.13.0-F",
+  "v2.14.0-F 變更內容": "What's new in v2.14.0-F",
   "修正旋轉 PDF 的印章拖曳邊界、預覽與匯出座標。": "Fixed stamp movement bounds, previews, and export coordinates on rotated PDFs.",
   "四套佈景、繁體中文／English 即時切換與偏好記憶。": "Four themes, instant Traditional Chinese / English switching, and saved preferences.",
   "v2.6.2-F 變更內容": "What's new in v2.6.2-F",
@@ -278,10 +278,11 @@ const tr = I18N.template;
   });
 })();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script type="module" src="pdf_engine.mjs"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script src="pdf_security.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -923,7 +924,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
     <button id="btn-save-pages" onclick="exportPagesAsZip()" disabled title="將左側每一頁各自存成 PDF，並打包成 ZIP">⤓ 個別分頁</button>
   </div>
   <button id="btn-about" onclick="toggleAbout()" style="background:#100f0d;border-color:#28251f;color:#6e6960;font-size:11px;">
-    FloofyFox · PDF Editor v2.13.0-F
+    FloofyFox · PDF Editor v2.14.0-F
   </button>
 </div>
 
@@ -932,15 +933,15 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
   <div id="about-close" onclick="toggleAbout()">✕</div>
   <div class="about-name">FloofyFox</div>
   <a class="about-link" href="https://github.com/Teafox113" target="_blank" rel="noopener noreferrer">github.com/Teafox113</a>
-  <div class="about-version">PDF 頁面編輯器 v2.13.0-F</div>
+  <div class="about-version">PDF 頁面編輯器 v2.14.0-F</div>
 
   <div class="about-section-title">功能摘要</div>
   <div class="about-features compact">
     PDF 頁面刪除、插入、拖曳重排、多選批次操作、縮圖旋轉、DOCX / 圖片來源載入、另存新 PDF、個別分頁 ZIP、圖片 / PDF 蓋章與裁切。
   </div>
 
-  <div class="about-section-title">v2.13.0-F 變更內容</div>
-  <div class="about-features" data-pe-text="裁切結果預覽、移動框、鍵盤微調與即時輸入診斷。">裁切結果預覽、移動框、鍵盤微調與即時輸入診斷。</div>
+  <div class="about-section-title">v2.14.0-F 變更內容</div>
+  <div class="about-features" data-pe-text="PDF.js 6.5.438 新引擎、離線字型／解碼資源及旋轉紙張尺寸修正。">PDF.js 6.5.438 新引擎、離線字型／解碼資源及旋轉紙張尺寸修正。</div>
 
   <div class="about-section-title">v2.6.2-F 變更內容</div>
   <div class="about-features" style="color:#FF9F0A;">
@@ -951,7 +952,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
 
   <div class="about-section-title">使用開源函式庫</div>
   <div class="about-libs">
-    <span>PDF.js 3.11.174 (Apache 2.0)</span><span>·</span>
+    <span>PDF.js 6.5.438 (Apache 2.0)</span><span>·</span>
     <span>pdf-lib 1.17.1 (MIT)</span><span>·</span>
     <span>Mammoth.js 1.6.0 (BSD 2-Clause)</span><span>·</span>
     <span>html2canvas 1.4.1 (MIT)</span>
@@ -1121,8 +1122,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
 // ════════════════════════════════
 //  PDF.js
 // ════════════════════════════════
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+// PDF.js ESM initialization is provided by pdf_engine.mjs before window.load.
 
 // ════════════════════════════════
 //  全域狀態
@@ -1410,7 +1410,7 @@ async function loadMainFile(file, confirmed=false) {
   setStatus(t('載入主 PDF 中...')); showProgress(t('讀取 PDF...'), 10);
   try {
     const pdfBytes = new Uint8Array(await file.arrayBuffer());
-    pdfDoc   = await pdfjsLib.getDocument({ data: pdfBytes.slice() }).promise;
+    pdfDoc   = await loadLocalPdf(pdfBytes.slice()).promise;
     const n = pdfDoc.numPages;
     const nextPages=[];
     for (let i = 1; i <= n; i++) {
@@ -1422,7 +1422,7 @@ async function loadMainFile(file, confirmed=false) {
     hideProgress(); renderMainThumbs(); updateMainHeader(); updateToolbar(); updateUndoBtn();
     setStatus(tr`已載入：${file.name}（${n} 頁）`);
   } catch(err) { hideProgress(); alert(pt('無法載入此 PDF，原工作階段已保留。請確認檔案未損壞且不需密碼。')); setStatus(t('載入失敗')); }
-  finally {setDocumentBusy(false);if(pdfDoc)await pdfDoc.destroy();}
+  finally {setDocumentBusy(false);if(pdfDoc)await pdfDoc.loadingTask.destroy();}
 }
 
 // ════════════════════════════════
@@ -1501,14 +1501,14 @@ async function loadSourceFile(file) { await loadSourceFiles([file]); }
 // Append 模式 — 不 reset state
 async function appendSourcePDF(file, baseProgress = 10, progressRange = 85, target = state.sourcePages) {
   const pdfBytes = new Uint8Array(await file.arrayBuffer());
-  const pdfDoc   = await pdfjsLib.getDocument({ data: pdfBytes.slice() }).promise;
+  const pdfDoc   = await loadLocalPdf(pdfBytes.slice()).promise;
   try {
   const n = pdfDoc.numPages;
   for (let i = 1; i <= n; i++) {
     showProgress(tr`${file.name} 第 ${i}/${n} 頁`, baseProgress + (i/n)*progressRange);
     target.push({ id: uid(), sourceType: 'source_pdf', sourcePath: file.name, pageIndex: i-1, pdfBytes, imageDataUrl: null });
   }
-  } finally {await pdfDoc.destroy();}
+  } finally {await pdfDoc.loadingTask.destroy();}
 }
 
 async function appendSourceImage(file, target = state.sourcePages) {
@@ -1716,12 +1716,14 @@ async function renderPageToCanvas(pg, canvas, generation = thumbRenderGeneration
 }
 
 async function renderPdfPageToCanvas(pdfBytes, pageIndex, canvas) {
-  const pdf  = await pdfjsLib.getDocument({ data: pdfBytes.slice() }).promise;
+  const pdf  = await loadLocalPdf(pdfBytes.slice()).promise;
+  try {
   const page = await pdf.getPage(pageIndex + 1);
   const scale = THUMB_RENDER_W / page.getViewport({ scale: 1 }).width;
   const vp = page.getViewport({ scale });
   canvas.width = vp.width; canvas.height = vp.height;
   await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+  } finally { await pdf.loadingTask.destroy(); }
 }
 
 async function renderPdfPageToDataUrl(pdfBytes, pageIndex, targetW = 900) {
@@ -1731,12 +1733,14 @@ async function renderPdfPageToDataUrl(pdfBytes, pageIndex, targetW = 900) {
 }
 
 async function renderPdfPageToCanvasAtWidth(pdfBytes, pageIndex, canvas, targetW) {
-  const pdf  = await pdfjsLib.getDocument({ data: pdfBytes.slice() }).promise;
+  const pdf  = await loadLocalPdf(pdfBytes.slice()).promise;
+  try {
   const page = await pdf.getPage(pageIndex + 1);
   const scale = targetW / page.getViewport({ scale: 1 }).width;
   const vp = page.getViewport({ scale });
   canvas.width = vp.width; canvas.height = vp.height;
   await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+  } finally { await pdf.loadingTask.destroy(); }
 }
 
 async function renderImageToCanvas(dataUrl, canvas) {
@@ -1789,7 +1793,7 @@ async function getPageNaturalSize(pg) {
 // Stamps use the visible, rotated CropBox with a bottom-left origin.
 // Convert this space back to native PDF coordinates only when exporting.
 async function getPdfPageGeometry(pg) {
-  const pdf = await pdfjsLib.getDocument({ data: pg.pdfBytes.slice() }).promise;
+  const pdf = await loadLocalPdf(pg.pdfBytes.slice()).promise;
   try {
     const page = await pdf.getPage(pg.pageIndex + 1);
     const vp = page.getViewport({ scale: 1 });
@@ -1798,10 +1802,11 @@ async function getPdfPageGeometry(pg) {
     const y = vp.convertToPdfPoint(0, vp.height - 1);
     return {
       width: vp.width, height: vp.height,
+      // PDF.js 6.x viewport dimensions already include UserUnit, in points.
       toPdf: [x[0] - origin[0], x[1] - origin[1],
         y[0] - origin[0], y[1] - origin[1], ...origin],
     };
-  } finally { await pdf.destroy(); }
+  } finally { await pdf.loadingTask.destroy(); }
 }
 
 async function renderPagePreviewToCanvas(pg, canvas, targetW = 900) {
@@ -1813,13 +1818,13 @@ async function renderPagePreviewToCanvas(pg, canvas, targetW = 900) {
     canvas.height = Math.round(size.height * scale);
     canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
   } else {
-    const pdf  = await pdfjsLib.getDocument({ data: pg.pdfBytes.slice() }).promise;
+    const pdf  = await loadLocalPdf(pg.pdfBytes.slice()).promise;
     try {
     const page = await pdf.getPage(pg.pageIndex + 1);
     const vp = page.getViewport({ scale });
     canvas.width = vp.width; canvas.height = vp.height;
     await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
-    } finally { await pdf.destroy(); }
+    } finally { await pdf.loadingTask.destroy(); }
   }
   return { size, scale };
 }
@@ -1933,18 +1938,20 @@ async function addImageStamp(file) {
 
 async function handleStampPdfFile(file) {
   const bytes = await file.arrayBuffer();
-  const pdf = await pdfjsLib.getDocument({ data: bytes.slice(0) }).promise;
+  const pdf = await loadLocalPdf(bytes.slice(0)).promise;
+  const pageCount = pdf.numPages;
+  await pdf.loadingTask.destroy();
   const addPage = async pageNo => {
-    const pageIndex = Math.max(0, Math.min(pdf.numPages - 1, pageNo - 1));
-    await addPdfStamp(file.name, bytes, pageIndex, pdf.numPages);
+    const pageIndex = Math.max(0, Math.min(pageCount - 1, pageNo - 1));
+    await addPdfStamp(file.name, bytes, pageIndex, pageCount);
   };
-  if (pdf.numPages === 1) {
+  if (pageCount === 1) {
     await addPage(1);
     return;
   }
   showInputModal(
     t('選擇 PDF 印章頁'),
-    tr`此 PDF 共有 ${pdf.numPages} 頁，請輸入要作為印章的頁碼`,
+    tr`此 PDF 共有 ${pageCount} 頁，請輸入要作為印章的頁碼`,
     t('例：1'),
     val => addPage(Number(val) || 1),
     '1'
@@ -3155,7 +3162,8 @@ function rotateDataUrl(dataUrl, degrees) {
 
 // PDF 頁轉高解析度圖（1200px 寬）供旋轉使用
 async function renderPageHighRes(pg, targetW = 1200) {
-  const pdfDoc = await pdfjsLib.getDocument({ data: pg.pdfBytes.slice() }).promise;
+  const pdfDoc = await loadLocalPdf(pg.pdfBytes.slice()).promise;
+  try {
   const page   = await pdfDoc.getPage(pg.pageIndex + 1);
   const scale  = targetW / page.getViewport({ scale: 1 }).width;
   const vp     = page.getViewport({ scale });
@@ -3163,12 +3171,15 @@ async function renderPageHighRes(pg, targetW = 1200) {
   canvas.width = vp.width; canvas.height = vp.height;
   await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
   return canvas.toDataURL('image/jpeg', 0.92);
+  } finally { await pdfDoc.loadingTask.destroy(); }
 }
 
 // 旋轉主 PDF 的第 i 頁（dir: 'cw' | 'ccw'）
 async function rotatePage(i, dir) {
   const pg = state.mainPages[i];
-  snapshotForUndo();
+  // Preserve physical page units before rasterizing: image pixels are not PDF points.
+  const originalSize = pg.sourceType === 'image'
+    ? await getPageNaturalSize(pg) : await getPdfPageGeometry(pg);
 
   setStatus(t('旋轉中...'));
   let srcDataUrl = pg.imageDataUrl;
@@ -3183,9 +3194,10 @@ async function rotatePage(i, dir) {
   const rotated = await rotateDataUrl(srcDataUrl, deg);
 
   // 更新頁面物件（轉成 image 型，以便 saveAsPDF 正確輸出旋轉後版本）
+  snapshotForUndo();
   pg.imageDataUrl = rotated;
   pg.sourceType   = 'image';
-  if(pg.pageSize)pg.pageSize={width:pg.pageSize.height,height:pg.pageSize.width};
+  pg.pageSize = { width: originalSize.height, height: originalSize.width };
 
   // 更新縮圖快取（用較低解析度版本）
   deleteThumbCacheForPage(pg);

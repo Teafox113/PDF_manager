@@ -16,6 +16,8 @@ Object.assign(PAGE_EDIT_TEXT,{
   '套用前請確認預覽與影響說明；可在本次工作階段復原。':'Review the preview and effects before applying; session undo is available.',
   '裁切與參考頁等比例校正。':'Page cropping and proportional fitting to a reference page.',
   '裁切結果預覽、移動框、鍵盤微調與即時輸入診斷。':'Crop-result preview, move mode, keyboard nudging and live input validation.',
+  '修正旋轉後紙張尺寸放大；保留實際尺寸並交換寬高。':'Fix enlarged paper sizes after rotation; preserve physical dimensions and swap width and height.',
+  'PDF.js 6.5.438 新引擎、離線字型／解碼資源及旋轉紙張尺寸修正。':'PDF.js 6.5.438: new offline engine, embedded fonts/decoders, and physical rotation size fixes.',
   '重設裁切框':'Reset crop box','畫新框':'Draw a new box','移動框':'Move box',
   '顯示裁切結果':'Show cropped result',
   '方向鍵移動 1 mm；Shift 為 10 mm，Alt 為 0.1 mm。結果預覽模式不能拖曳。':'Arrow keys move 1 mm; Shift moves 10 mm, Alt moves 0.1 mm. Dragging is disabled in result preview.',

@@ -26,14 +26,10 @@ import re
 import json
 import argparse
 from license_bundle import load_manifest, verify_bundle, embed_notices
+from pdf_engine_bundle import build_engine
 
 # ── 函式庫下載清單 ────────────────────────────────────────
 LIBS = [
-    {
-        "tag":  '<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>',
-        "url":  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",
-        "name": "PDF.js 3.11.174",
-    },
     {
         "tag":  '<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>',
         "url":  "https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js",
@@ -51,8 +47,6 @@ LIBS = [
     },
 ]
 
-WORKER_URL  = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"
-WORKER_NAME = "PDF.js Worker 3.11.174"
 
 SRC_FILE = "pdf_editor.html"
 
@@ -152,7 +146,7 @@ Change Log
     # ── 4. CSP meta tag ──────────────────────────────────
     CSP = ('<meta http-equiv="Content-Security-Policy"\n'
            '      content="default-src \'self\' data: blob: file:; '
-           'script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' blob:; '
+           'script-src \'self\' \'unsafe-inline\' \'wasm-unsafe-eval\' blob:; '
            'worker-src blob:; '
            'img-src \'self\' data: blob: file:; '
            'style-src \'self\' \'unsafe-inline\'; '
@@ -225,9 +219,9 @@ Change Log
 Third-Party Open Source License Notice
 
 本工具（{dist_name}）包含以下第三方開源 JavaScript 函式庫。
-相關著作權與授權條款歸原作者所有。本工具以離線內嵌方式使用，未修改原始碼。
+相關著作權與授權條款歸原作者所有。離線 Worker 模組包裝適配詳見內嵌完整授權及安全說明。
 
-1. PDF.js v3.11.174
+1. PDF.js v6.5.438
    Copyright (c) Mozilla Foundation and individual contributors
    License: Apache License 2.0 | SPDX: Apache-2.0
    Purpose: PDF parsing, rendering, thumbnail generation
@@ -306,7 +300,7 @@ def main():
         html = f.read()
 
     # Project-owned page editing module; bundle it without a runtime file fetch.
-    for project_module in ("pdf_resource_cleaner.js", "page_editor.js", "page_geometry.js"):
+    for project_module in ("pdf_security.js", "pdf_resource_cleaner.js", "page_editor.js", "page_geometry.js"):
         with open(os.path.join(here, project_module), "r", encoding="utf-8") as f:
             module_code = f.read().replace("</script", "<\\/script")
         html = html.replace(f'<script src="{project_module}"></script>', '<script>\n' + module_code + '\n</script>')
@@ -323,25 +317,8 @@ def main():
             print(f"\n❌ 下載 {lib['name']} 失敗：{e}")
             sys.exit(1)
 
-    # PDF.js Worker → Blob URL
-    try:
-        worker_code = download(WORKER_URL, WORKER_NAME).decode("utf-8")
-        verify_bundle(WORKER_URL, worker_code, license_manifest)
-        worker_json = json.dumps(worker_code)
-        blob_init = (
-            "const _pdfWorkerBlob = new Blob(["
-            + worker_json
-            + "], {type: 'application/javascript'});\n"
-            "pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(_pdfWorkerBlob);"
-        )
-        html = re.sub(
-            r"pdfjsLib\.GlobalWorkerOptions\.workerSrc\s*=\s*['\"].*?['\"];",
-            lambda _: blob_init,
-            html,
-        )
-    except Exception as e:
-        print(f"\n❌ 下載 PDF.js Worker 失敗：{e}")
-        sys.exit(1)
+    # Native ESM engine + real worker + licensed resources, all embedded.
+    html = html.replace('<script type="module" src="pdf_engine.mjs"></script>', build_engine())
 
     # ── 步驟 2：套用資安強化修改 ──
     print(f"\n[2/3] 套用資安強化修改（v{version}）")

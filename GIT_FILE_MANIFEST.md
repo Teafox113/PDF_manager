@@ -1,5 +1,20 @@
 # Git 預計納入清單
 
+## v2.14.0-F（2026-11-05）
+
+發布既有主程式、建置器、版號、雙語說明、測試／安全紀錄及授權。新增 pdf_security.js、pdf_engine.mjs、pdf_engine_bundle.py、pdf_worker_resources.js；tests/test_pdf_security.cjs、test_rotation_size.cjs、test_pdf_engine.cjs、test_engine_bundle.py、make_engine_fixtures.py、run_regression.cjs；docs/SECURITY_DEPENDENCIES.md、CHROME_EXTENSION_ASSESSMENT.md；licenses/pdfjs-resources.json 與 licenses/pdfjs-6.5.438/ 的 11 份授權。
+
+不提交任何 PDF／ZIP、下載套件、私人檔案特徵、測試截圖、test-results 或 release_work。離線 HTML 僅作 Release 附件，搭配 SHA256SUMS.txt。以下狀態為歷史。
+
+
+## 本機安全修補 v2.13.2-F（未提交／未發布）
+
+新增 `pdf_security.js`、`tests/test_pdf_security.cjs`、`docs/SECURITY_DEPENDENCIES.md`、`docs/CHROME_EXTENSION_ASSESSMENT.md`。更新來源、建置器、版號、回歸紀錄與說明。不納入私人 PDF／ZIP、測試輸出或離線 HTML；未同步 Git 工作區。
+
+## 本機測試 v2.13.1-F（未提交／未發布）
+
+新增 `tests/test_rotation_size.cjs`；更新旋轉尺寸邏輯、介面版號／說明、version.json 與文件。離線 HTML、合成測試輸出仍排除。使用者要求先本機測試，不同步 Git 工作區。
+
 ## v2.13.0-F 本次發布清單
 
 包含下方 v2.12 來源，另新增純合成 `tests/test_geometry_polish.cjs`，更新 page_geometry.js、page_editor.js、介面版號、文件及校驗碼。測試截圖／PDF、私人資料與離線 HTML 不納入 Git 歷史。

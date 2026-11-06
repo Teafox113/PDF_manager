@@ -10,7 +10,7 @@ const asset=process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_ed
   const errors=[],requests=[],dialogs=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
   page.on('dialog',async d=>{dialogs.push(d.message());await d.dismiss();});
-  await page.goto(pathToFileURL(asset).href);
+  await page.goto(pathToFileURL(asset).href);await page.evaluate(()=>pdfManagerEngineReady);
   const bytes=await page.evaluate(async()=>{const d=await PDFLib.PDFDocument.create();d.addPage([420,594]).drawText('ORIGINAL_SEARCHABLE',{x:20,y:30,size:10});return Array.from(await d.save());});
   await page.locator('#file-main').setInputFiles({name:'synthetic-inline.pdf',mimeType:'application/pdf',buffer:Buffer.from(bytes)});
   await page.waitForFunction(()=>state.mainPages.length===1);
@@ -56,11 +56,11 @@ const asset=process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_ed
   const exported=await page.evaluate(async()=>{
    const pg=getActiveStampPage(),preview=document.createElement('canvas');await renderPagePreviewToCanvas(pg,preview,840);await drawStampsOnCanvas(preview,pg);
    const d=await PDFLib.PDFDocument.create();await appendPageToPdfDocument(d,pg,new Map());
-   const pdf=await pdfjsLib.getDocument({data:await saveEditedPdf(d,state.mainPages)}).promise,p=await pdf.getPage(1);
+   const pdf=await loadLocalPdf(await saveEditedPdf(d,state.mainPages)).promise,p=await pdf.getPage(1);
    const text=(await p.getTextContent()).items.map(x=>x.str).join(' '),v=p.getViewport({scale:2}),canvas=document.createElement('canvas');canvas.width=v.width;canvas.height=v.height;
    await p.render({canvasContext:canvas.getContext('2d'),viewport:v}).promise;
    const bounds=c=>{const a=c.getContext('2d').getImageData(0,0,c.width,c.height).data;let minX=c.width,minY=c.height,maxX=-1,maxY=-1,count=0;for(let y=0;y<c.height;y++)for(let x=0;x<c.width;x++){const i=(y*c.width+x)*4;if(a[i]>110&&a[i]>a[i+1]*1.6&&a[i]>a[i+2]*1.6){count++;minX=Math.min(minX,x);maxX=Math.max(maxX,x);minY=Math.min(minY,y);maxY=Math.max(maxY,y);}}return {count,minX,minY,maxX,maxY};};
-   const result={text,preview:bounds(preview),output:bounds(canvas)};await pdf.destroy();return result;
+   const result={text,preview:bounds(preview),output:bounds(canvas)};await pdf.loadingTask.destroy();return result;
   });
   assert.ok(exported.text.includes('ORIGINAL_SEARCHABLE'));assert.ok(exported.output.count>100);
   for(const k of ['minX','minY','maxX','maxY'])assert.ok(Math.abs(exported.preview[k]-exported.output[k])<=2,`export ${k}`);

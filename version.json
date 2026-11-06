@@ -1,11 +1,11 @@
 {
-  "version": "2.13.0-F",
-  "release_date": "2026-10-21",
+  "version": "2.14.0-F",
+  "release_date": "2026-11-05",
   "channel": "Branch (Fable Dev)",
   "branch": "branch_v2",
   "branch_suffix": "-F",
   "branch_note": "由 Fable 模型接續的開發修訂線；分枝版號恆帶 -F 後綴，與主線 1.x 區隔。合併回主線時摘除後綴並升 MINOR。",
-  "notes": "本機候選：裁切結果預覽、移動框／鍵盤微調、重設、輸入診斷與處理階段進度。",
+  "notes": "PDF.js 6.5.438 原生 ESM 引擎與完整離線資源升級；修正 UserUnit 旋轉尺寸，完成回歸後發布。",
   "bump_rules": {
     "PATCH": "臭蟲修正、文字修正、UI 微調（不影響功能）",
     "MINOR": "新功能加入、顯著改善（向下相容）",
@@ -14,6 +14,21 @@
   },
   "output_filename_template": "pdf_editor_offline_v{version}.html",
   "history": [
+    {
+      "version": "2.14.0-F",
+      "date": "2026-11-05",
+      "summary": "PDF.js 升級 6.5.438，原生 ESM／真實 Worker、內嵌 CMap／字型／影像解碼資源；旋轉實際尺寸與安全回歸。"
+    },
+    {
+      "version": "2.13.2-F",
+      "date": "2026-11-05",
+      "summary": "本機安全修補：統一 PDF 載入入口，isEvalSupported=false，移除離線 unsafe-eval；沿用 3.11.174，不宣稱全面依賴升級。"
+    },
+    {
+      "version": "2.13.1-F",
+      "date": "2026-10-22",
+      "summary": "本機測試版：旋轉前保留實際紙張尺寸，修正 PDF／個別分頁輸出尺寸放大；新增合成回歸測試。"
+    },
     {
       "version": "2.13.0-F",
       "date": "2026-10-21",

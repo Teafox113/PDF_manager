@@ -14,7 +14,7 @@ const offline = fs.readFileSync(asset, 'utf8');
 const blocks = text => [...text.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].map(m => m[1]);
 blocks(source).forEach(js => new vm.Script(js));
 assert.ok(!offline.includes('-F-F'));
-assert.ok(!/<script\s+src=/.test(offline));
+assert.ok(!/<script\b[^>]*\ssrc=/.test(offline));
 assert.ok(offline.includes('Copyright (c) 2021, Michael Williamson'));
 const screenshots = path.join(root, 'test-results');
 fs.mkdirSync(screenshots, { recursive: true });
@@ -36,7 +36,7 @@ async function downloadBytes(download) {
     page.on('pageerror', e => errors.push(e.message));
     page.on('request', request => { if (/^https?:/.test(request.url())) external.push(request.url()); });
     page.on('dialog', dialog => { errors.push('Unexpected alert: ' + dialog.message()); dialog.dismiss(); });
-    await page.goto(pathToFileURL(asset).href);
+    await page.goto(pathToFileURL(asset).href);await page.evaluate(()=>pdfManagerEngineReady);
     await page.locator('#language-select').selectOption('en');
     assert.equal(await page.locator('html').getAttribute('lang'), 'en');
     assert.equal(await page.locator('#btn-save').innerText(), '⤓ Save PDF');

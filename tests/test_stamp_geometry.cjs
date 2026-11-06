@@ -16,7 +16,7 @@ const asset = process.env.PDF_MANAGER_ASSET || path.join(root, `release-assets/p
     const errors=[], external=[];
     page.on('pageerror',e=>errors.push(e.message));
     page.on('request',r=>{if(/^https?:/.test(r.url()))external.push(r.url());});
-    await page.goto(pathToFileURL(asset).href);
+    await page.goto(pathToFileURL(asset).href);await page.evaluate(()=>pdfManagerEngineReady);
     const cases = [0,90,180,270].flatMap(rotation=>[false,true].map(crop=>({rotation,crop})));
     if (process.env.PDF_MANAGER_TEST_PDF) cases.push({local:true});
     for (const spec of cases) {
@@ -100,7 +100,7 @@ const asset = process.env.PDF_MANAGER_ASSET || path.join(root, `release-assets/p
         const out=await PDFLib.PDFDocument.create();await appendPageToPdfDocument(out,pg,new Map());
         const bytes=await out.save();const rendered=document.createElement('canvas');
         await renderPdfPageToCanvasAtWidth(bytes,0,rendered,600);
-        const pdf=await pdfjsLib.getDocument({data:bytes.slice()}).promise;const p=await pdf.getPage(1);
+        const pdf=await loadLocalPdf(bytes.slice()).promise;const p=await pdf.getPage(1);
         const text=(await p.getTextContent()).items.map(x=>x.str).join(' ');
         function colors(c) {
           const data=c.getContext('2d').getImageData(0,0,c.width,c.height).data;

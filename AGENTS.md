@@ -13,6 +13,8 @@
 ## 來源與版本
 
 - `pdf_editor.html` 是主程式來源。
+- PDF.js 已升級至 6.5.438。`pdf_engine.mjs` 是開發入口，`pdf_engine_bundle.py`／`pdf_worker_resources.js` 負責離線包裝與資源；不得以 fake worker 通過測試，亦不得擴大 Worker 的資源白名單到網路。
+- 所有產品程式中的 PDF.js 文件載入必須透過 `pdf_security.js` 的 `loadLocalPdf`，不得繞過 isEvalSupported=false 或恢復離線 CSP unsafe-eval。PDF.js 主版升級必須重做授權／資源／安全與幾何測試。
 - `page_editor.js`、`page_geometry.js` 與 `pdf_resource_cleaner.js` 是本專案來源模組，離線建置會內嵌，必須一併維護與測試。
 - 消去後的 PDF／ZIP 輸出必須透過 `saveEditedPdf`，不得繞過資源清理；不支援的結構應拒絕，不可自動整份文件圖片化。
 - `version.json` 是版號唯一真實來源。

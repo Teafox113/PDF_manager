@@ -17,7 +17,7 @@ async function paste(page,html,text='') {
   const page=await context.newPage(),errors=[],requests=[],dialogs=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
   page.on('dialog',async d=>{dialogs.push(d.message());await d.dismiss();});
-  await page.goto(pathToFileURL(asset).href);
+  await page.goto(pathToFileURL(asset).href);await page.evaluate(()=>pdfManagerEngineReady);
   await page.locator('#language-select').selectOption('en');
   assert.equal(await page.locator('#btn-page-edit').innerText(),'✎ Edit page');
   const bytes=await page.evaluate(async()=>{
@@ -78,8 +78,8 @@ async function paste(page,html,text='') {
   // Adding objects must preserve original searchable text before erasure.
   const text=await page.evaluate(async()=>{
     const out=await PDFLib.PDFDocument.create();await appendPageToPdfDocument(out,getActiveStampPage(),new Map());
-    const pdf=await pdfjsLib.getDocument({data:await out.save()}).promise;
-    const pg=await pdf.getPage(1);const text=(await pg.getTextContent()).items.map(t=>t.str).join(' ');await pdf.destroy();return text;
+    const pdf=await loadLocalPdf(await out.save()).promise;
+    const pg=await pdf.getPage(1);const text=(await pg.getTextContent()).items.map(t=>t.str).join(' ');await pdf.loadingTask.destroy();return text;
   });
   assert.ok(text.includes('PRIVATE_TEST_MARKER_87291'));assert.ok(text.includes('UNERASED_VISIBLE_TEXT'));
   assert.equal(await page.locator('#pe-erase').isDisabled(),false);

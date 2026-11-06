@@ -1,4 +1,44 @@
-# 測試報告（v2.13.0-F）
+# 測試報告（v2.14.0-F）
+
+## 2026-11-06 — PDF.js 6.5.438 最終離線回歸
+
+發布前隱私閘門：實際 Git index 126 個檔案及 2 個附件，與 3 份本機私人輸入（含 ZIP 內 PDF）的 8,800 項檔名／路徑、文字、原始／解碼串流及 Base64 特徵比對，未發現吻合；原檔雜湊不變。亦未發現受禁副檔名、私人目錄、常見 Token／私鑰或本機絕對路徑。此為特徵掃描，不宣稱能證明任何可能形式的資料皆不存在。
+
+建置日期 2026-11-05，發布前驗證完成於 2026-11-06。固定成品 SHA-256：
+`D41A0AFADA08A13C2A7F8BEA31D1F9D9DE1F04F8CC618AA334728A324219A9F4`。
+
+- Chrome 156.0.8078.76／Edge 156.0.4314.58 各 13/13 組合成回歸通過；Python 7/7 授權與建置防竄改測試通過。測試完成後不重建此成品。
+- 引擎實際版本 6.5.438、真實 Worker（非 fake worker）、中文 CMap 的文字擷取與實際字形像素、未嵌入標準字型、JPX／JPEG 2000 紅色像素、ICC 青色色彩、3 個 WASM 模組編譯通過。
+- 合成 PDF OpenAction 不執行；合法與非法 PDF 結束後 Worker 數量回到 0。主頁及 Worker 的真實 DOM 事件 Function 測試均被 CSP 拒絕；合法資源無缺漏／fallback 警告，無 HTTP(S) 請求。
+- 旋轉 16 組 Rotate／CropBox／UserUnit，重複順逆旋轉、Undo／Redo、圖片與失敗原子性、整份 PDF 及實際 ZIP 流程通過。新版 viewport 已包含 UserUnit，不再重複乘倍。
+- 裁切／尺寸校正、8 組蓋章幾何、消去與共用資源清理、普通連結／具體拒絕、頁內文字／表格、剪貼簿、操作失敗保留、取消匯出及 120 頁文字順序回歸通過。
+- 雙語、四主題、窄視窗、儲存偏好、授權對話框、真實合成 PDF／ZIP 下載通過；截圖檢視無明顯版面問題。來源版 smoke 僅檢查 UI，主要功能證據來自實際單檔離線成品。
+- 全部功能測試只用合成資料；私人 PDF／ZIP 不作測試素材。發布前另在本機記憶體掃描 Git index 與附件，不保存擷取物。
+- 本輪未驗證 Edge 內建 PDF 閱讀器 Ctrl＋]、全瀏覽器、巨型掃描或複雜 JBIG2 語料庫；不是全面滲透測試／商用安全認證。旋轉仍點陣化，舊錯誤輸出不會自動還原。
+- 遷移中發現並修正 file:// module Worker 退回、6.x loadingTask.destroy API、viewport UserUnit 重複倍率及測試用舊矩形轉換 API。曾失敗的中間候選不發布。
+
+以下為歷史紀錄；舊版「未發布」或「僅緩解」狀態不適用目前版本。
+
+## 2026-11-05 — PDF.js 官方緩解與 CSP
+
+- Chrome／Edge `test_pdf_security.cjs` 通過：產品 8 個載入呼叫均經安全入口，VM 驗證固定 isEvalSupported=false／enableXfa=false、拒絕 URL／選項物件且額外參數不可覆寫。
+- 真正 DOM 點擊觸發的主頁與 Blob Worker 動態 Function 被 CSP 阻擋；合成 PDF 顯示及文字擷取正常。最初用 DevTools evaluate 測試會繞過主頁 CSP，已改為真實事件驗證。這不是任意惡意 PDF 的完整攻擊測試。
+- Chrome：旋轉尺寸、page geometry、resource cleanup、link cleanup、IO safety／120 頁、inline text、workflow、page editor、geometry polish 與完整 UI／真實合成 PDF／ZIP 下載回歸通過。Edge：安全入口／CSP 與 16 組旋轉尺寸回歸通過。
+- 離線零 HTTP(S) 請求；本輪沒有讀取私人 PDF／ZIP。第三方檔案與授權仍沿用既有固定雜湊，非全面依賴更新。完整 DOCX 排版與全輸入面資安稽核不在本輪驗證範圍。
+- 交付成品與已測試候選 SHA-256 相同：`354010857ef44c0d0dc1bb27a6fe206808669d079b5395b20ac775eda18f8976`。v2.13.0／v2.13.1 雜湊未變；新成品未推送 Git／GitHub Release。
+
+以下為先前版本紀錄。
+
+## 2026-10-22 — 旋轉紙張尺寸回歸
+
+- `tests/test_rotation_size.cjs` 在舊 v2.13.0-F 正確失敗：A4 第一次旋轉輸出 1697 × 1200 pt，應為約 841.89 × 595.28 pt。以此確認測試能捕捉原錯誤。
+- 新版 Chrome／Edge 通過 16 組原始旋轉（0／90／180／270）、偏移 CropBox 有無及 UserUnit（1／2）組合；四次順時針、逆時針、復原／重做、圖片頁既有尺寸、轉圖失敗不新增復原均通過。
+- 整份 PDF 與實際個別分頁 ZIP 流程（僅攔截最後下載邊界）驗證 A4 旋轉後維持 297 × 210 mm，其他頁尺寸不變；測試文件全部合成，PDF／ZIP 留在記憶體。
+- Chrome 既有 page geometry、geometry polish、workflow、8 組 stamp geometry、link cleanup、resource cleanup、IO safety／120 頁文件及完整 UI／實際下載回歸通過；4 項 Python 授權／校驗測試通過。離線測試無 HTTP(S) 請求或 pageerror。
+- 交付 HTML 與已測試候選雜湊相同：`59fc4d6c1fce637fc15ede0cd0623a1e8457176fca2b942914ad3daab2524a64`。v2.13.0-F 雜湊保持不變，沒有重建或覆寫舊版。
+- 未使用私人 PDF、未同步 Git 工作區、未推送。Edge 測試是執行 APP 與解析輸出，並非內建 PDF 閱讀器 Ctrl＋] 或開啟縮放比例的驗證；對方樣本無法取得，待使用者驗收。
+
+以下為先前版本紀錄。
 
 本次發布沿用已測試候選，SHA-256 為 `9ba3f97ecf5c84f4564d24e1bebfb3b871b7a51e4ed3004966d009401672dc53`。下方「未發布／本機候選」保留各輪測試當時的狀態，不代表目前遠端發布狀態。
 

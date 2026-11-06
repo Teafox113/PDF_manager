@@ -1,5 +1,30 @@
 # FUNCTION_MAP — pdf_editor.html 函式索引
 
+## v2.14.0-F — ESM／Worker／資源遷移
+
+- pdf_engine.mjs：開發版 ESM 入口；正式單檔由建置替換成內嵌主模組與資源。
+- pdf_engine_bundle.py 的 read_archive／engine_files／build_engine：雜湊驗證、記憶體讀取套件、挑選資源與精確 worker 包裝適配；不執行套件安裝腳本。
+- pdf_worker_resources.js 的 pdfManagerResourceBytes：僅允許預封裝資源鍵，Worker fetch／同步 XHR 讀記憶體，不開放網路。
+- pdf_security.js 的 loadLocalPdf／startLocalPdf：bytes 限制、ESM 就緒等待、真實 Worker ready 握手、15 秒啟動失敗、解析任務與 Worker 回收。
+- getPdfPageGeometry：6.x viewport 回傳物理點數，不另回傳倍率給 rotatePage；toPdf 將物理座標映回原 PDF。
+- renderPdfPageToCanvas／renderPdfPageToCanvasAtWidth／renderPageHighRes／handleStampPdfFile：透過 loadingTask.destroy 釋放文件與背景執行緒。
+- tests/test_pdf_engine.cjs、test_engine_bundle.py、make_engine_fixtures.py、run_regression.cjs：合成資源與生命週期、建置防竄改及完整回歸入口。
+
+以下為歷史紀錄；舊版本狀態不代表目前版本。
+
+
+## v2.13.2-F PDF.js 安全入口
+
+- `pdf_security.js / loadLocalPdf(data)`：只接受 Uint8Array／ArrayBuffer；固定 isEvalSupported=false、enableXfa=false，拒絕 URL 或設定物件。主文件、來源 PDF、縮圖、預覽、印章與旋轉共 8 個產品載入呼叫改用此入口。
+- `build_offline.py`：內嵌新安全模組，離線 CSP 移除 unsafe-eval；不更動已授權函式庫原始碼或雜湊。
+- `tests/test_pdf_security.cjs`：掃描產品呼叫點及 VM 驗證選項不可覆寫；使用真正 DOM click 事件測試 CSP，避免 DevTools evaluate 可繞過 CSP 的測試誤判。
+
+## v2.13.1-F 旋轉尺寸修正
+
+- `getPdfPageGeometry`：額外回傳 PDF.js 的 userUnit；既有 toPdf／寬高行為不變。
+- `rotatePage`：轉圖前取得可見頁面尺寸，PDF 來源乘上 UserUnit，旋轉後明確設定交換寬高的 pageSize，不把點陣像素當成紙張點數。轉圖成功後才記錄 snapshot。
+- `tests/test_rotation_size.cjs`：合成幾何、重複旋轉、復原／重做、失敗、圖片與實際 PDF／ZIP 匯出路徑回歸；不保存 PDF 或 ZIP。
+
 ## v2.13.0-F 裁切操作打磨
 
 - `resetGeometryRect`：還原完整頁、清除結果預覽及切回重畫模式，不建立文件 Undo。

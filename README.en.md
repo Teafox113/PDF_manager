@@ -2,6 +2,10 @@
 
 English · [繁體中文](README.md)
 
+> **v2.14.0-F** upgrades the actual PDF.js engine from 3.11.174 to **6.5.438**; it is not just the previous security workaround. The single-file offline build includes a real background Worker, CMaps, fonts, image decoders and ICC resources. Includes the physical rotation-size fix. [Security details](docs/SECURITY_DEPENDENCIES.md) · [Regression report](docs/TEST_REPORT.md).
+
+Reload the original PDF, rotate and export again. Existing oversized exports are not automatically repaired. Rotation still rasterizes the page. The Edge Ctrl+] issue remains unconfirmed; this fix does not force the viewer to open at 100% zoom.
+
 > **v2.13.0-F** adds page cropping and proportional reference-page fitting, with result previews, precise positioning and operation safeguards. See the [changelog](CHANGELOG.md) for details.
 
 ### Crop workflow polish
@@ -46,7 +50,7 @@ Double-click a main-document page to open the page editor:
 
 Click Add text to type on the page; double-click added text to edit it again. Formatting applies to the whole box, not individual text selections. Ctrl+B/I/U toggle bold/italic/underline; Ctrl+Enter applies and Esc cancels the draft. Switching tools or clicking the page editor's Done button also applies text first. Drag or resize after applying.
 
-Fonts come from the local system, with browser fallback if unavailable; no fonts are downloaded or bundled. Added text is still flattened to an image on export; existing PDF text is not directly editable. Tables retain the existing cell editor. Text exceeding page bounds is rejected instead of silently shrinking the font or clipping content.
+Fonts come from the local system, with browser fallback if unavailable; added-text fonts are not downloaded. The PDF rendering engine separately bundles licensed fallback fonts. Added text is still flattened to an image on export; existing PDF text is not directly editable. Tables retain the existing cell editor. Text exceeding page bounds is rejected instead of silently shrinking the font or clipping content.
 
 > **v2.8.1-F** adds editable text/tables and clipboard images. Ordinary links no longer block erasure; rejection messages identify the main-PDF page and reason. Added objects are flattened on export.
 
@@ -62,7 +66,7 @@ Fonts come from the local system, with browser fallback if unavailable; no fonts
 
 A browser-based, page-oriented tool for organizing and combining PDFs without sending documents to an online conversion service.
 
-Current version: **v2.13.0-F**. The interface supports **Traditional Chinese / English** and four selectable themes.
+Current version: **v2.14.0-F**. The interface supports **Traditional Chinese / English** and four selectable themes.
 
 This update adds page-content editing and limited area erasure, retaining the earlier stamp-coordinate fixes for rotated PDFs.
 
@@ -80,7 +84,7 @@ The editor can add text but cannot directly modify existing PDF text. OCR and di
 
 ## Quick start
 
-For offline use, visit the [v2.13.0-F release page](https://github.com/Teafox113/PDF_manager/releases/tag/v2.13.0-F), download `pdf_editor_offline_v2.13.0-F.html`, and open it in desktop Chrome or Edge.
+For offline use, visit the [v2.14.0-F release page](https://github.com/Teafox113/PDF_manager/releases/tag/v2.14.0-F), download `pdf_editor_offline_v2.14.0-F.html`, and open it in desktop Chrome or Edge.
 
 1. Download or clone the project and open [pdf_editor.html](pdf_editor.html) in desktop Chrome or Edge.
 2. Choose **Language / 語言** and **Theme** in the toolbar.
@@ -115,7 +119,7 @@ python build_offline.py
 Output:
 
 ```text
-release-assets/pdf_editor_offline_v2.8.1-F.html
+release-assets/pdf_editor_offline_v2.14.0-F.html
 ```
 
 Open that file directly in your browser. The builder verifies library and license-file hashes, embeds dependencies and full third-party notices, and refuses to overwrite an existing output by default. Offline HTML files are excluded from Git history and provided as GitHub Release assets.
@@ -123,7 +127,7 @@ Open that file directly in your browser. The builder verifies library and licens
 ## Privacy and data
 
 - Document parsing, editing, and export run locally in the browser. The application has no document-upload API.
-- The source edition requests JavaScript from cdnjs. This is not a document upload, but the source edition is not fully offline.
+- The source edition requests JavaScript from cdnjs / jsDelivr. This is not a document upload, but the source edition is not fully offline.
 - The offline artifact embeds its libraries and uses a Content Security Policy to restrict external connections.
 - `localStorage` stores interface preferences, not document content.
 - For confidential material, use a verified offline build and follow your organization's data-handling rules. Functional testing is not a comprehensive security audit.
@@ -156,7 +160,7 @@ release-assets/           Local offline builds (HTML excluded from Git)
 
 | Library | Version | Declared license |
 | --- | --- | --- |
-| PDF.js | 3.11.174 | Apache-2.0 |
+| PDF.js | 6.5.438 | Apache-2.0 |
 | pdf-lib | 1.17.1 | MIT |
 | html2canvas | 1.4.1 | MIT |
 | Mammoth | 1.6.0 | BSD-2-Clause |
@@ -187,3 +191,10 @@ When reporting an issue, include the version, browser, reproduction steps, and r
 ## Contact
 
 For questions, support, or feature suggestions, please leave a message in this project's [GitHub Issues](https://github.com/Teafox113/PDF_manager/issues). Do not include personal information, confidential documents, or credentials in public comments.
+
+
+### Engine build and tests
+
+Use current desktop Chrome or Edge with WebAssembly enabled. The build verifies pinned public archives and resource hashes; the cache is under ignored `test-results/dependency-cache/`. It does not install npm runtime packages. The source HTML uses ESM and should be served over a local HTTP server (`python -m http.server`); use the built HTML for direct offline opening.
+
+Development tests require Playwright, Pillow and the project Python runtime (`PYTHON` may select it): `node tests/run_regression.cjs`; repeat with `BROWSER_CHANNEL=msedge`. `python -m unittest discover -s tests -v` checks licenses and build invariants. Test fixtures are synthetic; do not set `PDF_MANAGER_TEST_PDF` for release regression.

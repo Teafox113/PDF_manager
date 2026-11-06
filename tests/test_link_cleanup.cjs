@@ -2,7 +2,7 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const {pathToFileURL}=require('node:url'),{chromium}=require('playwright');
 const root=path.resolve(__dirname,'..'),version=JSON.parse(fs.readFileSync(path.join(root,'version.json'))).version;
-(async()=>{const b=await chromium.launch({channel:'chrome',headless:true});try{
+(async()=>{const b=await chromium.launch({channel:process.env.BROWSER_CHANNEL||'chrome',headless:true});try{
  const ctx=await b.newContext({offline:true}),p=await ctx.newPage();let http=0;p.on('request',r=>{if(/^https?:/.test(r.url()))http++;});
  await p.goto(pathToFileURL(process.env.PDF_MANAGER_ASSET||path.join(root,`release-assets/pdf_editor_offline_v${version}.html`)).href);
  for(const mode of ['ordinary','javascript','next-action','appearance','text-annotation','named-destination','inline']){

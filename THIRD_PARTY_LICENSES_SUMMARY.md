@@ -1,5 +1,14 @@
 # 第三方授權資料
 
+## 2026-11-05 — PDF.js 6.5.438
+
+目前引擎為 PDF.js 6.5.438（Apache-2.0），不是下方歷史表的 3.11.174。新增 CMap、Foxit 字型、OpenJPEG、PDFium JBIG2、QCMS、ICC profile 與 Liberation Sans 2.1.5 OFL 原文；詳見 licenses/pdfjs-6.5.438/ 及 licenses/pdfjs-resources.json。
+
+不出貨套件中的舊 GPL Liberation 字型或 QuickJS。OFL 字型未修改、不單獨販售，保留名稱與完整條文。Worker 包裝移除單一 export 並替換兩處 import.meta.url，解析與解碼邏輯不變；修改說明內嵌於完整第三方條文。此為授權遵循紀錄，不是法律保證。
+
+以下為歷史紀錄；舊版本狀態不代表目前版本。
+
+
 ## 2026-09-21 更新
 
 適用應用版本 v2.7.0-F。dingbat-to-unicode 1.0.1 已改附其正式 BSD-2-Clause LICENSE（2021, Michael Williamson）；作者確認新版授權也適用所有舊版。下文若提到暫行引用或待確認，屬先前查核紀錄，已由本節取代。詳見 docs/LICENSE_AUDIT.md 與 licenses/manifest.json。
