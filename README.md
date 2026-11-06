@@ -2,7 +2,7 @@
 
 [English](README.en.md) · 繁體中文
 
-> **v2.14.0-F**：PDF.js 本體由 3.11.174 升級至 **6.5.438**，不是僅套用先前緩解。單檔離線版包含真實背景 Worker、CMap、字型、影像解碼及 ICC 資源，並整合旋轉紙張尺寸修正。[安全說明](docs/SECURITY_DEPENDENCIES.md) · [測試報告](docs/TEST_REPORT.md)。
+> **v2.14.0-F**：PDF.js 本體由 3.11.174 升級至 **6.5.438**。單檔離線版包含真實背景 Worker、CMap、字型、影像解碼及 ICC 資源，並整合旋轉紙張尺寸修正。[安全說明](docs/SECURITY_DEPENDENCIES.md) · [測試報告](docs/TEST_REPORT.md)。
 
 請從原始 PDF 重新載入、旋轉並匯出確認。此修正不會自動還原舊輸出檔的尺寸；旋轉仍會將該頁轉成圖片。Edge 的 Ctrl＋] 快捷鍵問題尚未確認，瀏覽器開啟縮放也不保證為 100%。
 
