@@ -1,5 +1,17 @@
 # 維護交接
 
+## 2026-11-13 — v0.2.2-offline 發布
+
+本次發布已測試的 vulpedit_0.2.2-offline-20261112.html，不重新建置。Chrome／Edge 各 6/6 組離線回歸通過；SHA-256 為 d783c66ddee88cc8376c6c97ba4e1ec55ba2797523c5a143f438d8568054b920。僅 HTML 及雜湊清單作 Release 附件，來源快照、私人文件、測試產物不公開。
+
+新版沿用主開發免費專有使用條款，不變更歷史來源授權。version.json 與根目錄核心仍為舊 v2.14 線；新版建置入口為 build_synced_offline.py，版本取自獲授權主開發 manifest。以下「不推送」記錄僅描述當時測試階段，不是本次發布狀態。
+
+目前最新離線同步為 Chrome 0.2.2：vulpedit_0.2.2-offline-20261112.html。主開發仍由 Chrome 專案負責，此處只讀同步；27 檔快照及校驗記錄保存在 sync-snapshots，未推送。
+
+最新同步基線為 Chrome 0.2.1；離線檔 vulpedit_0.2.1-offline-20261112.html。主開發仍由 Chrome 專案負責；本輪無反向修改或 Git 推送。詳見 docs/OFFLINE_SYNC.md。
+
+> 2026-11-12：主開發移交 Chrome 專案對話，本工作區負責單向同步與離線測試包。以 Chrome 0.2.0 為基線，不反向修改上游，原 v2.14 發布線保留。詳見 docs/OFFLINE_SYNC.md。
+
 ## 2026-11-05 — v2.14.0-F 發布基線
 
 - 使用者已授權：完成 PDF.js 真正升級、離線回歸穩定後推送既有 Git。此授權取代下列舊版暫不推送狀態。

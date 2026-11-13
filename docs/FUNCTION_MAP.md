@@ -1,5 +1,11 @@
 # FUNCTION_MAP — pdf_editor.html 函式索引
 
+> 0.2.2 同步直接沿用上游 batch_stamp.js／CSS 的滑桿、拖曳定位及角落命中修正；未新增第二套編輯核心或改動離線包裝 API。來源與 SHA-256 記錄見 OFFLINE_SYNC.md。
+
+> 同步建置器新增 --build-id（限英數及連字號）控制成品／快照識別並拒絕覆寫。Chrome 0.2.1 batch_stamp 模組的框選、縮放及邊界限制直接取自上游，未另寫第二套編輯核心。
+
+> 離線同步線：build_synced_offline.py 的 read／script 讀取白名單來源、快照並內嵌腳本資源。上游 app/layout/batch_stamp 函式保存於同步快照，不取代 v2.14 發布線。詳見 OFFLINE_SYNC.md。
+
 ## v2.14.0-F — ESM／Worker／資源遷移
 
 - pdf_engine.mjs：開發版 ESM 入口；正式單檔由建置替換成內嵌主模組與資源。

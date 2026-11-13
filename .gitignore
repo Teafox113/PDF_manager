@@ -36,6 +36,7 @@ build/
 dist/
 node_modules/
 test-results/
+sync-snapshots/
 review_*/
 README_GITHUB_DRAFT.md
 *.log

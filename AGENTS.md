@@ -10,7 +10,15 @@
 - 不得修改、搬移、重新命名、刪除或覆蓋上層原始專案檔案。
 - 所有發布修訂只在本資料夾內進行。
 
-## 來源與版本
+## 新版離線同步線（優先於以下歷史建置規則）
+
+- 主開發由獨立 Chrome 專案負責，此處只讀取，不反向修改。
+- 新版由 `build_synced_offline.py <upstream-root> --build-id <unique-id>` 建置，版號取上游 manifest，加 offline 建置識別。
+- `sync-snapshots/` 只供本機追溯，不提交；新版免費專有條款及第三方授權須保留。
+- 根目錄核心、version.json、build_offline.py 僅對應歷史 v2.14.0-F，不代表最新同步線。
+- 只發布經回歸測試且雜湊固定的 HTML；不得自動覆寫舊成品。
+
+## 來源與版本（歷史 v2.14 線）
 
 - `pdf_editor.html` 是主程式來源。
 - PDF.js 已升級至 6.5.438。`pdf_engine.mjs` 是開發入口，`pdf_engine_bundle.py`／`pdf_worker_resources.js` 負責離線包裝與資源；不得以 fake worker 通過測試，亦不得擴大 Worker 的資源白名單到網路。

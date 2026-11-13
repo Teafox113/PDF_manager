@@ -1,5 +1,15 @@
 # PDF Manager
 
+> 最新離線版：[Vulpedit 0.2.2-offline](https://github.com/Teafox113/PDF_manager/releases/tag/v0.2.2-offline)。下載附件 `vulpedit_0.2.2-offline-20261112.html`，使用桌面 Chrome／Edge 開啟。
+
+新增六主題與新舊版面、指定頁匯出、批次蓋章框選／縮放拉桿／拖曳定位。Chrome／Edge 各 6 組離線回歸通過；詳見 [同步及版本說明](docs/OFFLINE_SYNC.md)。
+
+此新版沿用主開發的免費專有使用條款（內嵌於離線程式），不是開源授權；第三方授權獨立保留。此庫根目錄來源及 `version.json` 保留歷史 v2.14.0-F，不能用來重建新版；新版需使用獲授權的主開發來源及 `build_synced_offline.py`。來源快照不公開。
+
+[English](README.en.md) · [聯繫請至 Issues](https://github.com/Teafox113/PDF_manager/issues)
+
+以下為歷史來源線使用說明。
+
 
 本專案提供瀏覽器基底之以頁面為基礎用來整理、合併 PDF 的工具，不必把文件交給線上轉檔服務。
 

@@ -1,6 +1,14 @@
 # PDF Manager
 
-English · [繁體中文](README.md)
+> Latest offline release: [Vulpedit 0.2.2-offline](https://github.com/Teafox113/PDF_manager/releases/tag/v0.2.2-offline). Download `vulpedit_0.2.2-offline-20261112.html` and open it in desktop Chrome/Edge.
+
+Includes six themes, classic/modern layouts, selected-page export and batch-stamp region selection, scale slider and drag positioning. Six offline regression suites passed in each browser. See [sync notes](docs/OFFLINE_SYNC.md).
+
+This release retains the upstream free-to-use proprietary terms embedded in the HTML; it is not open source. Third-party licenses remain independent. Root source files and version.json retain the historical v2.14.0-F line, not the source of this release. Rebuilding requires authorized upstream sources and build_synced_offline.py. Local source snapshots are not published.
+
+English · [繁體中文](README.md) · [Contact via Issues](https://github.com/Teafox113/PDF_manager/issues)
+
+The following documents the historical source line.
 
 > **v2.14.0-F** upgrades the actual PDF.js engine from 3.11.174 to **6.5.438**; it is not just the previous security workaround. The single-file offline build includes a real background Worker, CMaps, fonts, image decoders and ICC resources. Includes the physical rotation-size fix. [Security details](docs/SECURITY_DEPENDENCIES.md) · [Regression report](docs/TEST_REPORT.md).
 
